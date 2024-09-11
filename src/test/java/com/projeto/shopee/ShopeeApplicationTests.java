@@ -1,10 +1,10 @@
-package com.projeto.projeto;
+package com.projeto.shopee;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ProjetoApplicationTests {
+class ShopeeApplicationTests {
 
 	@Test
 	void contextLoads() {
