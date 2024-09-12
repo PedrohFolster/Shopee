@@ -1,6 +1,8 @@
 package com.projeto.shopee.util;
 
 import org.springframework.stereotype.Component;
+
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,10 +24,9 @@ public class UsuarioMapper {
         usuarioDTO.setTelefone(usuario.getTelefone());
         usuarioDTO.setDataNascimento(usuario.getDataNascimento());
         
-        // Mapear Endereco
         if (usuario.getEndereco() != null) {
             usuarioDTO.setEnderecoDTO(new EnderecoDTO(
-                usuario.getEndereco().getId(),  // Corrigido para pegar o id correto
+                usuario.getEndereco().getId(), 
                 usuario.getEndereco().getCep(),
                 usuario.getEndereco().getRua(),
                 usuario.getEndereco().getNumero(),
@@ -36,10 +37,9 @@ public class UsuarioMapper {
             ));
         }
 
-        // Mapear UsuarioAutenticar
         if (usuario.getUsuarioAutenticar() != null) {
             usuarioDTO.setUsuarioAutenticarDTO(new UsuarioAutenticarDTO(
-                usuario.getUsuarioAutenticar().getId(),  // Corrigido para pegar o id correto
+                usuario.getUsuarioAutenticar().getId(), 
                 usuario.getUsuarioAutenticar().getUsername(),
                 usuario.getUsuarioAutenticar().getPasswordHash()
             ));
@@ -56,7 +56,6 @@ public class UsuarioMapper {
         usuario.setTelefone(usuarioDTO.getTelefone());
         usuario.setDataNascimento(usuarioDTO.getDataNascimento());
 
-        // Mapear Endereco
         if (usuarioDTO.getEnderecoDTO() != null) {
             Endereco endereco = new Endereco();
             endereco.setId(usuarioDTO.getEnderecoDTO().getId());  // Certificar de que o ID é mapeado corretamente
@@ -70,12 +69,15 @@ public class UsuarioMapper {
             usuario.setEndereco(endereco);
         }
 
-        // Mapear UsuarioAutenticar
         if (usuarioDTO.getUsuarioAutenticarDTO() != null) {
             UsuarioAutenticar usuarioAutenticar = new UsuarioAutenticar();
             usuarioAutenticar.setId(usuarioDTO.getUsuarioAutenticarDTO().getId());  // Certificar de que o ID é mapeado corretamente
             usuarioAutenticar.setUsername(usuarioDTO.getUsuarioAutenticarDTO().getUsername());
-            usuarioAutenticar.setPasswordHash(usuarioDTO.getUsuarioAutenticarDTO().getPasswordHash());
+            try{
+                usuarioAutenticar.setPasswordHash(usuarioDTO.getUsuarioAutenticarDTO().getPasswordHash());
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
             usuario.setUsuarioAutenticar(usuarioAutenticar);
         }
 

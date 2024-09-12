@@ -1,6 +1,13 @@
 package com.projeto.shopee.entities;
 
-import jakarta.persistence.*;
+import java.security.NoSuchAlgorithmException;
+
+import com.projeto.shopee.util.Hashing;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 @Entity
 public class UsuarioAutenticar {
@@ -36,8 +43,8 @@ public class UsuarioAutenticar {
     public String getPasswordHash() {
         return passwordHash;
     }
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
+    public void setPasswordHash(String passwordHash) throws NoSuchAlgorithmException {
+        this.passwordHash = Hashing.hash(passwordHash);
     }
 
     
