@@ -22,9 +22,10 @@ public class UsuarioMapper {
         usuarioDTO.setTelefone(usuario.getTelefone());
         usuarioDTO.setDataNascimento(usuario.getDataNascimento());
         
+        // Mapear Endereco
         if (usuario.getEndereco() != null) {
             usuarioDTO.setEnderecoDTO(new EnderecoDTO(
-                usuario.getId(),
+                usuario.getEndereco().getId(),  // Corrigido para pegar o id correto
                 usuario.getEndereco().getCep(),
                 usuario.getEndereco().getRua(),
                 usuario.getEndereco().getNumero(),
@@ -35,9 +36,10 @@ public class UsuarioMapper {
             ));
         }
 
+        // Mapear UsuarioAutenticar
         if (usuario.getUsuarioAutenticar() != null) {
             usuarioDTO.setUsuarioAutenticarDTO(new UsuarioAutenticarDTO(
-                usuario.getUsuarioAutenticar().getId(),
+                usuario.getUsuarioAutenticar().getId(),  // Corrigido para pegar o id correto
                 usuario.getUsuarioAutenticar().getUsername(),
                 usuario.getUsuarioAutenticar().getPasswordHash()
             ));
@@ -54,8 +56,10 @@ public class UsuarioMapper {
         usuario.setTelefone(usuarioDTO.getTelefone());
         usuario.setDataNascimento(usuarioDTO.getDataNascimento());
 
+        // Mapear Endereco
         if (usuarioDTO.getEnderecoDTO() != null) {
             Endereco endereco = new Endereco();
+            endereco.setId(usuarioDTO.getEnderecoDTO().getId());  // Certificar de que o ID é mapeado corretamente
             endereco.setCep(usuarioDTO.getEnderecoDTO().getCep());
             endereco.setRua(usuarioDTO.getEnderecoDTO().getRua());
             endereco.setNumero(usuarioDTO.getEnderecoDTO().getNumero());
@@ -66,8 +70,10 @@ public class UsuarioMapper {
             usuario.setEndereco(endereco);
         }
 
+        // Mapear UsuarioAutenticar
         if (usuarioDTO.getUsuarioAutenticarDTO() != null) {
             UsuarioAutenticar usuarioAutenticar = new UsuarioAutenticar();
+            usuarioAutenticar.setId(usuarioDTO.getUsuarioAutenticarDTO().getId());  // Certificar de que o ID é mapeado corretamente
             usuarioAutenticar.setUsername(usuarioDTO.getUsuarioAutenticarDTO().getUsername());
             usuarioAutenticar.setPasswordHash(usuarioDTO.getUsuarioAutenticarDTO().getPasswordHash());
             usuario.setUsuarioAutenticar(usuarioAutenticar);
@@ -75,7 +81,6 @@ public class UsuarioMapper {
 
         return usuario;
     }
-
     public List<UsuarioDTO> toDTOs(List<Usuario> usuarios) {
         return usuarios.stream().map(this::toDTO).collect(Collectors.toList());
     }
