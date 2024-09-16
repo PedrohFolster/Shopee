@@ -8,6 +8,7 @@ import com.projeto.shopee.service.UsuarioService;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/usuarios")
 public class UsuarioController {
