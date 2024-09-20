@@ -76,11 +76,15 @@ export const MenuButton = styled.button`
 `;
 
 export const LogoLink = styled.a`
+  display: block;
+  padding-left: 3rem;
+
   img {
     display: block;
-    padding-left: 3rem;
+    padding: 0rem;
   }
 `;
+
 
 export const AuthLink = styled(Link)`
   display: flex;
@@ -141,6 +145,7 @@ export const SearchInput = styled.input`
   color: #000;
   font-size: 16px;
   outline: none;
+  margin: 0px 70px;
 
   @media (max-width: 768px) {
     max-width: 300px;

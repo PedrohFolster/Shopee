@@ -12,7 +12,20 @@ RUN npm run build
 
 FROM nginx:alpine
 
+# Copia os arquivos buildados da aplicação React
 COPY --from=build /app/build /usr/share/nginx/html
+
+# Modifica a configuração padrão do NGINX diretamente para redirecionar as rotas
+RUN echo 'server { \
+    listen 80; \
+    server_name localhost; \
+    root /usr/share/nginx/html; \
+    index index.html; \
+    location / { \
+        try_files $uri $uri/ /index.html; \
+    } \
+    error_page 404 /index.html; \
+}' > /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 
