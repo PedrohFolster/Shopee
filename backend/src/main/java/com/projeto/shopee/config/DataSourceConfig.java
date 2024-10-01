@@ -28,7 +28,7 @@ public class DataSourceConfig {
     @Bean
     public DataSource dataSource() {
         DataSourceBuilder builder = DataSourceBuilder.create();
-        builder.url("jdbc:mysql://localhost:3306/shopee");
+        builder.url("jdbc:mysql://db:3306/shopee");
         builder.username(dbUsername);
         builder.password(dbPassword);
         return builder.build();
