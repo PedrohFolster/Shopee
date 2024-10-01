@@ -28,7 +28,7 @@ public class DataSourceConfig {
     @Bean
     public DataSource dataSource() {
         DataSourceBuilder builder = DataSourceBuilder.create();
-        builder.url("jdbc:mysql://db:3306/shopee");
+        builder.url("jdbc:mysql://localhost:3306/shopee");
         builder.username(dbUsername);
         builder.password(dbPassword);
         return builder.build();
@@ -47,7 +47,7 @@ public class DataSourceConfig {
         factoryBean.setJpaVendorAdapter(vendorAdapter);
 
         Properties jpaProperties = new Properties();
-        jpaProperties.put("hibernate.hbm2ddl.auto", "update"); // Use 'update' para atualizar o esquema do banco sem apagá-lo
+        jpaProperties.put("hibernate.hbm2ddl.auto", "create"); // Use 'update' para atualizar o esquema do banco sem apagá-lo
         factoryBean.setJpaProperties(jpaProperties);
 
         return factoryBean;

@@ -29,11 +29,8 @@ public class ProdutoController {
 
     @PostMapping
     public ResponseEntity<ProdutoDTO> createProduto(
-            @RequestBody ProdutoDTO produtoDTO,
-            @RequestParam Long statusId,
-            @RequestParam Long categoriaProdutoId,
-            @RequestParam Long lojaId) {
-        ProdutoDTO novoProduto = produtoService.createProduto(produtoDTO, statusId, lojaId);
+            @RequestBody ProdutoDTO produtoDTO) {
+        ProdutoDTO novoProduto = produtoService.createProduto(produtoDTO);
         return ResponseEntity.ok(novoProduto);
     }
 

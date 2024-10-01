@@ -22,7 +22,7 @@ public class Produto {
     @JoinColumn(name = "categoria_produto_id")
     private CategoriaProduto categoriaProduto;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "loja_id")
     private Loja loja;
 

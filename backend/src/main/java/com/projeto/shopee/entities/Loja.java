@@ -11,13 +11,13 @@ public class Loja {
 
     private String nome;
 
-    @ManyToOne
+    @ManyToOne  // Corrigido para ManyToOne
     @JoinColumn(name = "categoria_loja_id")
-    private CategoriaLoja categoriaLoja;  // Relacionamento ManyToOne com CategoriaLoja
+    private CategoriaLoja categoriaLoja;  // Uma loja tem uma categoria, mas uma categoria pode estar em várias lojas
 
-    @OneToOne
+    @OneToOne  // Mantido OneToOne
     @JoinColumn(name = "usuario_id")
-    private Usuario usuario;  // Relacionamento OneToOne com Usuario
+    private Usuario usuario;  // Um usuário tem uma loja, e uma loja está ligada a um único usuário
 
     // Construtores
     public Loja() {}
