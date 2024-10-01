@@ -45,4 +45,10 @@ public class ProdutoController {
         produtoService.deleteProduto(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/loja/{lojaId}")
+    public ResponseEntity<List<ProdutoDTO>> getProdutosByLojaId(@PathVariable Long lojaId) {
+        List<ProdutoDTO> produtos = produtoService.getProdutosByLojaId(lojaId);
+        return ResponseEntity.ok(produtos);
+    }
 }

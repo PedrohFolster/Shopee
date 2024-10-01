@@ -47,7 +47,7 @@ public class DataSourceConfig {
         factoryBean.setJpaVendorAdapter(vendorAdapter);
 
         Properties jpaProperties = new Properties();
-        jpaProperties.put("hibernate.hbm2ddl.auto", "create"); // Use 'update' para atualizar o esquema do banco sem apagá-lo
+        jpaProperties.put("hibernate.hbm2ddl.auto", "update"); // Use 'update' para atualizar o esquema do banco sem apagá-lo
         factoryBean.setJpaProperties(jpaProperties);
 
         return factoryBean;

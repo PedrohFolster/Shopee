@@ -2,6 +2,7 @@ package com.projeto.shopee.service;
 
 import com.projeto.shopee.dto.LojaDTO;
 import com.projeto.shopee.entities.Loja;
+import com.projeto.shopee.exception.UsuarioJaPossuiLojaException;
 import com.projeto.shopee.repository.LojaRepository;
 import com.projeto.shopee.util.LojaMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,10 @@ public class LojaService {
     }
 
     public LojaDTO createLoja(LojaDTO lojaDTO) {
+        // Verificar se o usuário já possui uma loja
+        if (lojaRepository.existsByUsuarioId(lojaDTO.getUsuarioId())) {
+            throw new UsuarioJaPossuiLojaException("Este usuário já possui uma loja cadastrada."); 
+        }
         Loja loja = lojaMapper.toEntity(lojaDTO);
         loja = lojaRepository.save(loja);
         return lojaMapper.toDTO(loja);

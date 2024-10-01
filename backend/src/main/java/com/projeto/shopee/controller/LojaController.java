@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.projeto.shopee.dto.LojaDTO;
+import com.projeto.shopee.exception.UsuarioJaPossuiLojaException;
 import com.projeto.shopee.service.LojaService;
 
 import java.util.List;
@@ -28,9 +29,13 @@ public class LojaController {
     }
 
     @PostMapping
-    public ResponseEntity<LojaDTO> createLoja(@RequestBody LojaDTO lojaDTO) {
-        LojaDTO novaLoja = lojaService.createLoja(lojaDTO);
-        return ResponseEntity.ok(novaLoja);
+    public ResponseEntity<?> createLoja(@RequestBody LojaDTO lojaDTO) {
+        try {
+            LojaDTO novaLoja = lojaService.createLoja(lojaDTO);
+            return ResponseEntity.ok(novaLoja);
+        } catch (UsuarioJaPossuiLojaException e) {
+            return ResponseEntity.badRequest().body(e.getMessage()); 
+        }
     }
 
     @PutMapping("/{id}")

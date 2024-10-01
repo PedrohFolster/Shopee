@@ -47,4 +47,9 @@ public class ProdutoService {
     public void deleteProduto(Long id) {
         produtoRepository.deleteById(id);
     }
+
+    public List<ProdutoDTO> getProdutosByLojaId(Long lojaId) {
+        List<Produto> produtos = produtoRepository.findByLojaId(lojaId);
+        return produtoMapper.toDTOs(produtos);
+    }
 }
