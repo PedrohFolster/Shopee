@@ -8,7 +8,7 @@ const FavoritesLink = ({ activeLink, handleSetActive }) => (
   <Link
     to="/favoritos"
     aria-label="Favoritos"
-    className={`auth-link ${activeLink === "favoritos" ? "active" : ""}`}
+    className={`icon-link ${activeLink === "favoritos" ? "active" : ""}`}
     onClick={() => handleSetActive("favoritos")}
   >
     <FontAwesomeIcon icon={faHeart} className="icon" />

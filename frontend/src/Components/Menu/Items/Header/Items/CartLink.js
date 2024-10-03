@@ -8,9 +8,9 @@ const CartLink = ({ activeLink, handleSetActive }) => (
   <Link
     to="/carrinho"
     aria-label="Abrir carrinho"
-    className={`auth-link ${activeLink === "carrinho" ? "active" : ""}`}
+    className={`icon-link ${activeLink === "carrinho" ? "active" : ""}`}
     onClick={() => handleSetActive("carrinho")}
-  >
+    >
     <FontAwesomeIcon icon={faShoppingCart} className="icon" />
   </Link>
 );
