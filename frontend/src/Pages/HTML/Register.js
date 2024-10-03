@@ -4,14 +4,16 @@ import axios from 'axios';
 import Header from '../../Components/Menu/Items/Header/Header';
 import Input from '../../Components/Input/Input';
 import Button from '../../Components/Button/Button';
-import '../CSS/Register.css'; // Corrigido o caminho do CSS
+import '../CSS/Register.css';
+import { formatarCpf, validarCpf } from '../../Util/CpfFormatter';
+import { fetchAddressByCep } from '../../Util/CepAPI';
 
 const Register = () => {
   const [formData, setFormData] = useState({
     nomeCompleto: '',
     cpf: '',
     dataNascimento: '',
-    email: '',
+    email: '', // Este será o username
     telefone: '',
     senha: '',
     confirmarSenha: '',
@@ -28,38 +30,66 @@ const Register = () => {
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    if (name === 'cpf') {
+      if (value.length <= 14) { // Limita a 14 caracteres para o formato "000.000.000-00"
+        setFormData({ ...formData, [name]: formatarCpf(value) });
+      }
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
   const handleNextStep = () => {
-    const { nomeCompleto, cpf, dataNascimento, email, telefone, senha, confirmarSenha } = formData;
-    if (!nomeCompleto || !cpf || !dataNascimento || !email || !telefone || !senha || !confirmarSenha) {
-      alert('Por favor, preencha todos os campos obrigatórios.');
-      return;
+    if (step === 1) {
+      const { nomeCompleto, cpf, dataNascimento, email, telefone, senha, confirmarSenha } = formData;
+      if (!nomeCompleto || !cpf || !dataNascimento || !email || !telefone || !senha || !confirmarSenha) {
+        alert('Por favor, preencha todos os campos obrigatórios.');
+        return;
+      }
+      if (!validarCpf(cpf)) {
+        alert('CPF inválido');
+        return;
+      }
+      if (!email.includes('@')) {
+        alert('E-mail inválido');
+        return;
+      }
+      if (senha !== confirmarSenha) {
+        alert('As senhas não coincidem');
+        return;
+      }
+      setStep(2);
+    } else if (step === 2) {
+      const { cep, rua, numero, cidade, estado, pais } = formData;
+      if (!cep || !rua || !numero || !cidade || !estado || !pais) {
+        alert('Por favor, preencha todos os campos obrigatórios.');
+        return;
+      }
+      if (cep.length !== 9) {
+        alert('CEP inválido');
+        return;
+      }
+      handleSubmit();
     }
-    if (senha !== confirmarSenha) {
-      alert('As senhas não coincidem');
-      return;
-    }
-    setStep(2);
   };
 
   const handlePreviousStep = () => {
     setStep(1);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     try {
+      const cepSemHifen = formData.cep.replace('-', ''); // Remove o hífen para enviar à API
       const response = await axios.post('http://localhost:8080/usuarios', {
         nome: formData.nomeCompleto,
-        email: formData.email,
+        email: formData.email, // Usar email como username
         senha: formData.senha,
         cpf: formData.cpf,
         dataNascimento: formData.dataNascimento,
         telefone: formData.telefone,
         enderecoDTO: {
-          cep: formData.cep,
+          cep: cepSemHifen,
           rua: formData.rua,
           numero: formData.numero,
           cidade: formData.cidade,
@@ -83,28 +113,40 @@ const Register = () => {
   const fetchAddress = async (cep) => {
     try {
       const response = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
-      if (response.data) {
-        setFormData({
-          ...formData,
-          rua: response.data.logradouro,
-          cidade: response.data.localidade,
-          estado: response.data.uf,
+      if (!response.data.erro) {
+        setFormData((prevData) => ({
+          ...prevData,
+          rua: response.data.logradouro || '',
+          cidade: response.data.localidade || '',
+          estado: response.data.uf || '',
           pais: 'Brasil'
-        });
+        }));
       }
     } catch (error) {
       console.error('Erro ao buscar endereço:', error);
     }
   };
 
-  const handleCepChange = (e) => {
-    let cep = e.target.value.replace(/\D/g, '');
-    if (cep.length > 5) {
-      cep = cep.replace(/^(\d{5})(\d)/, '$1-$2');
+  const handleCepChange = async (e) => {
+    let cep = e.target.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+    if (cep.length <= 8) { // Limita a 8 caracteres numéricos
+      const formattedCep = cep.replace(/(\d{5})(\d{3})/, '$1-$2'); // Formata o CEP com hífen
+      setFormData({ ...formData, cep: formattedCep });
     }
-    setFormData({ ...formData, cep });
-    if (cep.length === 9) {
-      fetchAddress(cep.replace('-', ''));
+
+    if (cep.length === 8) { // Verifica se o CEP tem 8 dígitos numéricos
+      try {
+        const address = await fetchAddressByCep(cep);
+        setFormData((prevData) => ({
+          ...prevData,
+          rua: address.rua || '',
+          cidade: address.cidade || '',
+          estado: address.estado || '',
+          pais: address.pais || 'Brasil'
+        }));
+      } catch (error) {
+        alert('Erro ao buscar endereço: ' + error.message);
+      }
     }
   };
 
@@ -119,7 +161,7 @@ const Register = () => {
         )}
         <h2>CRIAR CONTA</h2>
         <div className="separator">ou</div>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={(e) => e.preventDefault()}>
           {step === 1 && (
             <>
               <div className="form-row full-width">
@@ -142,6 +184,7 @@ const Register = () => {
                   onChange={handleChange}
                   placeholder="CPF*"
                   required
+                  className={!validarCpf(formData.cpf) ? 'input-error' : ''}
                 />
                 <Input
                   type="email"
@@ -268,7 +311,7 @@ const Register = () => {
                   placeholder="Complemento"
                 />
               </div>
-              <Button type="submit">Criar conta</Button>
+              <Button type="button" onClick={handleNextStep}>Criar conta</Button>
             </>
           )}
         </form>

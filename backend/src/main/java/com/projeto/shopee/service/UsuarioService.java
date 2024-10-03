@@ -1,14 +1,15 @@
 package com.projeto.shopee.service;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.projeto.shopee.dto.UsuarioDTO;
 import com.projeto.shopee.entities.Usuario;
 import com.projeto.shopee.repository.UsuarioRepository;
 import com.projeto.shopee.util.UsuarioMapper;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UsuarioService {

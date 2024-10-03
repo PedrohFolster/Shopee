@@ -1,10 +1,10 @@
 package com.projeto.shopee.util;
 
-import org.springframework.stereotype.Component;
-
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Component;
 
 import com.projeto.shopee.dto.EnderecoDTO;
 import com.projeto.shopee.dto.UsuarioAutenticarDTO;
@@ -58,7 +58,7 @@ public class UsuarioMapper {
 
         if (usuarioDTO.getEnderecoDTO() != null) {
             Endereco endereco = new Endereco();
-            endereco.setId(usuarioDTO.getEnderecoDTO().getId());  // Certificar de que o ID é mapeado corretamente
+            endereco.setId(usuarioDTO.getEnderecoDTO().getId());
             endereco.setCep(usuarioDTO.getEnderecoDTO().getCep());
             endereco.setRua(usuarioDTO.getEnderecoDTO().getRua());
             endereco.setNumero(usuarioDTO.getEnderecoDTO().getNumero());
@@ -71,9 +71,9 @@ public class UsuarioMapper {
 
         if (usuarioDTO.getUsuarioAutenticarDTO() != null) {
             UsuarioAutenticar usuarioAutenticar = new UsuarioAutenticar();
-            usuarioAutenticar.setId(usuarioDTO.getUsuarioAutenticarDTO().getId());  // Certificar de que o ID é mapeado corretamente
+            usuarioAutenticar.setId(usuarioDTO.getUsuarioAutenticarDTO().getId());
             usuarioAutenticar.setUsername(usuarioDTO.getUsuarioAutenticarDTO().getUsername());
-            try{
+            try {
                 usuarioAutenticar.setPasswordHash(usuarioDTO.getUsuarioAutenticarDTO().getPasswordHash());
             } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
@@ -83,6 +83,7 @@ public class UsuarioMapper {
 
         return usuario;
     }
+
     public List<UsuarioDTO> toDTOs(List<Usuario> usuarios) {
         return usuarios.stream().map(this::toDTO).collect(Collectors.toList());
     }
