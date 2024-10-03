@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
-import Header from '../Components/Menu/Items/Header/Header';
-import Input from '../Components/Input/Input';
-import Button from '../Components/Button/Button';
-import './Register.css';
+import Header from '../../Components/Menu/Items/Header/Header';
+import Input from '../../Components/Input/Input';
+import Button from '../../Components/Button/Button';
+import '../CSS/Register.css'; // Corrigido o caminho do CSS
 
 const Register = () => {
   const [formData, setFormData] = useState({
