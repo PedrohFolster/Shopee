@@ -1,12 +1,12 @@
 import React from 'react';
 import Header from '../Components/Menu/Items/Header/Header';
+import './Home.css';
 
 const Home = () => {
   return (
-    <div>
+    <div className='home'>
       <Header />
-      {/* Adicione o conteúdo da página Home aqui */}
-      <main>
+      <main className='home-content'>
         <h1>Bem-vindo à Página Inicial</h1>
         <p>Este é o conteúdo da página inicial.</p>
       </main>

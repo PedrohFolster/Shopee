@@ -1,0 +1,149 @@
+.header {
+  background-color: rgb(0, 96, 177);
+  color: #fff;
+  padding: 20px 30px;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1400px;
+  margin: 10px auto;
+}
+
+.header-left, .header-right {
+  display: flex;
+  align-items: center;
+}
+
+.header-right {
+  gap: 20px;
+}
+
+.menu-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-right: 50px;
+  width: 24px;
+  height: 20px;
+  position: relative;
+}
+
+.menu-button .line {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: white;
+  position: absolute;
+  left: 0;
+  transition: all 0.3s ease-in-out;
+}
+
+.menu-button .line:nth-child(1) {
+  top: 0;
+}
+
+.menu-button .line:nth-child(2) {
+  top: 9px;
+}
+
+.menu-button .line:nth-child(3) {
+  top: 18px;
+}
+
+.menu-button.open .line:nth-child(1) {
+  transform: translateY(9px) rotate(45deg);
+}
+
+.menu-button.open .line:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-button.open .line:nth-child(3) {
+  transform: translateY(-9px) rotate(-45deg);
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+}
+
+.logo-link img {
+  max-height: 40px;
+  width: auto;
+}
+
+.auth-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  font-size: 16px;
+}
+
+.auth-link .icon {
+  margin-right: 8px;
+  font-size: 20px;
+}
+
+.auth-link.active {
+  font-weight: bold;
+}
+
+.auth-button {
+  background-color: rgb(0, 96, 177);
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.auth-button:hover {
+  background-color: rgb(0, 76, 144);
+}
+
+.icon {
+  font-size: 20px;
+  color: #fff;
+}
+
+.search-container {
+  flex-grow: 1;
+  max-width: 600px;
+  margin: 0 30px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #fff;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 15px 20px;
+  }
+
+  .header-content {
+    flex-wrap: wrap;
+  }
+
+  .search-container {
+    order: 3;
+    width: 100%;
+    margin: 15px 0 0 0;
+    max-width: none;
+  }
+
+  .header-right {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+}

@@ -1,24 +1,24 @@
 import React, { useState } from 'react';
-import { MenuButton as MenuButtonStyles } from '../HeaderStyles'; // Corrija a importação
+import '../Header.css';
 
 const MenuButton = () => {
-  const [isOpen, setIsOpen] = useState(false); // Estado para gerenciar o menu aberto
+  const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
   return (
-    <MenuButtonStyles
-      aria-label="Abrir menu"
-      aria-expanded={isOpen}
-      className={isOpen ? 'open' : ''}
+    <button 
+      className={`menu-button ${isOpen ? 'open' : ''}`} 
       onClick={toggleMenu}
+      aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
+      aria-expanded={isOpen}
     >
       <span className="line"></span>
       <span className="line"></span>
       <span className="line"></span>
-    </MenuButtonStyles>
+    </button>
   );
 };
 

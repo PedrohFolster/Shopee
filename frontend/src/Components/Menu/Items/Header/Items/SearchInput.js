@@ -1,10 +1,11 @@
 import React from 'react';
-import { SearchInput } from '../HeaderStyles'; // Certifique-se de que o estilo está importado corretamente
+import '../Header.css';
 
 const SearchInputComponent = () => {
   return (
     <div className="search-container">
-      <SearchInput
+      <input
+        className="search-input"
         type="text"
         placeholder="Buscar..."
         aria-label="Campo de busca"

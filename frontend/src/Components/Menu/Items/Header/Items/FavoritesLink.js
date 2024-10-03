@@ -1,20 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { AuthLink, Icon } from '../HeaderStyles';
+import '../Header.css';
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const FavoritesLink = ({ activeLink, handleSetActive }) => (
   <Link
-    as={Link}
     to="/favoritos"
     aria-label="Favoritos"
-    className={activeLink === "favoritos" ? "active" : ""}
+    className={`auth-link ${activeLink === "favoritos" ? "active" : ""}`}
     onClick={() => handleSetActive("favoritos")}
   >
-    <Icon>
-      <FontAwesomeIcon icon={faHeart} />
-    </Icon>
+    <FontAwesomeIcon icon={faHeart} className="icon" />
   </Link>
 );
 

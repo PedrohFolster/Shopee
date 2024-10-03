@@ -1,17 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { AuthLink } from '../HeaderStyles';
+import '../Header.css';
 
 const RegisterLink = ({ activeLink, handleSetActive }) => (
-  <AuthLink
-    as={Link}
+  <Link
     to="/registro"
     aria-label="Registro"
-    className={activeLink === "registro" ? "active" : ""}
+    className={`auth-link ${activeLink === "registro" ? "active" : ""}`}
     onClick={() => handleSetActive("registro")}
   >
     Cadastre-se
-  </AuthLink>
+  </Link>
 );
 
 export default RegisterLink;
