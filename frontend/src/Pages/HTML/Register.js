@@ -13,7 +13,7 @@ const Register = () => {
     nomeCompleto: '',
     cpf: '',
     dataNascimento: '',
-    email: '', // Este será o username
+    email: '',
     telefone: '',
     senha: '',
     confirmarSenha: '',
@@ -32,7 +32,7 @@ const Register = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === 'cpf') {
-      if (value.length <= 14) { // Limita a 14 caracteres para o formato "000.000.000-00"
+      if (value.length <= 14) {
         setFormData({ ...formData, [name]: formatarCpf(value) });
       }
     } else {
@@ -80,14 +80,13 @@ const Register = () => {
 
   const handleSubmit = async () => {
     try {
-      const cepSemHifen = formData.cep.replace('-', ''); // Remove o hífen para enviar à API
+      const cepSemHifen = formData.cep.replace('-', '');
+
       const response = await axios.post('http://localhost:8080/usuarios', {
         nome: formData.nomeCompleto,
-        email: formData.email, // Usar email como username
-        senha: formData.senha,
-        cpf: formData.cpf,
-        dataNascimento: formData.dataNascimento,
+        email: formData.email,
         telefone: formData.telefone,
+        dataNascimento: formData.dataNascimento,
         enderecoDTO: {
           cep: cepSemHifen,
           rua: formData.rua,
@@ -96,8 +95,13 @@ const Register = () => {
           estado: formData.estado,
           pais: formData.pais,
           complemento: formData.complemento
+        },
+        usuarioAutenticarDTO: {
+          username: formData.email, // Use o email como username
+          passwordHash: formData.senha // Envie a senha diretamente
         }
       });
+
       if (response.status === 200) {
         alert('Usuário registrado com sucesso!');
         navigate('/login');
@@ -128,13 +132,13 @@ const Register = () => {
   };
 
   const handleCepChange = async (e) => {
-    let cep = e.target.value.replace(/\D/g, ''); // Remove caracteres não numéricos
-    if (cep.length <= 8) { // Limita a 8 caracteres numéricos
-      const formattedCep = cep.replace(/(\d{5})(\d{3})/, '$1-$2'); // Formata o CEP com hífen
+    let cep = e.target.value.replace(/\D/g, '');
+    if (cep.length <= 8) {
+      const formattedCep = cep.replace(/(\d{5})(\d{3})/, '$1-$2');
       setFormData({ ...formData, cep: formattedCep });
     }
 
-    if (cep.length === 8) { // Verifica se o CEP tem 8 dígitos numéricos
+    if (cep.length === 8) {
       try {
         const address = await fetchAddressByCep(cep);
         setFormData((prevData) => ({
