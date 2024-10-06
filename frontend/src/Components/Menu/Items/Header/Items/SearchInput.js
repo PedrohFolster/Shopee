@@ -1,7 +1,7 @@
 import React from 'react';
 import '../Header.css';
 
-const SearchInputComponent = () => {
+const SearchInputComponent = ({ hidden }) => {
   return (
     <div className="search-container">
       <input
@@ -9,6 +9,7 @@ const SearchInputComponent = () => {
         type="text"
         placeholder="Buscar..."
         aria-label="Campo de busca"
+        hidden={hidden}
       />
     </div>
   );

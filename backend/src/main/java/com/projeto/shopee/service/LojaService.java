@@ -31,7 +31,6 @@ public class LojaService {
     }
 
     public LojaDTO createLoja(LojaDTO lojaDTO) {
-        // Verificar se o usuário já possui uma loja
         if (lojaRepository.existsByUsuarioId(lojaDTO.getUsuarioId())) {
             throw new UsuarioJaPossuiLojaException("Este usuário já possui uma loja cadastrada."); 
         }

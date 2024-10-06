@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface ProdutoRepository extends JpaRepository<Produto, Long> {
-    List<Produto> findByLojaId(Long lojaId);  // Adicionado método para buscar produtos por ID da loja
+    List<Produto> findByLojaId(Long lojaId);  
 }

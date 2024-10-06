@@ -6,4 +6,5 @@ import com.projeto.shopee.entities.CategoriaLoja;
 
 @Repository
 public interface CategoriaLojaRepository extends JpaRepository<CategoriaLoja, Long> {
+    boolean existsByNome(String nome);
 }

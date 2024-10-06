@@ -11,7 +11,6 @@ public class EnderecoDTO {
     private String pais;
     private String complemento;
 
-
     public EnderecoDTO(Long id, String cep, String rua, String numero, String cidade, String estado, String pais,
             String complemento) {
         this.id = id;
@@ -91,5 +90,4 @@ public class EnderecoDTO {
         this.complemento = complemento;
     }
 
-    
 }

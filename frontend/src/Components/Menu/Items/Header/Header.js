@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import './Header.css';
 import MenuButtonComponent from './Items/MenuButton';
 import SearchInputComponent from './Items/SearchInput';
 import LoginLink from './Items/LoginLink';
 import RegisterLink from './Items/RegisterLink';
+import MinhaContaLink from './Items/MinhaContaLink'; // Novo componente
 import CartLink from './Items/CartLink';
 import FavoritesLink from './Items/FavoritesLink';
 import NavBar from '../NavBar/NavBar';
+import { AuthContext } from '../../../../Util/Authentication';
 
-const Header = () => {
+const Header = ({ searchHidden = false }) => {
   const [activeLink, setActiveLink] = useState("");
+  const { isAuthenticated } = useContext(AuthContext);
 
   const handleSetActive = (link) => {
     setActiveLink(link);
@@ -26,18 +29,27 @@ const Header = () => {
             </a>
           </div>
           <div className="search-container">
-            <SearchInputComponent />
+            <SearchInputComponent hidden={searchHidden} />
           </div>
           <div className="header-right">
-            <LoginLink
-              activeLink={activeLink}
-              handleSetActive={handleSetActive}
-            />
-            <span>|</span>
-            <RegisterLink
-              activeLink={activeLink}
-              handleSetActive={handleSetActive}
-            />
+            {isAuthenticated ? (
+              <MinhaContaLink
+                activeLink={activeLink}
+                handleSetActive={handleSetActive}
+              />
+            ) : (
+              <>
+                <LoginLink
+                  activeLink={activeLink}
+                  handleSetActive={handleSetActive}
+                />
+                <span>|</span>
+                <RegisterLink
+                  activeLink={activeLink}
+                  handleSetActive={handleSetActive}
+                />
+              </>
+            )}
             <CartLink
               activeLink={activeLink}
               handleSetActive={handleSetActive}

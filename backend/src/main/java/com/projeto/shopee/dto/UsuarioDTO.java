@@ -9,15 +9,14 @@ public class UsuarioDTO {
     private String email;
     private String telefone;
     private Date dataNascimento;
-    private EnderecoDTO enderecoDTO;  
-    private UsuarioAutenticarDTO usuarioAutenticarDTO; 
+    private EnderecoDTO enderecoDTO;
+    private UsuarioAutenticarDTO usuarioAutenticarDTO;
 
-    // Construtores
     public UsuarioDTO() {
     }
 
     public UsuarioDTO(Long id, String nome, String email, String telefone, Date dataNascimento,
-                      EnderecoDTO enderecoDTO, UsuarioAutenticarDTO usuarioAutenticarDTO) {
+            EnderecoDTO enderecoDTO, UsuarioAutenticarDTO usuarioAutenticarDTO) {
         this.id = id;
         this.nome = nome;
         this.email = email;
@@ -27,7 +26,6 @@ public class UsuarioDTO {
         this.usuarioAutenticarDTO = usuarioAutenticarDTO;
     }
 
-    // Getters e Setters
     public Long getId() {
         return id;
     }

@@ -7,5 +7,5 @@ import com.projeto.shopee.entities.Loja;
 @Repository
 public interface LojaRepository extends JpaRepository<Loja, Long> {
 
-    boolean existsByUsuarioId(Long usuarioId);  // Adicionado método para verificar se o usuário já possui uma loja
+    boolean existsByUsuarioId(Long usuarioId);  
 }

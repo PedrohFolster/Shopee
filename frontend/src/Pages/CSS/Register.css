@@ -38,9 +38,12 @@
   color: #ff6600;
   text-decoration: none;
   display: block;
-  padding-top: 10px;
+  padding: 0;
+  justify-content: center;
+  width: fit-content; 
+  margin-left: auto; 
+  margin-right: auto; 
 }
-
 .login-link:hover {
   text-decoration: underline;
 }
@@ -95,7 +98,7 @@ button[type="submit"] {
 .input-error {
   background-color: #ffcccc;
   position: relative;
-  padding-right: 30px; /* Espaço para o ícone */
+  padding-right: 30px; 
 }
 
 .error-icon {
@@ -105,4 +108,12 @@ button[type="submit"] {
   transform: translateY(-50%);
   color: #ff0000;
   pointer-events: none;
+}
+
+button[type="button-register"] {
+  width: 100%; /* Expande o botão para ocupar toda a largura dos campos */
+  margin-top: 20px;
+  display: block;
+  margin-left: 0; /* Remove a centralização automática */
+  margin-right: 0; /* Remove a centralização automática */
 }

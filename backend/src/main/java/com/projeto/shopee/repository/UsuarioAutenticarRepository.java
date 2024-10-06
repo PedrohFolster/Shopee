@@ -6,4 +6,5 @@ import com.projeto.shopee.entities.UsuarioAutenticar;
 
 @Repository
 public interface UsuarioAutenticarRepository extends JpaRepository<UsuarioAutenticar, Long> {
+    UsuarioAutenticar findByUsername(String username);
 }

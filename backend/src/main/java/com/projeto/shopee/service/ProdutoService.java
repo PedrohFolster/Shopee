@@ -39,7 +39,7 @@ public class ProdutoService {
             return null;
         }
         produtoDTO.setId(id);
-        Produto produto = produtoMapper.toEntity(produtoDTO); // Atualizando sem Status e Loja
+        Produto produto = produtoMapper.toEntity(produtoDTO); 
         produto = produtoRepository.save(produto);
         return produtoMapper.toDTO(produto);
     }

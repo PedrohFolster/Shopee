@@ -4,11 +4,11 @@ public class LojaDTO {
 
     private Long id;
     private String nome;
-    private Long categoriaLojaId;  // Adicionado para armazenar o ID de CategoriaLoja
-    private Long usuarioId;         // Adicionado para armazenar o ID de Usuario
+    private Long categoriaLojaId;
+    private Long usuarioId;
 
-    // Construtores
-    public LojaDTO() {}
+    public LojaDTO() {
+    }
 
     public LojaDTO(Long id, String nome, Long categoriaLojaId, Long usuarioId) {
         this.id = id;
@@ -17,7 +17,6 @@ public class LojaDTO {
         this.usuarioId = usuarioId;
     }
 
-    // Getters e Setters
     public Long getId() {
         return id;
     }

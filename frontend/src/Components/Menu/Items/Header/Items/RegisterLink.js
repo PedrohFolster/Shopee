@@ -4,7 +4,7 @@ import '../Header.css';
 
 const RegisterLink = ({ activeLink, handleSetActive }) => (
   <Link
-    to="/registro"
+    to="/register"
     aria-label="Registro"
     className={`auth-link ${activeLink === "registro" ? "active" : ""}`}
     onClick={() => handleSetActive("registro")}

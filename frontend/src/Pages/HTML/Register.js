@@ -35,9 +35,37 @@ const Register = () => {
       if (value.length <= 14) {
         setFormData({ ...formData, [name]: formatarCpf(value) });
       }
+    } else if (name === 'telefone') {
+      if (value.replace(/\D/g, '').length < 12) {
+        setFormData({ ...formData, [name]: formatarTelefone(value) });
+      }
     } else {
       setFormData({ ...formData, [name]: value });
     }
+  };
+
+  const formatarTelefone = (telefone) => {
+    const telefoneNumeros = telefone.replace(/\D/g, '');
+    const tamanho = telefoneNumeros.length;
+
+    if (tamanho > 13) return telefone.slice(0, 12);
+
+    if (tamanho === 0) return '';
+
+
+    let formattedNumber = '';
+
+    if (tamanho <= 2) {
+      formattedNumber = `(${telefoneNumeros}`;
+    } else if (tamanho <= 4) {
+      formattedNumber = `(${telefoneNumeros.slice(0, 2)}) ${telefoneNumeros.slice(2)}`;
+    } else if (tamanho <= 8) {
+      formattedNumber = `(${telefoneNumeros.slice(0, 2)}) ${telefoneNumeros.slice(2, 4)}${telefoneNumeros.slice(4)}`;
+    } else {
+      formattedNumber = `(${telefoneNumeros.slice(0, 2)}) ${telefoneNumeros.slice(2, 4)}${telefoneNumeros.slice(4, 9)}${telefoneNumeros.slice(9, 13)}`;
+    }
+
+    return formattedNumber;
   };
 
   const handleNextStep = () => {
@@ -80,15 +108,16 @@ const Register = () => {
 
   const handleSubmit = async () => {
     try {
-      const cepSemHifen = formData.cep.replace('-', '');
+      const telefoneSemFormatacao = formData.telefone.replace(/\D/g, '');
+      const dataNascimentoFormatada = formData.dataNascimento.split('T')[0]; 
 
       const response = await axios.post('http://localhost:8080/usuarios', {
         nome: formData.nomeCompleto,
         email: formData.email,
-        telefone: formData.telefone,
-        dataNascimento: formData.dataNascimento,
+        telefone: telefoneSemFormatacao,
+        dataNascimento: dataNascimentoFormatada, // Envia apenas a data
         enderecoDTO: {
-          cep: cepSemHifen,
+          cep: formData.cep.replace('-', ''),
           rua: formData.rua,
           numero: formData.numero,
           cidade: formData.cidade,
@@ -97,8 +126,8 @@ const Register = () => {
           complemento: formData.complemento
         },
         usuarioAutenticarDTO: {
-          username: formData.email, // Use o email como username
-          passwordHash: formData.senha // Envie a senha diretamente
+          username: formData.email,
+          passwordHash: formData.senha
         }
       });
 
@@ -111,23 +140,6 @@ const Register = () => {
     } catch (error) {
       console.error('Erro:', error);
       alert('Erro ao registrar usuário');
-    }
-  };
-
-  const fetchAddress = async (cep) => {
-    try {
-      const response = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
-      if (!response.data.erro) {
-        setFormData((prevData) => ({
-          ...prevData,
-          rua: response.data.logradouro || '',
-          cidade: response.data.localidade || '',
-          estado: response.data.uf || '',
-          pais: 'Brasil'
-        }));
-      }
-    } catch (error) {
-      console.error('Erro ao buscar endereço:', error);
     }
   };
 
@@ -156,7 +168,7 @@ const Register = () => {
 
   return (
     <div className="register">
-      <Header />
+      <Header searchHidden={true} navbarHidden={true} />
       <main className="register-content">
         {step === 2 && (
           <button className="back-button" onClick={handlePreviousStep}>
@@ -164,7 +176,7 @@ const Register = () => {
           </button>
         )}
         <h2>CRIAR CONTA</h2>
-        <div className="separator">ou</div>
+        <div className="separator"></div>
         <form onSubmit={(e) => e.preventDefault()}>
           {step === 1 && (
             <>
@@ -240,7 +252,7 @@ const Register = () => {
                   required
                 />
               </div>
-              <Button type="button" onClick={handleNextStep}>Próxima Etapa</Button>
+              <Button type="button-register" onClick={handleNextStep}>Próxima Etapa</Button>
             </>
           )}
           {step === 2 && (
@@ -315,7 +327,7 @@ const Register = () => {
                   placeholder="Complemento"
                 />
               </div>
-              <Button type="button" onClick={handleNextStep}>Criar conta</Button>
+              <Button type="button-register" onClick={handleNextStep}>Finalizar Cadastro</Button>
             </>
           )}
         </form>
