@@ -7,6 +7,7 @@ import Button from '../../Components/Button/Button';
 import '../CSS/Register.css';
 import { formatarCpf, validarCpf } from '../../Util/CpfFormatter';
 import { fetchAddressByCep } from '../../Util/CepAPI';
+import { formatarTelefone } from '../../Util/TelefoneFormatter';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -27,6 +28,7 @@ const Register = () => {
   });
 
   const [step, setStep] = useState(1);
+  const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -36,7 +38,7 @@ const Register = () => {
         setFormData({ ...formData, [name]: formatarCpf(value) });
       }
     } else if (name === 'telefone') {
-      if (value.replace(/\D/g, '').length < 12) {
+      if (value.replace(/\D/g, '').length <= 11) {
         setFormData({ ...formData, [name]: formatarTelefone(value) });
       }
     } else {
@@ -44,58 +46,43 @@ const Register = () => {
     }
   };
 
-  const formatarTelefone = (telefone) => {
-    const telefoneNumeros = telefone.replace(/\D/g, '');
-    const tamanho = telefoneNumeros.length;
-
-    if (tamanho > 13) return telefone.slice(0, 12);
-
-    if (tamanho === 0) return '';
-
-
-    let formattedNumber = '';
-
-    if (tamanho <= 2) {
-      formattedNumber = `(${telefoneNumeros}`;
-    } else if (tamanho <= 4) {
-      formattedNumber = `(${telefoneNumeros.slice(0, 2)}) ${telefoneNumeros.slice(2)}`;
-    } else if (tamanho <= 8) {
-      formattedNumber = `(${telefoneNumeros.slice(0, 2)}) ${telefoneNumeros.slice(2, 4)}${telefoneNumeros.slice(4)}`;
-    } else {
-      formattedNumber = `(${telefoneNumeros.slice(0, 2)}) ${telefoneNumeros.slice(2, 4)}${telefoneNumeros.slice(4, 9)}${telefoneNumeros.slice(9, 13)}`;
-    }
-
-    return formattedNumber;
-  };
-
   const handleNextStep = () => {
+    setErrorMessage(''); // Limpa a mensagem de erro ao avançar
     if (step === 1) {
       const { nomeCompleto, cpf, dataNascimento, email, telefone, senha, confirmarSenha } = formData;
       if (!nomeCompleto || !cpf || !dataNascimento || !email || !telefone || !senha || !confirmarSenha) {
-        alert('Por favor, preencha todos os campos obrigatórios.');
+        setErrorMessage('Por favor, preencha todos os campos obrigatórios.');
+        return;
+      }
+      if (nomeCompleto.split(' ').length < 2) {
+        setErrorMessage('Nome completo deve conter pelo menos dois nomes.');
         return;
       }
       if (!validarCpf(cpf)) {
-        alert('CPF inválido');
+        setErrorMessage('CPF inválido');
         return;
       }
       if (!email.includes('@')) {
-        alert('E-mail inválido');
+        setErrorMessage('E-mail inválido');
         return;
       }
       if (senha !== confirmarSenha) {
-        alert('As senhas não coincidem');
+        setErrorMessage('As senhas não coincidem');
+        return;
+      }
+      if (!senha.match(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)) {
+        setErrorMessage('Senha deve conter pelo menos uma letra maiúscula, letras, números e um caractere especial.');
         return;
       }
       setStep(2);
     } else if (step === 2) {
       const { cep, rua, numero, cidade, estado, pais } = formData;
       if (!cep || !rua || !numero || !cidade || !estado || !pais) {
-        alert('Por favor, preencha todos os campos obrigatórios.');
+        setErrorMessage('Por favor, preencha todos os campos obrigatórios.');
         return;
       }
       if (cep.length !== 9) {
-        alert('CEP inválido');
+        setErrorMessage('CEP inválido');
         return;
       }
       handleSubmit();
@@ -109,13 +96,14 @@ const Register = () => {
   const handleSubmit = async () => {
     try {
       const telefoneSemFormatacao = formData.telefone.replace(/\D/g, '');
-      const dataNascimentoFormatada = formData.dataNascimento.split('T')[0]; 
+      const dataNascimentoFormatada = formData.dataNascimento.split('T')[0];
 
       const response = await axios.post('http://localhost:8080/usuarios', {
         nome: formData.nomeCompleto,
+        cpf: formData.cpf,
         email: formData.email,
         telefone: telefoneSemFormatacao,
-        dataNascimento: dataNascimentoFormatada, // Envia apenas a data
+        dataNascimento: dataNascimentoFormatada,
         enderecoDTO: {
           cep: formData.cep.replace('-', ''),
           rua: formData.rua,
@@ -134,12 +122,13 @@ const Register = () => {
       if (response.status === 200) {
         alert('Usuário registrado com sucesso!');
         navigate('/login');
-      } else {
-        alert('Erro ao registrar usuário');
       }
     } catch (error) {
-      console.error('Erro:', error);
-      alert('Erro ao registrar usuário');
+      if (error.response && error.response.data) {
+        setErrorMessage(error.response.data);
+      } else {
+        setErrorMessage('Erro ao registrar usuário');
+      }
     }
   };
 
@@ -161,7 +150,7 @@ const Register = () => {
           pais: address.pais || 'Brasil'
         }));
       } catch (error) {
-        alert('Erro ao buscar endereço: ' + error.message);
+        setErrorMessage('Erro ao buscar endereço: ' + error.message);
       }
     }
   };
@@ -177,6 +166,7 @@ const Register = () => {
         )}
         <h2>CRIAR CONTA</h2>
         <div className="separator"></div>
+        {errorMessage && <div className="error-message">{errorMessage}</div>}
         <form onSubmit={(e) => e.preventDefault()}>
           {step === 1 && (
             <>

@@ -8,6 +8,7 @@ public class UsuarioDTO {
     private String nome;
     private String email;
     private String telefone;
+    private String cpf; // Adicionado o campo CPF
     private Date dataNascimento;
     private EnderecoDTO enderecoDTO;
     private UsuarioAutenticarDTO usuarioAutenticarDTO;
@@ -15,17 +16,19 @@ public class UsuarioDTO {
     public UsuarioDTO() {
     }
 
-    public UsuarioDTO(Long id, String nome, String email, String telefone, Date dataNascimento,
+    public UsuarioDTO(Long id, String nome, String email, String telefone, String cpf, Date dataNascimento,
             EnderecoDTO enderecoDTO, UsuarioAutenticarDTO usuarioAutenticarDTO) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.telefone = telefone;
+        this.cpf = cpf;
         this.dataNascimento = dataNascimento;
         this.enderecoDTO = enderecoDTO;
         this.usuarioAutenticarDTO = usuarioAutenticarDTO;
     }
 
+    // Getters e Setters
     public Long getId() {
         return id;
     }
@@ -56,6 +59,14 @@ public class UsuarioDTO {
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     public Date getDataNascimento() {

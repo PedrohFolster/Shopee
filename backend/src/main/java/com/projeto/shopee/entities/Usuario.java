@@ -1,7 +1,14 @@
 package com.projeto.shopee.entities;
 
-import jakarta.persistence.*;
 import java.util.Date;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Usuario {
@@ -13,6 +20,7 @@ public class Usuario {
     private String nome;
     private String email;
     private String telefone;
+    private String cpf; // Adicionado o campo CPF
     private Date dataNascimento;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -22,13 +30,14 @@ public class Usuario {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "usuario_autenticar_id", referencedColumnName = "id")
     private UsuarioAutenticar usuarioAutenticar;
-    
-    public Usuario(Long id, String nome, String email, String telefone, Date dataNascimento, Endereco endereco,
+
+    public Usuario(Long id, String nome, String email, String telefone, String cpf, Date dataNascimento, Endereco endereco,
             UsuarioAutenticar usuarioAutenticar) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.telefone = telefone;
+        this.cpf = cpf;
         this.dataNascimento = dataNascimento;
         this.endereco = endereco;
         this.usuarioAutenticar = usuarioAutenticar;
@@ -37,6 +46,7 @@ public class Usuario {
     public Usuario() {
     }
 
+    // Getters e Setters
     public Long getId() {
         return id;
     }
@@ -69,6 +79,14 @@ public class Usuario {
         this.telefone = telefone;
     }
 
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
     public Date getDataNascimento() {
         return dataNascimento;
     }
@@ -92,6 +110,4 @@ public class Usuario {
     public void setUsuarioAutenticar(UsuarioAutenticar usuarioAutenticar) {
         this.usuarioAutenticar = usuarioAutenticar;
     }
-
-
 }
