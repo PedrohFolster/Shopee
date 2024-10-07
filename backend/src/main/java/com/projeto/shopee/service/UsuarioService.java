@@ -57,10 +57,10 @@ public class UsuarioService {
         if (usuarioDTO.getNome() == null || usuarioDTO.getNome().isEmpty() || usuarioDTO.getNome().split(" ").length < 2) {
             throw new IllegalArgumentException("Nome completo é obrigatório e deve conter pelo menos dois nomes");
         }
-        if (usuarioDTO.getEmail() == null || !usuarioDTO.getEmail().contains("@")) {
+        if (!ValidationUtils.isValidEmail(usuarioDTO.getEmail())) {
             throw new IllegalArgumentException("E-mail inválido");
         }
-        if (usuarioDTO.getTelefone() == null || !usuarioDTO.getTelefone().matches("\\d{10,11}")) {
+        if (!ValidationUtils.isValidTelefone(usuarioDTO.getTelefone())) {
             throw new IllegalArgumentException("Telefone inválido");
         }
         if (usuarioDTO.getCpf() == null || !ValidationUtils.isValidCpf(usuarioDTO.getCpf())) {

@@ -62,4 +62,14 @@ public class ValidationUtils {
         }
         return age >= 12;
     }
+
+    public static boolean isValidEmail(String email) {
+        // Verificar se o e-mail contém "@" e "."
+        return email != null && email.matches("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$");
+    }
+
+    public static boolean isValidTelefone(String telefone) {
+        // Verificar se o telefone contém exatamente 11 dígitos
+        return telefone != null && telefone.matches("\\d{11}");
+    }
 }
