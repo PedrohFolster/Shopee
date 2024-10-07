@@ -6,11 +6,12 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.projeto.shopee.util.ValidationUtils;
 import com.projeto.shopee.dto.UsuarioDTO;
 import com.projeto.shopee.entities.Usuario;
 import com.projeto.shopee.repository.UsuarioRepository;
 import com.projeto.shopee.util.UsuarioMapper;
+import com.projeto.shopee.util.ValidationUtils;
+
 @Service
 public class UsuarioService {
 

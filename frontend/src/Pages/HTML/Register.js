@@ -31,6 +31,8 @@ const Register = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
+  const [errorMessage, setErrorMessage] = useState('');
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === 'cpf') {
@@ -62,8 +64,9 @@ const Register = () => {
         setErrorMessage('CPF inválido');
         return;
       }
-      if (!email.includes('@')) {
-        setErrorMessage('E-mail inválido');
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        alert('E-mail inválido');
         return;
       }
       if (senha !== confirmarSenha) {
@@ -122,13 +125,12 @@ const Register = () => {
       if (response.status === 200) {
         alert('Usuário registrado com sucesso!');
         navigate('/login');
-      }
-    } catch (error) {
-      if (error.response && error.response.data) {
-        setErrorMessage(error.response.data);
       } else {
         setErrorMessage('Erro ao registrar usuário');
       }
+    } catch (error) {
+      console.error('Erro:', error);
+      setErrorMessage(error.response?.data || 'Erro ao registrar usuário');
     }
   };
 
@@ -166,7 +168,7 @@ const Register = () => {
         )}
         <h2>CRIAR CONTA</h2>
         <div className="separator"></div>
-        {errorMessage && <div className="error-message">{errorMessage}</div>}
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
         <form onSubmit={(e) => e.preventDefault()}>
           {step === 1 && (
             <>
