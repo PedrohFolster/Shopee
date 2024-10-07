@@ -28,15 +28,23 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public ResponseEntity<UsuarioDTO> createUsuario(@RequestBody UsuarioDTO usuarioDTO) {
-        UsuarioDTO novoUsuario = usuarioService.createUsuario(usuarioDTO);
-        return ResponseEntity.ok(novoUsuario);
+    public ResponseEntity<?> createUsuario(@RequestBody UsuarioDTO usuarioDTO) {
+        try {
+            UsuarioDTO novoUsuario = usuarioService.createUsuario(usuarioDTO);
+            return ResponseEntity.ok(novoUsuario);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UsuarioDTO> updateUsuario(@PathVariable Long id, @RequestBody UsuarioDTO usuarioDTO) {
-        UsuarioDTO usuarioAtualizado = usuarioService.updateUsuario(id, usuarioDTO);
-        return ResponseEntity.ok(usuarioAtualizado);
+    public ResponseEntity<?> updateUsuario(@PathVariable Long id, @RequestBody UsuarioDTO usuarioDTO) {
+        try {
+            UsuarioDTO usuarioAtualizado = usuarioService.updateUsuario(id, usuarioDTO);
+            return ResponseEntity.ok(usuarioAtualizado);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @DeleteMapping("/{id}")
