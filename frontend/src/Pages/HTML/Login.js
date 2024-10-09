@@ -26,11 +26,13 @@ const Login = () => {
       const response = await axios.post('http://localhost:8080/login', {
         username: formData.email,
         password: formData.senha
-      });
+      }, { withCredentials: true });
 
       if (response.status === 200) {
-        alert('Login realizado com sucesso!');
-        login();
+        const sessionId = response.data.sessionId;
+        console.log('Session ID:', sessionId);
+        // Armazene o ID da sessão conforme necessário
+        login(); // Atualize o contexto de autenticação
         navigate('/home');
       } else {
         alert('Usuário ou senha inválidos');
