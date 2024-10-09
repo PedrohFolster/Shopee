@@ -4,7 +4,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.Date;
+import java.util.Calendar;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -37,17 +37,20 @@ public class UsuarioControllerEndPointTest {
         novoUsuario = new UsuarioDTO();
         novoUsuario.setNome("Usuário Teste");
         novoUsuario.setEmail("teste@teste.com");
-        novoUsuario.setTelefone("11987654321");
-        novoUsuario.setCpf("12345678901");
-        novoUsuario.setDataNascimento(new Date());
+        novoUsuario.setTelefone("48988613333");
+        novoUsuario.setCpf("13164097913");
+
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.YEAR, -13);
+        novoUsuario.setDataNascimento(cal.getTime());
 
         novoEnderecoDTO = new EnderecoDTO();
-        novoEnderecoDTO.setCep("12345678");
-        novoEnderecoDTO.setRua("Rua Teste");
+        novoEnderecoDTO.setCep("88075520");
+        novoEnderecoDTO.setRua("Rua Exemplo");
         novoEnderecoDTO.setNumero("123");
-        novoEnderecoDTO.setCidade("Cidade Teste");
-        novoEnderecoDTO.setEstado("SP");
-        novoEnderecoDTO.setPais("Brasil");
+        novoEnderecoDTO.setCidade("Cidade Exemplo");
+        novoEnderecoDTO.setEstado("Estado Exemplo");
+        novoEnderecoDTO.setPais("País Exemplo");
         novoUsuario.setEnderecoDTO(novoEnderecoDTO);
 
         novoUsuarioAutenticar = new UsuarioAutenticarDTO();
@@ -66,8 +69,8 @@ public class UsuarioControllerEndPointTest {
         String usuarioNovoJson = objectMapper.writeValueAsString(novoUsuario);
 
         this.mockMvc.perform(post("/usuarios")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(usuarioNovoJson))
-            .andExpect(status().isOk());
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(usuarioNovoJson))
+                .andExpect(status().isOk());
     }
 }
