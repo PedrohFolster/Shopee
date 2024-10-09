@@ -75,7 +75,10 @@ public class UsuarioService {
         if (usuarioDTO.getEnderecoDTO() == null) {
             throw new IllegalArgumentException("Endereço é obrigatório");
         }
-        if (usuarioDTO.getEnderecoDTO().getCep() == null || usuarioDTO.getEnderecoDTO().getCep().length() != 8) {
+        if (usuarioDTO.getEnderecoDTO().getCep() == null) {
+            throw new IllegalArgumentException("CEP é obrigatório");
+        }
+        if (usuarioDTO.getEnderecoDTO().getCep().length() != 8) {
             throw new IllegalArgumentException("CEP inválido");
         }
         if (usuarioDTO.getEnderecoDTO().getRua() == null || usuarioDTO.getEnderecoDTO().getRua().isEmpty()) {

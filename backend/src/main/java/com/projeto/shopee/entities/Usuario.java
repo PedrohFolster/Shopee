@@ -20,7 +20,7 @@ public class Usuario {
     private String nome;
     private String email;
     private String telefone;
-    private String cpf; // Adicionado o campo CPF
+    private String cpf; 
     private Date dataNascimento;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -46,7 +46,6 @@ public class Usuario {
     public Usuario() {
     }
 
-    // Getters e Setters
     public Long getId() {
         return id;
     }

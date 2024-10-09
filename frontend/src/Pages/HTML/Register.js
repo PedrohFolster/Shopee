@@ -47,7 +47,7 @@ const Register = () => {
   };
 
   const handleNextStep = () => {
-    setErrorMessage(''); // Limpa a mensagem de erro ao avançar
+    setErrorMessage(''); 
     if (step === 1) {
       const { nomeCompleto, cpf, dataNascimento, email, telefone, senha, confirmarSenha } = formData;
       if (!nomeCompleto || !cpf || !dataNascimento || !email || !telefone || !senha || !confirmarSenha) {
@@ -96,6 +96,7 @@ const Register = () => {
   const handleSubmit = async () => {
     try {
       const telefoneSemFormatacao = formData.telefone.replace(/\D/g, '');
+      const cpfSemFormatacao = formData.cpf.replace(/\D/g, '');
       const dataNascimentoFormatada = formData.dataNascimento.split('T')[0];
 
       const response = await axios.post('http://localhost:8080/usuarios', {
@@ -103,6 +104,7 @@ const Register = () => {
         email: formData.email,
         telefone: telefoneSemFormatacao,
         dataNascimento: dataNascimentoFormatada,
+        cpf: cpfSemFormatacao,
         enderecoDTO: {
           cep: formData.cep.replace('-', ''),
           rua: formData.rua,
