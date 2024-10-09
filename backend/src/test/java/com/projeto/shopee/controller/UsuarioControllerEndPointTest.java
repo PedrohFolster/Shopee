@@ -4,7 +4,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.Calendar;
+import java.time.LocalDate;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,6 +18,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.projeto.shopee.dto.UsuarioAutenticarDTO;
 import com.projeto.shopee.dto.UsuarioDTO;
 import com.projeto.shopee.dto.EnderecoDTO;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -40,9 +41,8 @@ public class UsuarioControllerEndPointTest {
         novoUsuario.setTelefone("48988613333");
         novoUsuario.setCpf("13164097913");
 
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.YEAR, -13);
-        novoUsuario.setDataNascimento(cal.getTime());
+        LocalDate dataNascimento = LocalDate.now().minusYears(13);
+        novoUsuario.setDataNascimento(dataNascimento);
 
         novoEnderecoDTO = new EnderecoDTO();
         novoEnderecoDTO.setCep("88075520");
@@ -57,6 +57,8 @@ public class UsuarioControllerEndPointTest {
         novoUsuarioAutenticar.setUsername("teste@teste.com");
         novoUsuarioAutenticar.setPasswordHash("Senha123!");
         novoUsuario.setUsuarioAutenticarDTO(novoUsuarioAutenticar);
+
+        objectMapper.registerModule(new JavaTimeModule()); // Adiciona suporte para Java 8 Date/Time API
     }
 
     @Test

@@ -1,7 +1,6 @@
 package com.projeto.shopee.entities;
 
-import java.util.Date;
-
+import java.time.LocalDate;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,7 +20,7 @@ public class Usuario {
     private String email;
     private String telefone;
     private String cpf; 
-    private Date dataNascimento;
+    private LocalDate dataNascimento;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "endereco_id", referencedColumnName = "id")
@@ -31,7 +30,7 @@ public class Usuario {
     @JoinColumn(name = "usuario_autenticar_id", referencedColumnName = "id")
     private UsuarioAutenticar usuarioAutenticar;
 
-    public Usuario(Long id, String nome, String email, String telefone, String cpf, Date dataNascimento, Endereco endereco,
+    public Usuario(Long id, String nome, String email, String telefone, String cpf, LocalDate dataNascimento, Endereco endereco,
             UsuarioAutenticar usuarioAutenticar) {
         this.id = id;
         this.nome = nome;
@@ -86,11 +85,11 @@ public class Usuario {
         this.cpf = cpf;
     }
 
-    public Date getDataNascimento() {
+    public LocalDate getDataNascimento() {
         return dataNascimento;
     }
 
-    public void setDataNascimento(Date dataNascimento) {
+    public void setDataNascimento(LocalDate dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
 

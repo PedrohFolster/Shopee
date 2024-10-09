@@ -1,6 +1,6 @@
 package com.projeto.shopee.dto;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class UsuarioDTO {
 
@@ -9,14 +9,14 @@ public class UsuarioDTO {
     private String email;
     private String telefone;
     private String cpf; // Adicionado o campo CPF
-    private Date dataNascimento;
+    private LocalDate dataNascimento; // Alterado para LocalDate
     private EnderecoDTO enderecoDTO;
     private UsuarioAutenticarDTO usuarioAutenticarDTO;
 
     public UsuarioDTO() {
     }
 
-    public UsuarioDTO(Long id, String nome, String email, String telefone, String cpf, Date dataNascimento,
+    public UsuarioDTO(Long id, String nome, String email, String telefone, String cpf, LocalDate dataNascimento,
             EnderecoDTO enderecoDTO, UsuarioAutenticarDTO usuarioAutenticarDTO) {
         this.id = id;
         this.nome = nome;
@@ -69,11 +69,11 @@ public class UsuarioDTO {
         this.cpf = cpf;
     }
 
-    public Date getDataNascimento() {
+    public LocalDate getDataNascimento() {
         return dataNascimento;
     }
 
-    public void setDataNascimento(Date dataNascimento) {
+    public void setDataNascimento(LocalDate dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
 

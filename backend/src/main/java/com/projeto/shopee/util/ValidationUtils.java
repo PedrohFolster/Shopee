@@ -1,7 +1,8 @@
 package com.projeto.shopee.util;
 
-import java.util.Calendar;
-import java.util.Date;
+
+import java.time.LocalDate;
+import java.time.Period;
 
 public class ValidationUtils {
 
@@ -45,22 +46,13 @@ public class ValidationUtils {
         return password.matches("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");
     }
 
-    public static boolean isOlderThan12Years(Date birthDate) {
+    public static boolean isOlderThan12Years(LocalDate birthDate) {
         if (birthDate == null) {
             return false;
         }
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(birthDate);
-        int year = cal.get(Calendar.YEAR);
-        int month = cal.get(Calendar.MONTH);
-        int day = cal.get(Calendar.DAY_OF_MONTH);
-
-        Calendar today = Calendar.getInstance();
-        int age = today.get(Calendar.YEAR) - year;
-        if (today.get(Calendar.MONTH) < month || (today.get(Calendar.MONTH) == month && today.get(Calendar.DAY_OF_MONTH) < day)) {
-            age--;
-        }
-        return age >= 12;
+        LocalDate today = LocalDate.now();
+        Period age = Period.between(birthDate, today);
+        return age.getYears() >= 12;
     }
 
     public static boolean isValidEmail(String email) {
