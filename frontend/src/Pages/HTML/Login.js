@@ -26,13 +26,22 @@ const Login = () => {
       const response = await axios.post('http://localhost:8080/login', {
         username: formData.email,
         password: formData.senha
-      }, { withCredentials: true });
-
-      if (response.status === 200) {
+      }, { withCredentials: true }); // Adiciona withCredentials
+  
+      if (response.status === 200 && response.data.sessionId) {
         const sessionId = response.data.sessionId;
         console.log('Session ID:', sessionId);
-        // Armazene o ID da sessão conforme necessário
-        login(); // Atualize o contexto de autenticação
+  
+        // Armazena o sessionId em um cookie
+        document.cookie = `sessionId=${sessionId}; path=/;`;
+  
+        // Armazena o sessionId no localStorage
+        localStorage.setItem('sessionId', sessionId);
+  
+        // Atualiza o estado de autenticação
+        login();
+  
+        // Navega para a página inicial
         navigate('/home');
       } else {
         alert('Usuário ou senha inválidos');

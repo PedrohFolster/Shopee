@@ -5,6 +5,7 @@ public class SecurityConstants {
         "/login",
         "/register",
         "/public/**",
-        "/usuarios" // Adicione esta linha se quiser que seja público
+        "/usuarios", // Adicione esta linha se quiser que seja público
+        "/validate-session" // Adiciona o endpoint de validação de sessão
     };
 }
