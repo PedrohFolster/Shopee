@@ -18,7 +18,11 @@ const CriarLoja = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const novaLoja = { nome, categoriaLojaId: categoriaId };
+        const novaLoja = { 
+            nome, 
+            categoriaLojaId: categoriaId,
+            usuarioId: 1 // Adiciona o usuarioId fixo
+        };
 
         // Enviar dados para o backend
         axios.post('http://localhost:8080/lojas', novaLoja)

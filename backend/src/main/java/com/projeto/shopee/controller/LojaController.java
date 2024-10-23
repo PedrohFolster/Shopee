@@ -49,4 +49,15 @@ public class LojaController {
         lojaService.deleteLoja(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/verificar-loja")
+    public ResponseEntity<String> verificarLojaUsuario() {
+        Long usuarioId = 1L; // ID fixo do usuário
+        boolean possuiLoja = lojaService.usuarioPossuiLoja(usuarioId);
+        if (possuiLoja) {
+            return ResponseEntity.ok("Redirecionar para /minha-loja");
+        } else {
+            return ResponseEntity.ok("Redirecionar para /criar-loja");
+        }
+    }
 }

@@ -52,4 +52,8 @@ public class LojaService {
     public void deleteLoja(Long id) {
         lojaRepository.deleteById(id);
     }
+
+    public boolean usuarioPossuiLoja(Long usuarioId) {
+        return lojaRepository.existsByUsuarioId(usuarioId);
+    }
 }

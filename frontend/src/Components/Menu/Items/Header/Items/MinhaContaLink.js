@@ -1,13 +1,15 @@
 import React, { useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate
 import '../Header.css';
 import { faUser, faClipboardList, faSignOutAlt, faCaretDown, faCaretUp, faStore } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { AuthContext } from '../../../../../Util/Authentication';
+import axios from 'axios';
 
 const MinhaContaLink = ({ activeLink, handleSetActive, usuario }) => {
     const [isDropdownVisible, setDropdownVisible] = useState(false);
     const { logout } = useContext(AuthContext);
+    const navigate = useNavigate(); 
     let timer;
 
     const handleMouseEnter = () => {
@@ -26,11 +28,16 @@ const MinhaContaLink = ({ activeLink, handleSetActive, usuario }) => {
         handleSetActive("");
     };
 
-    const handleLojaClick = () => {
-        if (usuario && usuario.lojaId) {
-            handleSetActive("minha-loja");
-        } else {
-            handleSetActive("criar-loja");
+    const handleLojaClick = async () => {
+        try {
+            const response = await axios.get('http://localhost:8080/lojas/verificar-loja'); // Corrija a URL
+            if (response.data === "Redirecionar para /minha-loja") {
+                navigate("/MinhaLoja");
+            } else {
+                navigate("/CreateLoja");
+            }
+        } catch (error) {
+            console.error("Erro ao verificar loja:", error);
         }
     };
 
@@ -51,7 +58,7 @@ const MinhaContaLink = ({ activeLink, handleSetActive, usuario }) => {
                         <FontAwesomeIcon icon={faClipboardList} className="menu-icon" />
                         Pedidos
                     </Link>
-                    <Link to={usuario && usuario.lojaId ? "/minha-loja" : "/CreateLoja"} onClick={handleLojaClick}>
+                    <Link as="button" onClick={handleLojaClick}>
                         <FontAwesomeIcon icon={faStore} className="menu-icon" />
                         Minha Loja
                     </Link>
