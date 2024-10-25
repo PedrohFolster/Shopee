@@ -49,6 +49,11 @@ public class UsuarioService {
         return usuarioMapper.toDTO(usuario);
     }
 
+    public Long findByEmail(String email) {
+        Usuario usuario = usuarioRepository.findByEmail(email);
+        return usuario != null ? usuario.getId() : null;
+    }
+
     public void deleteUsuario(Long id) {
         usuarioRepository.deleteById(id);
     }

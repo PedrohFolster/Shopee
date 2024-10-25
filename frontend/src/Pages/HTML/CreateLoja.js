@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
+ 
 const CriarLoja = () => {
     const [nome, setNome] = useState('');
     const [categoriaId, setCategoriaId] = useState('');
     const [categorias, setCategorias] = useState([]);
-
+ 
     useEffect(() => {
         axios.get('http://localhost:8080/categorias-l')
             .then(response => {
@@ -15,17 +15,16 @@ const CriarLoja = () => {
                 console.error('Erro ao buscar categorias:', error);
             });
     }, []);
-
+ 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const novaLoja = { 
-            nome, 
-            categoriaLojaId: categoriaId,
-            usuarioId: 1 // Adiciona o usuarioId fixo
+        const novaLoja = {
+            nome,
+            categoriaLojaId: categoriaId
         };
-
+ 
         // Enviar dados para o backend
-        axios.post('http://localhost:8080/lojas', novaLoja)
+        axios.post('http://localhost:8080/lojas', novaLoja, { withCredentials: true })
             .then(response => {
                 console.log('Loja criada com sucesso:', response.data);
                 // Redirecionar ou mostrar mensagem de sucesso
@@ -34,7 +33,7 @@ const CriarLoja = () => {
                 console.error('Erro ao criar loja:', error);
             });
     };
-
+ 
     return (
         <div>
             <h2>Criar Loja</h2>
@@ -68,5 +67,5 @@ const CriarLoja = () => {
         </div>
     );
 };
-
+ 
 export default CriarLoja;

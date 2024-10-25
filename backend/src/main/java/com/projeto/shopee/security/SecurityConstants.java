@@ -14,5 +14,6 @@ public class SecurityConstants {
         "/lojas/verificar-loja",
         "/lojas/CreateLoja",
         "/lojas/MinhaLoja",
+        "/logout",
     };
 }

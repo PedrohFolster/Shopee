@@ -24,6 +24,6 @@ public class UserLoginDetailsService implements UserDetailsService {
         if (usuario == null) {
             throw new UsernameNotFoundException("Usuário não encontrado: " + username);
         }
-        return new UserAuthenticated(new LoginRequestDTO(usuario.getUsername(), usuario.getPasswordHash()));
+        return new UserAuthenticated(new LoginRequestDTO(usuario.getUsername(), usuario.getPasswordHash()), usuario.getId());
     }
 }

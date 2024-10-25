@@ -25,12 +25,17 @@ public class JwtService {
         String scope = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(" "));
+        
+        // Obter o userId do objeto de autenticação
+        Long userId = ((UserAuthenticated) authentication.getPrincipal()).getUserId();
+
         JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuer("exemplo-spring-security-senac")
                 .issuedAt(now)
                 .expiresAt(now.plusSeconds(expiry))
                 .subject(authentication.getName())
                 .claim("scope", scope)
+                .claim("userId", userId) // Adiciona o userId ao token
                 .build();
 
         return jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();

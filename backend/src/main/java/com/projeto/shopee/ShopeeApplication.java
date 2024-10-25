@@ -51,12 +51,12 @@ public class ShopeeApplication implements CommandLineRunner {
             System.out.println("Status com ID 2 já existe.");
         }
 
-        // Criação do Usuário
-        if (!usuarioRepository.existsByEmail("joao.silva@example.com")) {
+        // Criação do Usuário João Silva
+        if (!usuarioRepository.existsByEmail("1@gmail.com")) {
             Usuario usuario = new Usuario();
             usuario.setNome("João Silva");
             usuario.setCpf("07894276995");
-            usuario.setEmail("joao.silva@example.com");
+            usuario.setEmail("1@gmail.com");
             usuario.setTelefone("48984868321");
             usuario.setDataNascimento(LocalDate.of(2000, 5, 15));
 
@@ -79,6 +79,36 @@ public class ShopeeApplication implements CommandLineRunner {
             System.out.println("Usuário 'João Silva' criado.");
         } else {
             System.out.println("Usuário com email 'joao.silva@example.com' já existe.");
+        }
+
+        // Criação do Usuário Maria Oliveira
+        if (!usuarioRepository.existsByEmail("2@gmail.com")) {
+            Usuario usuario = new Usuario();
+            usuario.setNome("Maria Oliveira");
+            usuario.setCpf("12345678901");
+            usuario.setEmail("2@gmail.com");
+            usuario.setTelefone("48984868322");
+            usuario.setDataNascimento(LocalDate.of(1995, 8, 20));
+
+            Endereco endereco = new Endereco();
+            endereco.setCep("88064001");
+            endereco.setRua("Rua Nova");
+            endereco.setNumero("200");
+            endereco.setCidade("Rio de Janeiro");
+            endereco.setEstado("RJ");
+            endereco.setPais("Brasil");
+            endereco.setComplemento("Casa 2");
+            usuario.setEndereco(endereco);
+
+            UsuarioAutenticar usuarioAutenticar = new UsuarioAutenticar();
+            usuarioAutenticar.setUsername("2@gmail.com");
+            usuarioAutenticar.setPasswordHash("Caruso123!");
+            usuario.setUsuarioAutenticar(usuarioAutenticar);
+
+            usuarioRepository.save(usuario);
+            System.out.println("Usuário 'Maria Oliveira' criado.");
+        } else {
+            System.out.println("Usuário com email 'maria.oliveira@example.com' já existe.");
         }
     }
 }

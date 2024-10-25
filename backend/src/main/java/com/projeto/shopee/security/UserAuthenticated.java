@@ -12,10 +12,12 @@ public class UserAuthenticated implements UserDetails {
 
     private final String login;
     private final String password;
+    private final Long userId;
 
-    public UserAuthenticated(LoginRequestDTO loginRequestDTO) {
+    public UserAuthenticated(LoginRequestDTO loginRequestDTO, Long userId) {
         this.login = loginRequestDTO.getUsername();
         this.password = loginRequestDTO.getPassword();
+        this.userId = userId;
     }
 
     @Override
@@ -51,5 +53,9 @@ public class UserAuthenticated implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public Long getUserId() {
+        return userId;
     }
 }

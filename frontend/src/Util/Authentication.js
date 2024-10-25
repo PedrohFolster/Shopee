@@ -40,15 +40,36 @@ export const AuthProvider = ({ children }) => {
     console.log('Sessão válida');
   };
 
-  const logout = () => {
-    setIsAuthenticated(false);
+  const logout = async () => {
+    const sessionId = localStorage.getItem('sessionId');
     localStorage.removeItem('isAuthenticated');
-    localStorage.removeItem('sessionId');
-    console.log('Sessão encerrada');
+  
+    try {
+        await axios.post('http://localhost:8080/logout', {}, {
+            headers: {
+                'session-id': sessionId
+            }
+        });
+        console.log('Logout bem-sucedido');
+    } catch (error) {
+        console.error('Erro ao realizar logout:', error);
+    }
+    localStorage.removeItem('sessionId'); // Remover o sessionId do armazenamento local
+};
+
+  const addAuthHeader = (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers = {
+        ...config.headers,
+        'Authorization': `Bearer ${token}`
+      };
+    }
+    return config;
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, login, logout, addAuthHeader }}>
       {children}
     </AuthContext.Provider>
   );

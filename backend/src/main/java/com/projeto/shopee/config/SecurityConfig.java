@@ -22,6 +22,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import jakarta.servlet.http.HttpServletResponse;
 
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
@@ -46,9 +47,16 @@ SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http.cors(cors -> cors.configurationSource(corsConfigurationSource()))
         .csrf(csrf -> csrf.disable())
         .authorizeHttpRequests(auth -> auth
-            .requestMatchers(SecurityConstants.PUBLIC_URLS).permitAll() // Permite acesso às URLs públicas
-            .anyRequest().authenticated()) // Requer autenticação para todas as outras requisições
-        .oauth2ResourceServer(oauth2 -> oauth2.jwt()); // Configuração para JWT
+            .requestMatchers(SecurityConstants.PUBLIC_URLS).permitAll()
+            .anyRequest().authenticated())
+        .oauth2ResourceServer(oauth2 -> oauth2.jwt())
+        .logout(logout -> logout
+            .logoutUrl("/logout") // Define a URL de logout
+            .logoutSuccessHandler((request, response, authentication) -> {
+                response.setStatus(HttpServletResponse.SC_OK);
+            })
+            .invalidateHttpSession(true)
+            .deleteCookies("JSESSIONID")); // Opcional: remover cookies de sessão
     return http.build();
 }
 
