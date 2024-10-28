@@ -55,6 +55,7 @@ export const AuthProvider = ({ children }) => {
         console.error('Erro ao realizar logout:', error);
     }
     localStorage.removeItem('sessionId'); // Remover o sessionId do armazenamento local
+    window.location.reload(); // Recarregar a página
 };
 
   const addAuthHeader = (config) => {
