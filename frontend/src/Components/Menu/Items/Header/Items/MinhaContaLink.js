@@ -6,6 +6,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { AuthContext } from '../../../../../Util/Authentication';
 import axios from 'axios';
 
+// Configurar axios para enviar cookies de sessão
+axios.defaults.withCredentials = true;
+
 const MinhaContaLink = ({ activeLink, handleSetActive, usuario }) => {
     const [isDropdownVisible, setDropdownVisible] = useState(false);
     const { logout } = useContext(AuthContext);

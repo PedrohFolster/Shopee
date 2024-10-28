@@ -67,8 +67,11 @@ public class LojaController {
     }
  
     @GetMapping("/verificar-loja")
-    public ResponseEntity<String> verificarLojaUsuario() {
-        Long usuarioId = 1L; // ID fixo do usuário
+    public ResponseEntity<String> verificarLojaUsuario(HttpSession session) {
+        Long usuarioId = (Long) session.getAttribute("userId");
+        if (usuarioId == null) {
+            return ResponseEntity.status(401).body("Usuário não autenticado");
+        }
         boolean possuiLoja = lojaService.usuarioPossuiLoja(usuarioId);
         if (possuiLoja) {
             return ResponseEntity.ok("Redirecionar para /minha-loja");
