@@ -1,19 +1,26 @@
 package com.projeto.shopee.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import com.projeto.shopee.dto.ProdutoDTO;
-import com.projeto.shopee.entities.Produto;
-import com.projeto.shopee.repository.ProdutoRepository;
-import com.projeto.shopee.util.ProdutoMapper;
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.projeto.shopee.dto.ProdutoDTO;
+import com.projeto.shopee.entities.Loja;
+import com.projeto.shopee.entities.Produto;
+import com.projeto.shopee.repository.LojaRepository;
+import com.projeto.shopee.repository.ProdutoRepository;
+import com.projeto.shopee.util.ProdutoMapper;
 
 @Service
 public class ProdutoService {
 
     @Autowired
     private ProdutoRepository produtoRepository;
+
+    @Autowired
+    private LojaRepository lojaRepository;
 
     @Autowired
     private ProdutoMapper produtoMapper;
@@ -28,8 +35,12 @@ public class ProdutoService {
         return produto.map(produtoMapper::toDTO).orElse(null);
     }
 
-    public ProdutoDTO createProduto(ProdutoDTO produtoDTO) {
+    public ProdutoDTO createProduto(ProdutoDTO produtoDTO, Long usuarioId) {
+        Loja loja = lojaRepository.findByUsuarioId(usuarioId)
+            .orElseThrow(() -> new RuntimeException("Usuário não possui uma loja"));
+
         Produto produto = produtoMapper.toEntity(produtoDTO);
+        produto.setLoja(loja);
         produto = produtoRepository.save(produto);
         return produtoMapper.toDTO(produto);
     }

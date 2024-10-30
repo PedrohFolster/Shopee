@@ -1,15 +1,16 @@
 package com.projeto.shopee.service;
 
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.projeto.shopee.dto.LojaDTO;
 import com.projeto.shopee.entities.Loja;
 import com.projeto.shopee.exception.UsuarioJaPossuiLojaException;
 import com.projeto.shopee.repository.LojaRepository;
 import com.projeto.shopee.util.LojaMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class LojaService {
@@ -30,9 +31,14 @@ public class LojaService {
         return loja.map(lojaMapper::toDTO).orElse(null);
     }
 
+    public LojaDTO getLojaByUsuarioId(Long usuarioId) {
+        Optional<Loja> lojaOptional = lojaRepository.findByUsuarioId(usuarioId);
+        return lojaOptional.map(lojaMapper::toDTO).orElse(null);
+    }
+
     public LojaDTO createLoja(LojaDTO lojaDTO) {
         if (lojaRepository.existsByUsuarioId(lojaDTO.getUsuarioId())) {
-            throw new UsuarioJaPossuiLojaException("Este usuário já possui uma loja cadastrada."); 
+            throw new UsuarioJaPossuiLojaException("Este usuário já possui uma loja cadastrada.");
         }
         Loja loja = lojaMapper.toEntity(lojaDTO);
         loja = lojaRepository.save(loja);

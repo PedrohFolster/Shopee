@@ -15,5 +15,8 @@ public class SecurityConstants {
         "/lojas/CreateLoja",
         "/lojas/MinhaLoja",
         "/logout",
+        "/lojas/{id}",
+        "/categorias-p",
+        "/status"
     };
 }

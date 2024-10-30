@@ -6,6 +6,7 @@ import Register from './Pages/HTML/Register';
 import Login from './Pages/HTML/Login';
 import CreateLoja from './Pages/HTML/CreateLoja';
 import MinhaLoja from './Pages/HTML/MinhaLoja';
+import CriarProduto from './Pages/HTML/CriarProduto';
 function App() {
   return (
     <Router>
@@ -17,6 +18,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/CreateLoja" element={<CreateLoja />} />
           <Route path="/MinhaLoja" element={<MinhaLoja />} />
+          <Route path="/criar-produto" element={<CriarProduto />} />
         </Routes>
       </div>
     </Router>
