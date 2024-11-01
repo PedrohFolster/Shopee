@@ -1,5 +1,3 @@
-
-
 .create-loja-content h2 {
     text-align: center;
     margin-bottom: 0px;
@@ -26,7 +24,7 @@
     border-color: #ff6600;
 }
 
-/* Estilo específico para o select de categoria */
+
 .loja-categoria-select {
     width: 100%;
     max-width: 400px;
@@ -42,7 +40,7 @@
     border-color: #ff6600;
 }
 
-/* Estilo específico para o botão de criar loja */
+
 button[type="criar-loja-btn"] {
     width: 100%;
     max-width: 400px;
@@ -58,6 +56,71 @@ button[type="criar-loja-btn"] {
 
 button[type="criar-loja-btn"]:hover {
     background-color: #e65c00;
+}
+
+.create-loja {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.create-loja-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    flex: 1;
+}
+
+.create-loja-form h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #ff6600;
+}
+
+.create-loja-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 400px;
+}
+
+.form-row-nome,
+.form-row-categoria,
+.form-row-button {
+    width: 100%;
+}
+
+.loja-nome-input {
+    width: 100%;
+    height: 40px;
+    padding: 10000px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.loja-categoria-select {
+    width: 100%;
+    height: 40px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: white;
+}
+
+button[type="criar-loja-btn"] {
+    width: 100%;
+    height: 40px;
+    background-color: #ff6600;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
 }
 
 

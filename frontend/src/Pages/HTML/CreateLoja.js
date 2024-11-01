@@ -43,10 +43,10 @@ const CriarLoja = () => {
     return (
         <div className="create-loja">
             <Header searchHidden={true} />
-            <main className="create-loja-content centered-form">
+            <main className="create-loja-form">
                 <h2>CRIAR LOJA</h2>
                 <form onSubmit={handleSubmit}>
-                    <div className="form-row">
+                    <div className="form-row-nome">
                         <Input
                             type="text"
                             id="nome"
@@ -58,7 +58,7 @@ const CriarLoja = () => {
                             className="loja-nome-input"
                         />
                     </div>
-                    <div className="form-row">
+                    <div className="form-row-categoria">
                         <select
                             className="loja-categoria-select"
                             value={categoriaId}
@@ -73,7 +73,7 @@ const CriarLoja = () => {
                             ))}
                         </select>
                     </div>
-                    <div className="form-row">
+                    <div className="form-row-button">
                         <Button type="criar-loja-btn" onClick={handleSubmit}>
                             Criar Loja
                         </Button>
