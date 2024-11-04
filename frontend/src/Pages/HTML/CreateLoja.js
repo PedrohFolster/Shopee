@@ -46,7 +46,7 @@ const CriarLoja = () => {
             <main className="create-loja-form">
                 <h2>CRIAR LOJA</h2>
                 <form onSubmit={handleSubmit}>
-                    <div className="form-row-nome">
+                    <div className="form-row-createloja">
                         <Input
                             type="text"
                             id="nome"
@@ -55,12 +55,11 @@ const CriarLoja = () => {
                             onChange={(e) => setNome(e.target.value)}
                             placeholder="Nome da Loja*"
                             required
-                            className="loja-nome-input"
                         />
                     </div>
-                    <div className="form-row-categoria">
+                    <div className="form-row-createloja">
                         <select
-                            className="loja-categoria-select"
+                            className="categoria-loja-select"
                             value={categoriaId}
                             onChange={(e) => setCategoriaId(e.target.value)}
                             required
@@ -73,7 +72,7 @@ const CriarLoja = () => {
                             ))}
                         </select>
                     </div>
-                    <div className="form-row-button">
+                    <div className="form-row-button-createloja">
                         <Button type="criar-loja-btn" onClick={handleSubmit}>
                             Criar Loja
                         </Button>

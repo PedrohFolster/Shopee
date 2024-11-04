@@ -171,7 +171,7 @@ const Register = () => {
         <form onSubmit={(e) => e.preventDefault()}>
           {step === 1 && (
             <>
-              <div className="form-row full-width">
+              <div className="form-row completo">
                 <Input
                   type="text"
                   id="nomeCompleto"
@@ -182,7 +182,7 @@ const Register = () => {
                   required
                 />
               </div>
-              <div className="form-row">
+              <div className="form-row-register">
                 <Input
                   type="text"
                   id="cpf"
@@ -203,7 +203,7 @@ const Register = () => {
                   required
                 />
               </div>
-              <div className="form-row">
+              <div className="form-row-register">
                 <Input
                   type="date"
                   id="dataNascimento"
@@ -223,7 +223,7 @@ const Register = () => {
                   required
                 />
               </div>
-              <div className="form-row">
+              <div className="form-row-register">
                 <Input
                   type="password"
                   id="senha"
@@ -248,7 +248,7 @@ const Register = () => {
           )}
           {step === 2 && (
             <>
-              <div className="form-row">
+              <div className="form-row-register">
                 <Input
                   type="text"
                   id="cep"
@@ -268,7 +268,7 @@ const Register = () => {
                   required
                 />
               </div>
-              <div className="form-row">
+              <div className="form-row-register">
                 <Input
                   type="text"
                   id="rua"
@@ -288,7 +288,7 @@ const Register = () => {
                   required
                 />
               </div>
-              <div className="form-row">
+              <div className="form-row-register">
                 <Input
                   type="text"
                   id="estado"
@@ -308,7 +308,7 @@ const Register = () => {
                   required
                 />
               </div>
-              <div className="form-row full-width">
+              <div className="form-row completo">
                 <Input
                   type="text"
                   id="complemento"
