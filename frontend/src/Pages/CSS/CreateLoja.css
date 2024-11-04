@@ -31,7 +31,7 @@
 }
 
 /* Estilo para o input de nome */
-input[type="text"] {
+.create-loja input[type="text"] {
     width: 400px !important;
     height: 40px !important;
     padding: 8px;
@@ -45,9 +45,9 @@ input[type="text"] {
 }
 
 /* Estilo para o select de categoria */
-.categoria-loja-select {
-    width: 400px;
-    height: 40px;
+.create-loja .categoria-loja-select {
+    width: 400px !important;
+    height: 40px !important;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -58,9 +58,8 @@ input[type="text"] {
 }
 
 /* Estilos de foco */
-.nome-loja-input:focus,
-.nome-loja-input input:focus,
-.categoria-loja-select:focus {
+.create-loja input[type="text"]:focus,
+.create-loja .categoria-loja-select:focus {
     outline: none;
     border-color: #ff6600;
 }
