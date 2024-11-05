@@ -7,12 +7,12 @@ const Home = () => {
   const [produtos, setProdutos] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:8080/produtos')
+    axios.get('http://localhost:8080/produtos/ativos')
       .then(response => {
         setProdutos(response.data);
       })
       .catch(error => {
-        console.error('Erro ao buscar produtos:', error);
+        console.error('Erro ao buscar produtos ativos:', error);
       });
   }, []);
 
@@ -24,7 +24,6 @@ const Home = () => {
           {produtos.length > 0 ? (
             produtos.map(produto => (
               <div key={produto.id} className='produto-item'>
-                <div className='cupom'>CUPOM {produto.cupom}</div>
                 <img src={produto.imagem || 'default-image.jpg'} alt={produto.nome} />
                 <h2>{produto.nome}</h2>
                 {produto.precoAntigo && (

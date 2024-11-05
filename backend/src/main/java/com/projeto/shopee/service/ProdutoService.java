@@ -7,10 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.projeto.shopee.dto.ProdutoDTO;
+import com.projeto.shopee.entities.CategoriaProduto;
 import com.projeto.shopee.entities.Loja;
 import com.projeto.shopee.entities.Produto;
+import com.projeto.shopee.entities.Status;
+import com.projeto.shopee.repository.CategoriaProdutoRepository;
 import com.projeto.shopee.repository.LojaRepository;
 import com.projeto.shopee.repository.ProdutoRepository;
+import com.projeto.shopee.repository.StatusRepository;
 import com.projeto.shopee.util.ProdutoMapper;
 
 @Service
@@ -25,8 +29,19 @@ public class ProdutoService {
     @Autowired
     private ProdutoMapper produtoMapper;
 
+    @Autowired
+    private CategoriaProdutoRepository categoriaProdutoRepository;
+
+    @Autowired
+    private StatusRepository statusRepository;
+
     public List<ProdutoDTO> getAllProdutos() {
         List<Produto> produtos = produtoRepository.findAll();
+        return produtoMapper.toDTOs(produtos);
+    }
+
+    public List<ProdutoDTO> getProdutosAtivos() {
+        List<Produto> produtos = produtoRepository.findByStatusNomeStatus("Ativo");
         return produtoMapper.toDTOs(produtos);
     }
 
@@ -36,6 +51,9 @@ public class ProdutoService {
     }
 
     public ProdutoDTO createProduto(ProdutoDTO produtoDTO, Long usuarioId) {
+        // Log para verificar os dados recebidos
+        System.out.println("ProdutoDTO recebido: " + produtoDTO);
+
         Loja loja = lojaRepository.findByUsuarioId(usuarioId)
             .orElseThrow(() -> new RuntimeException("Usuário não possui uma loja"));
 
@@ -46,13 +64,35 @@ public class ProdutoService {
     }
 
     public ProdutoDTO updateProduto(Long id, ProdutoDTO produtoDTO) {
-        if (!produtoRepository.existsById(id)) {
-            return null;
+        // Log para verificar os dados recebidos
+        System.out.println("ProdutoDTO para atualização: " + produtoDTO);
+
+        Produto produtoExistente = produtoRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+
+        // Atualize os campos do produto existente
+        produtoExistente.setNome(produtoDTO.getNome());
+        produtoExistente.setDescricao(produtoDTO.getDescricao());
+        produtoExistente.setPreco(produtoDTO.getPreco());
+        produtoExistente.setEstoque(produtoDTO.getEstoque());
+        produtoExistente.setImagem(produtoDTO.getImagem());
+
+        // Atualize a categoria e o status usando as entidades associadas
+        CategoriaProduto categoria = categoriaProdutoRepository.findById(produtoDTO.getCategoriaProdutoId())
+            .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
+        produtoExistente.setCategoriaProduto(categoria);
+
+        Status status = statusRepository.findById(produtoDTO.getStatusId())
+            .orElseThrow(() -> new RuntimeException("Status não encontrado"));
+        produtoExistente.setStatus(status);
+
+        // Mantenha a loja existente
+        if (produtoExistente.getLoja() == null) {
+            throw new RuntimeException("Produto não está associado a uma loja");
         }
-        produtoDTO.setId(id);
-        Produto produto = produtoMapper.toEntity(produtoDTO); 
-        produto = produtoRepository.save(produto);
-        return produtoMapper.toDTO(produto);
+
+        produtoExistente = produtoRepository.save(produtoExistente);
+        return produtoMapper.toDTO(produtoExistente);
     }
 
     public void deleteProduto(Long id) {

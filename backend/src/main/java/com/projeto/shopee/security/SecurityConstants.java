@@ -19,6 +19,8 @@ public class SecurityConstants {
         "/categorias-p",
         "/status",
         "/produtos/loja/{id}",
-        "/produtos/{id}"
+        "/produtos",
+        "/produtos/1",
+        "/produtos/ativos"
     };
 }

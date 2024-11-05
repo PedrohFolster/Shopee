@@ -56,6 +56,9 @@ public class ProdutoController {
     @PutMapping("/{id}")
     public ResponseEntity<ProdutoDTO> updateProduto(@PathVariable Long id, @RequestBody ProdutoDTO produtoDTO) {
         ProdutoDTO produtoAtualizado = produtoService.updateProduto(id, produtoDTO);
+        if (produtoAtualizado == null) {
+            return ResponseEntity.notFound().build();
+        }
         return ResponseEntity.ok(produtoAtualizado);
     }
 
@@ -78,5 +81,11 @@ public class ProdutoController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+
+    @GetMapping("/ativos")
+    public ResponseEntity<List<ProdutoDTO>> getProdutosAtivos() {
+        List<ProdutoDTO> produtosAtivos = produtoService.getProdutosAtivos();
+        return ResponseEntity.ok(produtosAtivos);
     }
 }
