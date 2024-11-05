@@ -17,6 +17,8 @@ public class SecurityConstants {
         "/logout",
         "/lojas/{id}",
         "/categorias-p",
-        "/status"
+        "/status",
+        "/produtos/loja/{id}",
+        "/produtos/{id}"
     };
 }

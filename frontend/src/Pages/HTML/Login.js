@@ -54,7 +54,7 @@ const Login = () => {
 
   return (
     <div className="login">
-      <Header searchHidden={true} />
+      <Header searchHidden={true}navbarHidden={true} />
       <main className="login-content centered-form">
         <h2>LOGIN</h2>
         <form onSubmit={(e) => e.preventDefault()}>

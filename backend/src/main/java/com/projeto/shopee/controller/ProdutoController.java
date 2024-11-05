@@ -66,8 +66,17 @@ public class ProdutoController {
     }
 
     @GetMapping("/loja/{lojaId}")
-    public ResponseEntity<List<ProdutoDTO>> getProdutosByLojaId(@PathVariable Long lojaId) {
-        List<ProdutoDTO> produtos = produtoService.getProdutosByLojaId(lojaId);
-        return ResponseEntity.ok(produtos);
+    public ResponseEntity<?> getProdutosByLojaId(@PathVariable Long lojaId, HttpSession session) {
+        Long usuarioId = (Long) session.getAttribute("userId");
+        if (usuarioId == null) {
+            return ResponseEntity.status(401).body("Usuário não autenticado");
+        }
+
+        try {
+            List<ProdutoDTO> produtos = produtoService.getProdutosByLojaIdAndUsuario(lojaId, usuarioId);
+            return ResponseEntity.ok(produtos);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }

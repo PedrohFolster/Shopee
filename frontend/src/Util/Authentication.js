@@ -42,20 +42,24 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     const sessionId = localStorage.getItem('sessionId');
-    localStorage.removeItem('isAuthenticated');
-  
+    
     try {
         await axios.post('http://localhost:8080/logout', {}, {
             headers: {
                 'session-id': sessionId
             }
         });
+        
+        // Limpar dados de autenticação
+        localStorage.removeItem('sessionId');
+        localStorage.removeItem('isAuthenticated');
+        setIsAuthenticated(false);
+        
         console.log('Logout bem-sucedido');
     } catch (error) {
         console.error('Erro ao realizar logout:', error);
+        throw error; // Propaga o erro para ser tratado no componente
     }
-    localStorage.removeItem('sessionId'); // Remover o sessionId do armazenamento local
-    window.location.reload(); // Recarregar a página
 };
 
   const addAuthHeader = (config) => {

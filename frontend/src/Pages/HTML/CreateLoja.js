@@ -10,6 +10,7 @@ const CriarLoja = () => {
     const [nome, setNome] = useState('');
     const [categoriaId, setCategoriaId] = useState('');
     const [categorias, setCategorias] = useState([]);
+    const [error, setError] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -24,6 +25,16 @@ const CriarLoja = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        if (!nome) {
+            setError('O nome é obrigatório.');
+            return;
+        }
+        if (!categoriaId) {
+            setError('A categoria é obrigatória.');
+            return;
+        }
+        setError(''); // Limpa o erro se ambos os campos estiverem preenchidos
+
         const novaLoja = {
             nome,
             categoriaLojaId: categoriaId
@@ -42,7 +53,7 @@ const CriarLoja = () => {
 
     return (
         <div className="create-loja">
-            <Header searchHidden={true} />
+            <Header searchHidden={true} navbarHidden={true} />
             <main className="create-loja-form">
                 <h2>CRIAR LOJA</h2>
                 <form onSubmit={handleSubmit}>
@@ -72,6 +83,7 @@ const CriarLoja = () => {
                             ))}
                         </select>
                     </div>
+                    {error && <div className="error-message">{error}</div>}
                     <div className="form-row-button-createloja">
                         <Button type="criar-loja-btn" onClick={handleSubmit}>
                             Criar Loja

@@ -26,9 +26,14 @@ const MinhaContaLink = ({ activeLink, handleSetActive, usuario }) => {
         }, 100); 
     };
 
-    const handleLogout = () => {
-        logout();
-        handleSetActive("");
+    const handleLogout = async () => {
+        try {
+            await logout(); // Aguarda o logout ser completado
+            handleSetActive("");
+            navigate('/login'); // Redireciona após o logout
+        } catch (error) {
+            console.error("Erro ao fazer logout:", error);
+        }
     };
 
     const handleLojaClick = async () => {

@@ -10,7 +10,7 @@ import FavoritesLink from './Items/FavoritesLink';
 import NavBar from '../NavBar/NavBar';
 import { AuthContext } from '../../../../Util/Authentication';
 
-const Header = ({ searchHidden = false }) => {
+const Header = ({ searchHidden = false, navbarHidden = false }) => {
   const [activeLink, setActiveLink] = useState("");
   const { isAuthenticated } = useContext(AuthContext);
 
@@ -28,9 +28,11 @@ const Header = ({ searchHidden = false }) => {
               <img alt="Logo Kabum" src="https://static.kabum.com.br/conteudo/icons/logo.svg" width="105" height="36" />
             </a>
           </div>
-          <div className="search-container">
-            <SearchInputComponent hidden={searchHidden} />
-          </div>
+          {!searchHidden && (
+            <div className="search-container">
+              <SearchInputComponent />
+            </div>
+          )}
           <div className="header-right">
             {isAuthenticated ? (
               <MinhaContaLink
@@ -61,7 +63,7 @@ const Header = ({ searchHidden = false }) => {
           </div>
         </div>
       </header>
-      <NavBar />
+      {!navbarHidden && <NavBar />}
     </>
   );
 };

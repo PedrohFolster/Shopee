@@ -13,4 +13,6 @@ public interface LojaRepository extends JpaRepository<Loja, Long> {
     boolean existsByUsuarioId(Long usuarioId);
 
     Optional<Loja> findByUsuarioId(Long usuarioId); // Retorna Optional
+
+    Optional<Loja> findByIdAndUsuarioId(Long id, Long usuarioId);
 }

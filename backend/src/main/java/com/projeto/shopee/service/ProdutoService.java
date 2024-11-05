@@ -63,4 +63,12 @@ public class ProdutoService {
         List<Produto> produtos = produtoRepository.findByLojaId(lojaId);
         return produtoMapper.toDTOs(produtos);
     }
+
+    public List<ProdutoDTO> getProdutosByLojaIdAndUsuario(Long lojaId, Long usuarioId) {
+        Loja loja = lojaRepository.findByIdAndUsuarioId(lojaId, usuarioId)
+            .orElseThrow(() -> new RuntimeException("Loja não encontrada ou não pertence ao usuário"));
+
+        List<Produto> produtos = produtoRepository.findByLojaId(lojaId);
+        return produtoMapper.toDTOs(produtos);
+    }
 }

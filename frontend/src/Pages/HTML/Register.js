@@ -158,7 +158,7 @@ const Register = () => {
 
   return (
     <div className="register">
-      <Header searchHidden={true} navbarHidden={true} />
+      <Header searchHidden={true} navbarHidden={true}/>
       <main className="register-content">
         {step === 2 && (
           <button className="back-button" onClick={handlePreviousStep}>
