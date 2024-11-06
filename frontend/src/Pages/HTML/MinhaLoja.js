@@ -91,9 +91,33 @@ const MinhaLoja = () => {
         setShowModal(true);
     };
 
+    const validarCampos = () => {
+        if (!nome.trim() || /\s/.test(nome)) {
+            setMensagem('O nome não pode conter espaços vazios.');
+            return false;
+        }
+        if (!descricao.trim() || descricao.length > 500) {
+            setMensagem('A descrição não pode conter espaços vazios e deve ter no máximo 500 caracteres.');
+            return false;
+        }
+        if (!/^\d+$/.test(preco) || parseFloat(preco) >= 99999) {
+            setMensagem('O preço deve ser um número abaixo de 99999.');
+            return false;
+        }
+        if (!/^\d+$/.test(estoque) || parseInt(estoque, 10) >= 99999) {
+            setMensagem('O estoque deve ser um número abaixo de 99999.');
+            return false;
+        }
+        return true;
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
-    
+
+        if (!validarCampos()) {
+            return;
+        }
+
         const produto = {
             nome,
             descricao,
@@ -193,6 +217,7 @@ const MinhaLoja = () => {
                                     placeholder="Imagem" 
                                     value={imagem} 
                                     onChange={(e) => setImagem(e.target.value)} 
+                                    required 
                                 />
                             </div>
                             <div className="form-group">
