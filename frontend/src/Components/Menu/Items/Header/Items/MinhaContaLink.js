@@ -1,12 +1,12 @@
 import React, { useState, useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate
+import { Link, useNavigate } from 'react-router-dom'; 
 import '../Header.css';
 import { faUser, faClipboardList, faSignOutAlt, faCaretDown, faCaretUp, faStore } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { AuthContext } from '../../../../../Util/Authentication';
 import axios from 'axios';
 
-// Configurar axios para enviar cookies de sessão
+
 axios.defaults.withCredentials = true;
 
 const MinhaContaLink = ({ activeLink, handleSetActive, usuario }) => {
@@ -28,9 +28,9 @@ const MinhaContaLink = ({ activeLink, handleSetActive, usuario }) => {
 
     const handleLogout = async () => {
         try {
-            await logout(); // Aguarda o logout ser completado
+            await logout(); 
             handleSetActive("");
-            navigate('/login'); // Redireciona após o logout
+            navigate('/login'); 
         } catch (error) {
             console.error("Erro ao fazer logout:", error);
         }
@@ -38,7 +38,7 @@ const MinhaContaLink = ({ activeLink, handleSetActive, usuario }) => {
 
     const handleLojaClick = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/lojas/verificar-loja'); // Corrija a URL
+            const response = await axios.get('http://localhost:8080/lojas/verificar-loja'); 
             if (response.data === "Redirecionar para /minha-loja") {
                 navigate("/MinhaLoja");
             } else {

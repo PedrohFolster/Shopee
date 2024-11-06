@@ -51,7 +51,6 @@ public class ProdutoService {
     }
 
     public ProdutoDTO createProduto(ProdutoDTO produtoDTO, Long usuarioId) {
-        // Log para verificar os dados recebidos
         System.out.println("ProdutoDTO recebido: " + produtoDTO);
 
         Loja loja = lojaRepository.findByUsuarioId(usuarioId)
@@ -64,20 +63,17 @@ public class ProdutoService {
     }
 
     public ProdutoDTO updateProduto(Long id, ProdutoDTO produtoDTO) {
-        // Log para verificar os dados recebidos
         System.out.println("ProdutoDTO para atualização: " + produtoDTO);
 
         Produto produtoExistente = produtoRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
 
-        // Atualize os campos do produto existente
         produtoExistente.setNome(produtoDTO.getNome());
         produtoExistente.setDescricao(produtoDTO.getDescricao());
         produtoExistente.setPreco(produtoDTO.getPreco());
         produtoExistente.setEstoque(produtoDTO.getEstoque());
         produtoExistente.setImagem(produtoDTO.getImagem());
 
-        // Atualize a categoria e o status usando as entidades associadas
         CategoriaProduto categoria = categoriaProdutoRepository.findById(produtoDTO.getCategoriaProdutoId())
             .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
         produtoExistente.setCategoriaProduto(categoria);
@@ -86,7 +82,6 @@ public class ProdutoService {
             .orElseThrow(() -> new RuntimeException("Status não encontrado"));
         produtoExistente.setStatus(status);
 
-        // Mantenha a loja existente
         if (produtoExistente.getLoja() == null) {
             throw new RuntimeException("Produto não está associado a uma loja");
         }

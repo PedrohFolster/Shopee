@@ -7,17 +7,14 @@ import java.time.Period;
 public class ValidationUtils {
 
     public static boolean isValidCpf(String cpf) {
-        // Verificar se o CPF contém apenas dígitos
         if (!cpf.matches("\\d{11}")) {
             return false;
         }
 
-        // Verificar se todos os dígitos são iguais
         if (cpf.matches("(\\d)\\1{10}")) {
             return false;
         }
 
-        // Calcular os dígitos verificadores
         int[] pesos = {10, 9, 8, 7, 6, 5, 4, 3, 2};
         int soma = 0;
         for (int i = 0; i < 9; i++) {
@@ -38,7 +35,6 @@ public class ValidationUtils {
             segundoDigitoVerificador = 0;
         }
 
-        // Verificar se os dígitos verificadores são iguais aos informados
         return cpf.charAt(9) - '0' == primeiroDigitoVerificador && cpf.charAt(10) - '0' == segundoDigitoVerificador;
     }
 
@@ -56,12 +52,10 @@ public class ValidationUtils {
     }
 
     public static boolean isValidEmail(String email) {
-        // Verificar se o e-mail contém "@" e "."
         return email != null && email.matches("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$");
     }
 
     public static boolean isValidTelefone(String telefone) {
-        // Verificar se o telefone contém exatamente 11 dígitos
         return telefone != null && telefone.matches("\\d{11}");
     }
 

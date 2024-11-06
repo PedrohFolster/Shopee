@@ -13,7 +13,7 @@ public class LogoutController {
     @PostMapping("/logout")
     public ResponseEntity<Void> logout(HttpSession session) {
         if (session != null) {
-            session.invalidate(); // Invalida a sessão HTTP
+            session.invalidate();
             System.out.println("Sessão encerrada.");
         }
         return ResponseEntity.ok().build();

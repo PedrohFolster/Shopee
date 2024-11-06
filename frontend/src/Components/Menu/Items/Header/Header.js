@@ -4,7 +4,7 @@ import MenuButtonComponent from './Items/MenuButton';
 import SearchInputComponent from './Items/SearchInput';
 import LoginLink from './Items/LoginLink';
 import RegisterLink from './Items/RegisterLink';
-import MinhaContaLink from './Items/MinhaContaLink'; // Novo componente
+import MinhaContaLink from './Items/MinhaContaLink'; 
 import CartLink from './Items/CartLink';
 import FavoritesLink from './Items/FavoritesLink';
 import NavBar from '../NavBar/NavBar';

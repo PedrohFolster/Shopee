@@ -58,7 +58,7 @@ public class UsuarioControllerEndPointTest {
         novoUsuarioAutenticar.setPasswordHash("Senha123!");
         novoUsuario.setUsuarioAutenticarDTO(novoUsuarioAutenticar);
 
-        objectMapper.registerModule(new JavaTimeModule()); // Adiciona suporte para Java 8 Date/Time API
+        objectMapper.registerModule(new JavaTimeModule());
     }
 
     @Test

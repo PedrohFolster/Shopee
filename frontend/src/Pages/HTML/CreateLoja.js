@@ -33,7 +33,7 @@ const CriarLoja = () => {
             setError('A categoria é obrigatória.');
             return;
         }
-        setError(''); // Limpa o erro se ambos os campos estiverem preenchidos
+        setError(''); 
 
         const novaLoja = {
             nome,

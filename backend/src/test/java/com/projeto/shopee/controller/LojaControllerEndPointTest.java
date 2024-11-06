@@ -45,11 +45,9 @@ public class LojaControllerEndPointTest {
 
     @BeforeEach
     void setUp() {
-        // Limpa os repositórios antes de cada teste
         lojaRepository.deleteAll();
         usuarioRepository.deleteAll();
 
-        // Configuração do usuário
         novoUsuario = new UsuarioDTO();
         novoUsuario.setNome("Usuário Teste");
         novoUsuario.setEmail("teste@teste.com");
@@ -71,37 +69,31 @@ public class LojaControllerEndPointTest {
         novoUsuarioAutenticar.setPasswordHash("Senha123!");
         novoUsuario.setUsuarioAutenticarDTO(novoUsuarioAutenticar);
 
-        // Configuração da loja
         novaLoja = new LojaDTO();
         novaLoja.setNome("Loja Teste");
-        novaLoja.setCategoriaLojaId(1L); // Supondo que a categoria com ID 1 existe
+        novaLoja.setCategoriaLojaId(1L); 
 
-        objectMapper.registerModule(new JavaTimeModule()); // Adiciona suporte para Java 8 Date/Time API
+        objectMapper.registerModule(new JavaTimeModule()); 
 
-        // Configuração da sessão
         session = new MockHttpSession();
     }
 
     @Test
     void criarUsuarioECriarLoja() throws Exception {
-        // Criar usuário
         String usuarioNovoJson = objectMapper.writeValueAsString(novoUsuario);
         this.mockMvc.perform(post("/usuarios")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(usuarioNovoJson))
                 .andExpect(status().isOk());
 
-        // Recuperar o usuário criado
         Usuario usuarioCriado = usuarioRepository.findByEmail(novoUsuario.getEmail());
 
-        // Configurar a sessão com o ID do usuário criado
         session.setAttribute("userId", usuarioCriado.getId());
         novaLoja.setUsuarioId(usuarioCriado.getId());
 
-        // Criar loja
         String lojaNovaJson = objectMapper.writeValueAsString(novaLoja);
         this.mockMvc.perform(post("/lojas")
-                .session(session) // Adiciona a sessão ao request
+                .session(session) 
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(lojaNovaJson))
                 .andExpect(status().isOk());
@@ -109,21 +101,17 @@ public class LojaControllerEndPointTest {
 
     @Test
     void naoDeveCriarLojaSeUsuarioJaPossui() throws Exception {
-        // Criar usuário
         String usuarioNovoJson = objectMapper.writeValueAsString(novoUsuario);
         this.mockMvc.perform(post("/usuarios")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(usuarioNovoJson))
                 .andExpect(status().isOk());
 
-        // Recuperar o usuário criado
         Usuario usuarioCriado = usuarioRepository.findByEmail(novoUsuario.getEmail());
 
-        // Configurar a sessão com o ID do usuário criado
         session.setAttribute("userId", usuarioCriado.getId());
         novaLoja.setUsuarioId(usuarioCriado.getId());
 
-        // Primeiro, cria a loja para o usuário
         Loja lojaExistente = new Loja();
         lojaExistente.setNome("Loja Existente");
         lojaExistente.setUsuario(usuarioCriado);

@@ -27,7 +27,6 @@ protected void doFilterInternal(HttpServletRequest request, HttpServletResponse 
     String requestUri = request.getRequestURI();
     System.out.println("Request URI: " + requestUri);
 
-    // Ignora a verificação de sessão para URLs públicas
     if (publicUrls.contains(requestUri)) {
         System.out.println("URL pública, ignorando verificação de sessão.");
         filterChain.doFilter(request, response);
@@ -36,7 +35,6 @@ protected void doFilterInternal(HttpServletRequest request, HttpServletResponse 
 
     String sessionId = null;
 
-    // Verifica se o sessionId está nos cookies
     Cookie[] cookies = request.getCookies();
     if (cookies != null) {
         for (Cookie cookie : cookies) {
@@ -47,14 +45,12 @@ protected void doFilterInternal(HttpServletRequest request, HttpServletResponse 
         }
     }
 
-    // Verifica se o sessionId está no header
     if (sessionId == null) {
         sessionId = request.getHeader("session-id");
     }
 
     System.out.println("Session ID: " + sessionId);
 
-    // Verifica se o sessionId é válido
     if (sessionId == null || !isValidSession(sessionId)) {
         System.out.println("Sessão inválida ou não encontrada.");
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);

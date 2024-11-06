@@ -26,18 +26,15 @@ public class DataLoader implements CommandLineRunner {
     public void run(String... args) throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            // Carregar o arquivo JSON
             CategoriasData categoriasData = objectMapper.readValue(
                 new ClassPathResource("data.json").getFile(), 
                 CategoriasData.class
             );
 
-            // Salvar categorias de loja
             for (String nome : categoriasData.getCategoriasLoja()) {
                 categoriaLojaRepository.save(new CategoriaLoja(null, nome));
             }
 
-            // Salvar categorias de produto
             for (String nome : categoriasData.getCategoriasProduto()) {
                 categoriaProdutoRepository.save(new CategoriaProduto(null, nome));
             }
@@ -46,8 +43,6 @@ public class DataLoader implements CommandLineRunner {
             e.printStackTrace();
         }
     }
-
-    // Classe interna para mapear o JSON
     private static class CategoriasData {
         private List<String> categoriasLoja;
         private List<String> categoriasProduto;

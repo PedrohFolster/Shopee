@@ -8,8 +8,8 @@ public class UsuarioDTO {
     private String nome;
     private String email;
     private String telefone;
-    private String cpf; // Adicionado o campo CPF
-    private LocalDate dataNascimento; // Alterado para LocalDate
+    private String cpf; 
+    private LocalDate dataNascimento; 
     private EnderecoDTO enderecoDTO;
     private UsuarioAutenticarDTO usuarioAutenticarDTO;
 
@@ -28,7 +28,7 @@ public class UsuarioDTO {
         this.usuarioAutenticarDTO = usuarioAutenticarDTO;
     }
 
-    // Getters e Setters
+ 
     public Long getId() {
         return id;
     }

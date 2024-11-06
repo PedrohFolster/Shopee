@@ -52,12 +52,12 @@ SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
             .anyRequest().authenticated())
         .oauth2ResourceServer(oauth2 -> oauth2.jwt())
         .logout(logout -> logout
-            .logoutUrl("/logout") // Define a URL de logout
+            .logoutUrl("/logout") 
             .logoutSuccessHandler((request, response, authentication) -> {
                 response.setStatus(HttpServletResponse.SC_OK);
             })
             .invalidateHttpSession(true)
-            .deleteCookies("JSESSIONID")); // Opcional: remover cookies de sessão
+            .deleteCookies("JSESSIONID")); 
     return http.build();
 }
 
@@ -67,7 +67,7 @@ CorsConfigurationSource corsConfigurationSource() {
     configuration.addAllowedOrigin("http://localhost:3000");
     configuration.addAllowedMethod("*");
     configuration.addAllowedHeader("*");
-    configuration.setAllowCredentials(true); // Permite o envio de cookies
+    configuration.setAllowCredentials(true); 
     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
     source.registerCorsConfiguration("/**", configuration);
     return source;
@@ -97,7 +97,7 @@ CorsConfigurationSource corsConfigurationSource() {
     private RSAPublicKey getPublicKey(String key) throws Exception {
         String publicKeyPEM = key.replace("-----BEGIN PUBLIC KEY-----", "")
                 .replace("-----END PUBLIC KEY-----", "")
-                .replaceAll("\\s+", ""); // Remove todos os espaços e quebras de linha
+                .replaceAll("\\s+", ""); 
         byte[] encoded = Base64.getDecoder().decode(publicKeyPEM);
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
         X509EncodedKeySpec keySpec = new X509EncodedKeySpec(encoded);
@@ -107,7 +107,7 @@ CorsConfigurationSource corsConfigurationSource() {
     private RSAPrivateKey getPrivateKey(String key) throws Exception {
         String privateKeyPEM = key.replace("-----BEGIN PRIVATE KEY-----", "")
                 .replace("-----END PRIVATE KEY-----", "")
-                .replaceAll("\\s+", ""); // Remove todos os espaços e quebras de linha
+                .replaceAll("\\s+", ""); 
         byte[] encoded = Base64.getDecoder().decode(privateKeyPEM);
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
         PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(encoded);

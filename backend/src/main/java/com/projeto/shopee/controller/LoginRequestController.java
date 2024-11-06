@@ -39,21 +39,17 @@ public ResponseEntity<Map<String, String>> login(@RequestBody LoginRequestDTO lo
         System.out.println("ID do usuário recuperado: " + userId);
 
         if (userId != null) {
-            // Invalida a sessão atual, se existir
             HttpSession session = request.getSession(false);
             if (session != null) {
                 session.invalidate();
                 System.out.println("Sessão atual invalidada para o usuário: " + userId);
             }
 
-            // Cria uma nova sessão
             HttpSession newSession = request.getSession(true);
             newSession.setAttribute("userId", userId);
 
-            // Adiciona o sessionId à lista de sessões válidas
             SessionFilter.addValidSession(newSession.getId());
 
-            // Retorna o ID da nova sessão
             Map<String, String> response = new HashMap<>();
             response.put("message", "Login realizado com sucesso!");
             response.put("sessionId", newSession.getId());

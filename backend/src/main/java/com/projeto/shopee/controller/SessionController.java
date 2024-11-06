@@ -16,7 +16,6 @@ public class SessionController {
 public ResponseEntity<Void> validateSession(@RequestHeader("session-id") String sessionId) {
     System.out.println("Session ID recebido: " + sessionId);
 
-    // Verifica se o sessionId é válido usando o SessionFilter
     if (SessionFilter.isValidSession(sessionId)) {
         return ResponseEntity.ok().build();
     } else {

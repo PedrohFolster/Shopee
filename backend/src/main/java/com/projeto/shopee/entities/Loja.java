@@ -15,11 +15,10 @@ public class Loja {
     @JoinColumn(name = "categoria_loja_id")
     private CategoriaLoja categoriaLoja; 
 
-    @OneToOne  // Mantido OneToOne
+    @OneToOne  
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;  
 
-    // Construtores
     public Loja() {}
 
     public Loja(Long id, String nome, CategoriaLoja categoriaLoja, Usuario usuario) {
@@ -29,7 +28,6 @@ public class Loja {
         this.usuario = usuario;
     }
 
-    // Getters e Setters
     public Long getId() {
         return id;
     }

@@ -38,16 +38,16 @@ public class DataSourceConfig {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
         LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
         factoryBean.setDataSource(dataSource);
-        factoryBean.setPackagesToScan("com.projeto.shopee"); // Ajuste para o seu pacote
+        factoryBean.setPackagesToScan("com.projeto.shopee");
 
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-        vendorAdapter.setGenerateDdl(true); // Opcional: para gerar o esquema do banco
-        vendorAdapter.setShowSql(true); // Opcional: para mostrar as consultas SQL no log
-        vendorAdapter.setDatabasePlatform("org.hibernate.dialect.MySQL8Dialect"); // Define o dialeto do MySQL 8
+        vendorAdapter.setGenerateDdl(true); 
+        vendorAdapter.setShowSql(true); 
+        vendorAdapter.setDatabasePlatform("org.hibernate.dialect.MySQL8Dialect");
         factoryBean.setJpaVendorAdapter(vendorAdapter);
 
         Properties jpaProperties = new Properties();
-        jpaProperties.put("hibernate.hbm2ddl.auto", "create"); // Use 'update' para atualizar o esquema do banco sem apagá-lo
+        jpaProperties.put("hibernate.hbm2ddl.auto", "create");
         factoryBean.setJpaProperties(jpaProperties);
 
         return factoryBean;

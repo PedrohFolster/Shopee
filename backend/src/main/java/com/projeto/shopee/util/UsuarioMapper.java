@@ -22,7 +22,7 @@ public class UsuarioMapper {
         usuarioDTO.setNome(usuario.getNome());
         usuarioDTO.setEmail(usuario.getEmail());
         usuarioDTO.setTelefone(usuario.getTelefone());
-        usuarioDTO.setCpf(usuario.getCpf()); // Mapeamento do CPF
+        usuarioDTO.setCpf(usuario.getCpf());
         usuarioDTO.setDataNascimento(usuario.getDataNascimento());
 
         if (usuario.getEndereco() != null) {
@@ -55,7 +55,7 @@ public class UsuarioMapper {
         usuario.setNome(usuarioDTO.getNome());
         usuario.setEmail(usuarioDTO.getEmail());
         usuario.setTelefone(usuarioDTO.getTelefone());
-        usuario.setCpf(usuarioDTO.getCpf()); // Mapeamento do CPF
+        usuario.setCpf(usuarioDTO.getCpf()); 
         usuario.setDataNascimento(usuarioDTO.getDataNascimento());
 
         if (usuarioDTO.getEnderecoDTO() != null) {

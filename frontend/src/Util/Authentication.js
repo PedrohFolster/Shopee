@@ -50,7 +50,7 @@ export const AuthProvider = ({ children }) => {
             }
         });
         
-        // Limpar dados de autenticação
+  
         localStorage.removeItem('sessionId');
         localStorage.removeItem('isAuthenticated');
         setIsAuthenticated(false);
@@ -58,7 +58,7 @@ export const AuthProvider = ({ children }) => {
         console.log('Logout bem-sucedido');
     } catch (error) {
         console.error('Erro ao realizar logout:', error);
-        throw error; // Propaga o erro para ser tratado no componente
+        throw error; 
     }
 };
 

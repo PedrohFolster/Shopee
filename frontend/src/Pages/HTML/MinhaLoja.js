@@ -12,7 +12,6 @@ const MinhaLoja = () => {
     const [activeTab, setActiveTab] = useState('dados');
     const [showModal, setShowModal] = useState(false);
     
-    // Estados do formulário de produto
     const [nome, setNome] = useState('');
     const [descricao, setDescricao] = useState('');
     const [preco, setPreco] = useState('');
@@ -28,7 +27,6 @@ const MinhaLoja = () => {
 
 
     useEffect(() => {
-        // Buscar informações da loja do usuário autenticado
         axios.get('http://localhost:8080/lojas/minha-loja', { withCredentials: true })
             .then(lojaResponse => {
                 setLojaInfo(lojaResponse.data);
@@ -36,7 +34,6 @@ const MinhaLoja = () => {
             .catch(lojaError => {
                 if (lojaError.response && lojaError.response.status === 401) {
                     console.error('Usuário não autenticado. Redirecionando para login.');
-                    // Redirecionar para a página de login
                     
                 } else {
                     console.error('Erro ao buscar informações da loja:', lojaError);
@@ -74,7 +71,6 @@ const MinhaLoja = () => {
                 .catch(error => {
                     if (error.response && error.response.status === 401) {
                         console.error('Usuário não autenticado. Redirecionando para login.');
-                        // Redirecionar para a página de login ou mostrar uma mensagem de erro
                     } else {
                         console.error('Erro ao buscar produtos:', error);
                         setError('Erro ao carregar produtos da loja.');
@@ -85,7 +81,6 @@ const MinhaLoja = () => {
 
     const handleEditarProduto = (produto) => {
         setEditingProduto(produto);
-        // Preencher o formulário com os dados do produto
         setNome(produto.nome);
         setDescricao(produto.descricao);
         setPreco(produto.preco.toString());
@@ -123,7 +118,6 @@ const MinhaLoja = () => {
         })
         .then(response => {
             setMensagem(editingProduto ? 'Produto atualizado com sucesso!' : 'Produto criado com sucesso!');
-            // Limpar formulário
             setNome('');
             setDescricao('');
             setPreco('');
@@ -133,7 +127,6 @@ const MinhaLoja = () => {
             setStatusId('');
             setEditingProduto(null);
             
-            // Atualizar lista de produtos
             if (lojaInfo?.id) {
                 axios.get(`http://localhost:8080/produtos/loja/${lojaInfo.id}`, { withCredentials: true })
                     .then(response => {
@@ -144,7 +137,6 @@ const MinhaLoja = () => {
                     });
             }
             
-            // Fechar modal após alguns segundos
             setTimeout(() => {
                 setShowModal(false);
                 setMensagem('');
@@ -165,7 +157,6 @@ const MinhaLoja = () => {
                     <button className="modal-close" onClick={() => {
                         setShowModal(false);
                         setEditingProduto(null);
-                        // Limpar formulário
                         setNome('');
                         setDescricao('');
                         setPreco('');
@@ -260,6 +251,13 @@ const MinhaLoja = () => {
         );
     };
 
+    const formatarPreco = (preco) => {
+        return new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL'
+        }).format(preco);
+    };
+
     const renderContent = () => {
         switch(activeTab) {
             case 'dados':
@@ -290,7 +288,7 @@ const MinhaLoja = () => {
                                     <div key={produto.id} className="produto-item">
                                         <img src={produto.imagem} alt={produto.nome} />
                                         <h3>{produto.nome}</h3>
-                                        <p className="preco">R$ {produto.preco.toFixed(2)}</p>
+                                        <p className="preco">{formatarPreco(produto.preco)}</p>
                                         <p className="estoque">Estoque: {produto.estoque}</p>
                                         <div className="produto-acoes">
                                             <Button 

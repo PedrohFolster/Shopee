@@ -26,22 +26,20 @@ const Login = () => {
       const response = await axios.post('http://localhost:8080/login', {
         username: formData.email,
         password: formData.senha
-      }, { withCredentials: true }); // Adiciona withCredentials
-  
+      }, { withCredentials: true });
       if (response.status === 200 && response.data.sessionId) {
         const sessionId = response.data.sessionId;
         console.log('Session ID:', sessionId);
-  
-        // Armazena o sessionId em um cookie
+
+
         document.cookie = `sessionId=${sessionId}; path=/;`;
-  
-        // Armazena o sessionId no localStorage
+
+
         localStorage.setItem('sessionId', sessionId);
-  
-        // Atualiza o estado de autenticação
+
         login();
-  
-        // Navega para a página inicial
+
+
         navigate('/home');
       } else {
         alert('Usuário ou senha inválidos');
@@ -54,7 +52,7 @@ const Login = () => {
 
   return (
     <div className="login">
-      <Header searchHidden={true}navbarHidden={true} />
+      <Header searchHidden={true} navbarHidden={true} />
       <main className="login-content centered-form">
         <h2>LOGIN</h2>
         <form onSubmit={(e) => e.preventDefault()}>

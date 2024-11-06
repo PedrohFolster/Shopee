@@ -30,7 +30,6 @@ public class ShopeeApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        // Criação dos Status
         if (!statusRepository.existsById(1L)) {
             Status statusAtivo = new Status();
             statusAtivo.setId(1L);
@@ -50,8 +49,6 @@ public class ShopeeApplication implements CommandLineRunner {
         } else {
             System.out.println("Status com ID 2 já existe.");
         }
-
-        // Criação do Usuário João Silva
         if (!usuarioRepository.existsByEmail("1@gmail.com")) {
             Usuario usuario = new Usuario();
             usuario.setNome("João Silva");
@@ -81,7 +78,6 @@ public class ShopeeApplication implements CommandLineRunner {
             System.out.println("Usuário com email 'joao.silva@example.com' já existe.");
         }
 
-        // Criação do Usuário Maria Oliveira
         if (!usuarioRepository.existsByEmail("2@gmail.com")) {
             Usuario usuario = new Usuario();
             usuario.setNome("Maria Oliveira");
