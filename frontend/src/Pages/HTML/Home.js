@@ -16,6 +16,13 @@ const Home = () => {
       });
   }, []);
 
+  const adicionarAoCarrinho = (produto) => {
+    const carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+    carrinho.push(produto);
+    localStorage.setItem('carrinho', JSON.stringify(carrinho));
+    alert('Produto adicionado ao carrinho!');
+  };
+
   return (
     <div className='home'>
       <Header />
@@ -31,7 +38,7 @@ const Home = () => {
                 )}
                 <p className='preco-novo'>R$ {produto.preco.toFixed(2)}</p>
                 <p className='desconto'>À vista no PIX</p>
-                <button className='botao-comprar'>Comprar</button>
+                <button className='botao-comprar' onClick={() => adicionarAoCarrinho(produto)}>Adicionar ao Carrinho</button>
               </div>
             ))
           ) : (

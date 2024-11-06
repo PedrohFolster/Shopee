@@ -88,4 +88,16 @@ public class ProdutoController {
         List<ProdutoDTO> produtosAtivos = produtoService.getProdutosAtivos();
         return ResponseEntity.ok(produtosAtivos);
     }
+
+    @PostMapping("/finalizar-compra")
+    public ResponseEntity<?> finalizarCompra(@RequestBody List<ProdutoDTO> produtos) {
+        try {
+            for (ProdutoDTO produto : produtos) {
+                produtoService.reduzirEstoque(produto.getId(), 1);
+            }
+            return ResponseEntity.ok("Compra finalizada com sucesso!");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }
