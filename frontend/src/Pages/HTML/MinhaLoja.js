@@ -92,20 +92,33 @@ const MinhaLoja = () => {
     };
 
     const validarCampos = () => {
-        if (!nome.trim() || /\s/.test(nome)) {
-            setMensagem('O nome não pode conter espaços vazios.');
-            return false;
-        }
-        if (!descricao.trim() || descricao.length > 500) {
-            setMensagem('A descrição não pode conter espaços vazios e deve ter no máximo 500 caracteres.');
+        if (!nome.trim() || /\s{2,}/.test(nome)) {
+            setMensagem('O campo nome está inválido.');
             return false;
         }
         if (!/^\d+$/.test(preco) || parseFloat(preco) >= 99999) {
-            setMensagem('O preço deve ser um número abaixo de 99999.');
+            setMensagem('O preço está inválido. Deve ser um número abaixo de 99999.');
+            return false;
+        }
+        if (!imagem.trim()) {
+            setMensagem('O campo imagem está inválido.');
             return false;
         }
         if (!/^\d+$/.test(estoque) || parseInt(estoque, 10) >= 99999) {
-            setMensagem('O estoque deve ser um número abaixo de 99999.');
+            setMensagem('O campo estoque está inválido. Deve ser um número abaixo de 99999.');
+            return false;
+        }
+        if (!categoriaProdutoId.trim()) {
+            setMensagem('A categoria é obrigatória.');
+            return false;
+        }
+        if (!statusId.trim()) {
+            setMensagem('O status é obrigatório.');
+            return false;
+        }
+        
+        if (!descricao.trim() || /\s{2,}/.test(descricao) || descricao.length > 500) {
+            setMensagem('O campo descrição está inválido.');
             return false;
         }
         return true;
@@ -283,12 +296,23 @@ const MinhaLoja = () => {
         }).format(preco);
     };
 
+    const mapearStatus = (statusId) => {
+        switch (statusId) {
+            case 1:
+                return 'Ativo';
+            case 2:
+                return 'Inativo';
+            default:
+                return 'Desconhecido';
+        }
+    };
+
     const renderContent = () => {
         switch(activeTab) {
             case 'dados':
                 return (
                     <div className="informacoes-loja">
-                        <p><strong>Nome da Loja:</strong> {lojaInfo?.nome || 'Informação não disponível'}</p>
+                        <p><strong>Nome da Loja:</strong> {lojaInfo?.nome || 'Informação não disponvel'}</p>
                         <p><strong>Quantidade de Produtos:</strong> {lojaInfo?.quantidadeProdutos || 0}</p>
                         <p><strong>Produtos Vendidos:</strong> {lojaInfo?.quantidadeVendidos || 0}</p>
                         <p><strong>Valor Total:</strong> R$ {lojaInfo?.valorTotal ? lojaInfo.valorTotal.toFixed(2) : '0.00'}</p>
@@ -314,7 +338,10 @@ const MinhaLoja = () => {
                                         <img src={produto.imagem} alt={produto.nome} />
                                         <h3>{produto.nome}</h3>
                                         <p className="preco">{formatarPreco(produto.preco)}</p>
-                                        <p className="estoque">Estoque: {produto.estoque}</p>
+                                        <div className="produto-info">
+                                            <p className="estoque">Estoque: {produto.estoque}</p>
+                                            <p className="status">Status: {mapearStatus(produto.statusId)}</p>
+                                        </div>
                                         <div className="produto-acoes">
                                             <Button 
                                                 type="button-edit" 
