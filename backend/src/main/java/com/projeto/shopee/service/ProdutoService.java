@@ -107,4 +107,38 @@ public class ProdutoService {
         List<Produto> produtos = produtoRepository.findByLojaId(lojaId);
         return produtoMapper.toDTOs(produtos);
     }
+
+    public void reduzirEstoque(Long produtoId, int quantidade) {
+        Produto produto = produtoRepository.findById(produtoId)
+            .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+        
+        if (produto.getEstoque() < quantidade) {
+            throw new RuntimeException("Estoque insuficiente");
+        }
+        
+        produto.setEstoque(produto.getEstoque() - quantidade);
+        produtoRepository.save(produto);
+
+        // Verifica se o estoque está zerado após a redução
+        if (produto.getEstoque() == 0) {
+            desativarProduto(produtoId);
+        }
+    }
+
+    public int getEstoque(Long produtoId) {
+        Produto produto = produtoRepository.findById(produtoId)
+            .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+        return produto.getEstoque();
+    }
+
+    public void desativarProduto(Long produtoId) {
+        Produto produto = produtoRepository.findById(produtoId)
+            .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+        
+        Status statusInativo = statusRepository.findByNomeStatus("Inativo")
+            .orElseThrow(() -> new RuntimeException("Status 'Inativo' não encontrado"));
+        
+        produto.setStatus(statusInativo);
+        produtoRepository.save(produto);
+    }
 }
