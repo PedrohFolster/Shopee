@@ -105,6 +105,7 @@ public class ProdutoService {
     }
 
     public List<ProdutoDTO> getProdutosByLojaIdAndUsuario(Long lojaId, Long usuarioId) {
+        @SuppressWarnings("unused")
         Loja loja = lojaRepository.findByIdAndUsuarioId(lojaId, usuarioId)
             .orElseThrow(() -> new RuntimeException("Loja não encontrada ou não pertence ao usuário"));
 

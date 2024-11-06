@@ -1,6 +1,6 @@
 package com.projeto.shopee.util;
 
-
+import com.projeto.shopee.dto.EnderecoDTO;
 import java.time.LocalDate;
 import java.time.Period;
 
@@ -63,5 +63,39 @@ public class ValidationUtils {
     public static boolean isValidTelefone(String telefone) {
         // Verificar se o telefone contém exatamente 11 dígitos
         return telefone != null && telefone.matches("\\d{11}");
+    }
+
+    public static boolean isValidNomeLoja(String nome) {
+        return nome != null && nome.trim().length() >= 2;
+    }
+
+    public static boolean isValidCategoriaLoja(Long categoriaLojaId) {
+        return categoriaLojaId != null;
+    }
+
+    public static boolean isValidNomeCompleto(String nome) {
+        return nome != null && !nome.isEmpty() && nome.split(" ").length >= 2;
+    }
+
+    public static boolean isValidDataNascimento(LocalDate dataNascimento) {
+        return dataNascimento != null && isOlderThan12Years(dataNascimento);
+    }
+
+    public static boolean isValidEndereco(EnderecoDTO enderecoDTO) {
+        if (enderecoDTO == null) return false;
+        return isValidCep(enderecoDTO.getCep()) &&
+               isValidString(enderecoDTO.getRua()) &&
+               isValidString(enderecoDTO.getNumero()) &&
+               isValidString(enderecoDTO.getCidade()) &&
+               isValidString(enderecoDTO.getEstado()) &&
+               isValidString(enderecoDTO.getPais());
+    }
+
+    private static boolean isValidCep(String cep) {
+        return cep != null && cep.length() == 8;
+    }
+
+    private static boolean isValidString(String value) {
+        return value != null && !value.isEmpty();
     }
 }

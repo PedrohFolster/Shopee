@@ -42,6 +42,7 @@ public class SecurityConfig {
     @Value("${jwt.private.key}")
     private String privateKeyPEM;
 
+@SuppressWarnings("removal")
 @Bean
 SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http.cors(cors -> cors.configurationSource(corsConfigurationSource()))

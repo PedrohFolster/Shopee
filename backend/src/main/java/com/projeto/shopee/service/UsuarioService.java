@@ -59,7 +59,7 @@ public class UsuarioService {
     }
 
     private void validateUsuario(UsuarioDTO usuarioDTO) {
-        if (usuarioDTO.getNome() == null || usuarioDTO.getNome().isEmpty() || usuarioDTO.getNome().split(" ").length < 2) {
+        if (!ValidationUtils.isValidNomeCompleto(usuarioDTO.getNome())) {
             throw new IllegalArgumentException("Nome completo é obrigatório e deve conter pelo menos dois nomes");
         }
         if (!ValidationUtils.isValidEmail(usuarioDTO.getEmail())) {
@@ -71,35 +71,14 @@ public class UsuarioService {
         if (usuarioDTO.getCpf() == null || !ValidationUtils.isValidCpf(usuarioDTO.getCpf())) {
             throw new IllegalArgumentException("CPF inválido");
         }
-        if (usuarioDTO.getDataNascimento() == null || !ValidationUtils.isOlderThan12Years(usuarioDTO.getDataNascimento())) {
+        if (!ValidationUtils.isValidDataNascimento(usuarioDTO.getDataNascimento())) {
             throw new IllegalArgumentException("Data de nascimento é obrigatória e o usuário deve ter mais de 12 anos");
         }
         if (usuarioDTO.getUsuarioAutenticarDTO() == null || !ValidationUtils.isValidPassword(usuarioDTO.getUsuarioAutenticarDTO().getPasswordHash())) {
             throw new IllegalArgumentException("Senha inválida. Deve conter pelo menos uma letra maiúscula, letras, números e um caractere especial");
         }
-        if (usuarioDTO.getEnderecoDTO() == null) {
-            throw new IllegalArgumentException("Endereço é obrigatório");
-        }
-        if (usuarioDTO.getEnderecoDTO().getCep() == null) {
-            throw new IllegalArgumentException("CEP é obrigatório");
-        }
-        if (usuarioDTO.getEnderecoDTO().getCep().length() != 8) {
-            throw new IllegalArgumentException("CEP inválido");
-        }
-        if (usuarioDTO.getEnderecoDTO().getRua() == null || usuarioDTO.getEnderecoDTO().getRua().isEmpty()) {
-            throw new IllegalArgumentException("Rua é obrigatória");
-        }
-        if (usuarioDTO.getEnderecoDTO().getNumero() == null || usuarioDTO.getEnderecoDTO().getNumero().isEmpty()) {
-            throw new IllegalArgumentException("Número é obrigatório");
-        }
-        if (usuarioDTO.getEnderecoDTO().getCidade() == null || usuarioDTO.getEnderecoDTO().getCidade().isEmpty()) {
-            throw new IllegalArgumentException("Cidade é obrigatória");
-        }
-        if (usuarioDTO.getEnderecoDTO().getEstado() == null || usuarioDTO.getEnderecoDTO().getEstado().isEmpty()) {
-            throw new IllegalArgumentException("Estado é obrigatório");
-        }
-        if (usuarioDTO.getEnderecoDTO().getPais() == null || usuarioDTO.getEnderecoDTO().getPais().isEmpty()) {
-            throw new IllegalArgumentException("País é obrigatório");
+        if (!ValidationUtils.isValidEndereco(usuarioDTO.getEnderecoDTO())) {
+            throw new IllegalArgumentException("Endereço é obrigatório e deve ser válido");
         }
     }
 }
