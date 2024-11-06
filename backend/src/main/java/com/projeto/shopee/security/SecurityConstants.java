@@ -20,7 +20,7 @@ public class SecurityConstants {
         "/status",
         "/produtos/loja/{id}",
         "/produtos",
-        "/produtos/1",
+        "/produtos/{id}",
         "/produtos/ativos",
         "/produtos/finalizar-compra"
     };
