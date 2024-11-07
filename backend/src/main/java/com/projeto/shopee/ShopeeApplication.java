@@ -178,36 +178,287 @@ public class ShopeeApplication implements CommandLineRunner {
 
         if (!lojaRepository.existsById(1L)) {
             Loja loja = new Loja();
-            loja.setNome("Loja Exemplo");
+            loja.setNome("Kabum");
             loja.setUsuario(usuarioRepository.findByEmail("2@gmail.com"));
             loja.setCategoriaLoja(categoriaLojaRepository.findById(1L).orElse(null));
             loja = lojaRepository.save(loja);
-            System.out.println("Loja 'Loja Exemplo' criada com ID 1.");
+            System.out.println("Loja 'Kabum' criada com ID 1.");
         } else {
             System.out.println("Loja com ID 1 já existe.");
         }
 
-        for (int i = 1; i <= 10; i++) {
-            if (!produtoRepository.existsById((long) i)) {
+
+            if (!produtoRepository.existsById((long) 1L)) {
                 Produto produto = new Produto();
-                produto.setNome("Produto " + i);
-                produto.setDescricao("Descrição do Produto " + i);
-                produto.setPreco(100.0 + i * 10);
+                produto.setNome(
+                        "Notebook Gamer Acer Nitro V15 ANV15-51-7837 Intel Core I7, 8GB RAM, DDR5, Nvidia RTX 3050, 512GB SSD, 15.6\", Linux, Preto - NH.QQDAL.008");
+                produto.setDescricao("Descrição do Produto 1" );
+                produto.setPreco(1000);
                 produto.setImagem(
                         "https://images6.kabum.com.br/produtos/fotos/649716/notebook-acer-gamer-nitro-v15-anv15-51-7837-intel-core-i7-8gb-ram-ddr5-15-6-nvidia-rtx-3050-512gb-ssd-linux-preto-nh-qqdal-008_1730306499_m.jpg");
                 produto.setEstoque(10);
                 produto.setLoja(lojaRepository.findById(1L).orElse(null));
-                produto.setCategoriaProduto(categoriaProdutoRepository.findById(1L).orElse(null)); // Supondo que a
-                                                                                                   // categoria com ID 1
-                                                                                                   // existe
-                produto.setStatus(statusRepository.findById(1L).orElse(null)); // Supondo que o status 'Ativo' com ID 1
-                                                                               // existe
+                produto.setCategoriaProduto(categoriaProdutoRepository.findById(1L).orElse(null));
+                produto.setStatus(statusRepository.findById(1L).orElse(null));
                 produtoRepository.save(produto);
-                System.out.println("Produto 'Produto " + i + "' criado.");
+                System.out.println("Produto 1 criado.");
             } else {
-                System.out.println("Produto com ID " + i + " já existe.");
+                System.out.println("Produto com ID 1 já existe.");
+            }
+            if (!produtoRepository.existsById((long) 2L)) {
+                Produto produto = new Produto();
+                produto.setNome(
+                        "Processador Intel Core i7-12700K, 3.6GHz (5.0GHz Max Turbo), 12 Núcleos, 20 Threads, LGA 1700, Vídeo Integrado - BX8071512700K");
+                produto.setDescricao("Descrição do Produto 2");
+                produto.setPreco(2000);
+                produto.setImagem(
+                        "https://images8.kabum.com.br/produtos/fotos/241048/processador-intel-core-i7-12700k-cache-25mb-3-6ghz-5-0ghz-max-turbo-lga-1700-bx8071512700k_1634830258_m.jpg");
+                produto.setEstoque(10);
+                produto.setLoja(lojaRepository.findById(1L).orElse(null));
+                produto.setCategoriaProduto(categoriaProdutoRepository.findById(1L).orElse(null));
+                produto.setStatus(statusRepository.findById(1L).orElse(null));
+                produtoRepository.save(produto);
+                System.out.println("Produto 2 criado");
+            } else {
+                System.out.println("Produto com ID 2 já existe.");
+            }
+            if (!produtoRepository.existsById((long) 3L)) {
+                Produto produto = new Produto();
+                produto.setNome(
+                        "Notebook VAIO FE15, AMD Ryzen 5, 8GB, 512GB SSD, Placa de vídeo AMD, Tela 15,6\" FHD Antirreflexo, 60Hz, Linux, Cinza - VJFE59F11XB1911H");
+                produto.setDescricao("Descrição do Produto 3");
+                produto.setPreco(3000);
+                produto.setImagem(
+                        "https://images7.kabum.com.br/produtos/fotos/641847/notebook-vaio-fe15-amd-ryzen-5-8gb-512gb-ssd-placa-de-video-amd-tela-15-6-fhd-antirreflexo-60hz-linux-cinza-vjfe59f11xb1911h_1729882859_g.jpg");
+                produto.setEstoque(10);
+                produto.setLoja(lojaRepository.findById(1L).orElse(null));
+                produto.setCategoriaProduto(categoriaProdutoRepository.findById(1L).orElse(null));
+                produto.setStatus(statusRepository.findById(1L).orElse(null));
+                produtoRepository.save(produto);
+                System.out.println("Produto 3 criado");
+            } else {
+                System.out.println("Produto com ID 3 já existe.");
+            }
+            if (!produtoRepository.existsById((long) 4L)) {
+                Produto produto = new Produto();
+                produto.setNome(
+                        "SSD Kingston NV2, 500 GB, M.2 2280, PCIe 4.0 x4, NVMe, Leitura: 3500 MB/s, Gravação: 2100 MB/s, Azul - SNV2S/500G");
+                produto.setDescricao("Descrição do Produto 4");
+                produto.setPreco(3000);
+                produto.setImagem(
+                        "https://images4.kabum.com.br/produtos/fotos/380744/ssd-kingston-nv2-500-gb-m-2-2280-pcie-nvme-leitura-2-100-mb-s-e-gravacao-1-700-mb-s-snv2s-500g_1666032961_m.jpg");
+                produto.setEstoque(10);
+                produto.setLoja(lojaRepository.findById(1L).orElse(null));
+                produto.setCategoriaProduto(categoriaProdutoRepository.findById(1L).orElse(null));
+                produto.setStatus(statusRepository.findById(1L).orElse(null));
+                produtoRepository.save(produto);
+                System.out.println("Produto 4 criado");
+            } else {
+                System.out.println("Produto com ID 4 já existe.");
+            }
+            if (!produtoRepository.existsById((long) 5L)) {
+                Produto produto = new Produto();
+                produto.setNome(
+                        "Notebook Gamer Acer Nitro V15 ANV15-51-7837 Intel Core I7, 8GB RAM, DDR5, Nvidia RTX 3050, 512GB SSD, 15.6\", Linux, Preto - NH.QQDAL.008");
+                produto.setDescricao("Descrição do Produto 1" );
+                produto.setPreco(1000);
+                produto.setImagem(
+                        "https://images6.kabum.com.br/produtos/fotos/649716/notebook-acer-gamer-nitro-v15-anv15-51-7837-intel-core-i7-8gb-ram-ddr5-15-6-nvidia-rtx-3050-512gb-ssd-linux-preto-nh-qqdal-008_1730306499_m.jpg");
+                produto.setEstoque(10);
+                produto.setLoja(lojaRepository.findById(1L).orElse(null));
+                produto.setCategoriaProduto(categoriaProdutoRepository.findById(1L).orElse(null));
+                produto.setStatus(statusRepository.findById(1L).orElse(null));
+                produtoRepository.save(produto);
+                System.out.println("Produto 1 criado.");
+            } else {
+                System.out.println("Produto com ID 1 já existe.");
+            }
+            if (!produtoRepository.existsById((long) 6L)) {
+                Produto produto = new Produto();
+                produto.setNome(
+                        "Processador Intel Core i7-12700K, 3.6GHz (5.0GHz Max Turbo), 12 Núcleos, 20 Threads, LGA 1700, Vídeo Integrado - BX8071512700K");
+                produto.setDescricao("Descrição do Produto 2");
+                produto.setPreco(2000);
+                produto.setImagem(
+                        "https://images8.kabum.com.br/produtos/fotos/241048/processador-intel-core-i7-12700k-cache-25mb-3-6ghz-5-0ghz-max-turbo-lga-1700-bx8071512700k_1634830258_m.jpg");
+                produto.setEstoque(10);
+                produto.setLoja(lojaRepository.findById(1L).orElse(null));
+                produto.setCategoriaProduto(categoriaProdutoRepository.findById(1L).orElse(null));
+                produto.setStatus(statusRepository.findById(1L).orElse(null));
+                produtoRepository.save(produto);
+                System.out.println("Produto 2 criado");
+            } else {
+                System.out.println("Produto com ID 2 já existe.");
+            }
+            if (!produtoRepository.existsById((long) 7L)) {
+                Produto produto = new Produto();
+                produto.setNome(
+                        "Notebook VAIO FE15, AMD Ryzen 5, 8GB, 512GB SSD, Placa de vídeo AMD, Tela 15,6\" FHD Antirreflexo, 60Hz, Linux, Cinza - VJFE59F11XB1911H");
+                produto.setDescricao("Descrição do Produto 3");
+                produto.setPreco(3000);
+                produto.setImagem(
+                        "https://images7.kabum.com.br/produtos/fotos/641847/notebook-vaio-fe15-amd-ryzen-5-8gb-512gb-ssd-placa-de-video-amd-tela-15-6-fhd-antirreflexo-60hz-linux-cinza-vjfe59f11xb1911h_1729882859_g.jpg");
+                produto.setEstoque(10);
+                produto.setLoja(lojaRepository.findById(1L).orElse(null));
+                produto.setCategoriaProduto(categoriaProdutoRepository.findById(1L).orElse(null));
+                produto.setStatus(statusRepository.findById(1L).orElse(null));
+                produtoRepository.save(produto);
+                System.out.println("Produto 3 criado");
+            } else {
+                System.out.println("Produto com ID 3 já existe.");
+            }
+            if (!produtoRepository.existsById((long) 8L)) {
+                Produto produto = new Produto();
+                produto.setNome(
+                        "SSD Kingston NV2, 500 GB, M.2 2280, PCIe 4.0 x4, NVMe, Leitura: 3500 MB/s, Gravação: 2100 MB/s, Azul - SNV2S/500G");
+                produto.setDescricao("Descrição do Produto 4");
+                produto.setPreco(3000);
+                produto.setImagem(
+                        "https://images4.kabum.com.br/produtos/fotos/380744/ssd-kingston-nv2-500-gb-m-2-2280-pcie-nvme-leitura-2-100-mb-s-e-gravacao-1-700-mb-s-snv2s-500g_1666032961_m.jpg");
+                produto.setEstoque(10);
+                produto.setLoja(lojaRepository.findById(1L).orElse(null));
+                produto.setCategoriaProduto(categoriaProdutoRepository.findById(1L).orElse(null));
+                produto.setStatus(statusRepository.findById(1L).orElse(null));
+                produtoRepository.save(produto);
+                System.out.println("Produto 4 criado");
+            } else {
+                System.out.println("Produto com ID 4 já existe.");
+            }
+            if (!produtoRepository.existsById((long) 9L)) {
+                Produto produto = new Produto();
+                produto.setNome(
+                        "Notebook Gamer Acer Nitro V15 ANV15-51-7837 Intel Core I7, 8GB RAM, DDR5, Nvidia RTX 3050, 512GB SSD, 15.6\", Linux, Preto - NH.QQDAL.008");
+                produto.setDescricao("Descrição do Produto 1" );
+                produto.setPreco(1000);
+                produto.setImagem(
+                        "https://images6.kabum.com.br/produtos/fotos/649716/notebook-acer-gamer-nitro-v15-anv15-51-7837-intel-core-i7-8gb-ram-ddr5-15-6-nvidia-rtx-3050-512gb-ssd-linux-preto-nh-qqdal-008_1730306499_m.jpg");
+                produto.setEstoque(10);
+                produto.setLoja(lojaRepository.findById(1L).orElse(null));
+                produto.setCategoriaProduto(categoriaProdutoRepository.findById(1L).orElse(null));
+                produto.setStatus(statusRepository.findById(1L).orElse(null));
+                produtoRepository.save(produto);
+                System.out.println("Produto 1 criado.");
+            } else {
+                System.out.println("Produto com ID 1 já existe.");
+            }
+            if (!produtoRepository.existsById((long) 10L)) {
+                Produto produto = new Produto();
+                produto.setNome(
+                        "Processador Intel Core i7-12700K, 3.6GHz (5.0GHz Max Turbo), 12 Núcleos, 20 Threads, LGA 1700, Vídeo Integrado - BX8071512700K");
+                produto.setDescricao("Descrição do Produto 2");
+                produto.setPreco(2000);
+                produto.setImagem(
+                        "https://images8.kabum.com.br/produtos/fotos/241048/processador-intel-core-i7-12700k-cache-25mb-3-6ghz-5-0ghz-max-turbo-lga-1700-bx8071512700k_1634830258_m.jpg");
+                produto.setEstoque(10);
+                produto.setLoja(lojaRepository.findById(1L).orElse(null));
+                produto.setCategoriaProduto(categoriaProdutoRepository.findById(1L).orElse(null));
+                produto.setStatus(statusRepository.findById(1L).orElse(null));
+                produtoRepository.save(produto);
+                System.out.println("Produto 2 criado");
+            } else {
+                System.out.println("Produto com ID 2 já existe.");
+            }
+            if (!produtoRepository.existsById((long) 11L)) {
+                Produto produto = new Produto();
+                produto.setNome(
+                        "Notebook VAIO FE15, AMD Ryzen 5, 8GB, 512GB SSD, Placa de vídeo AMD, Tela 15,6\" FHD Antirreflexo, 60Hz, Linux, Cinza - VJFE59F11XB1911H");
+                produto.setDescricao("Descrição do Produto 3");
+                produto.setPreco(3000);
+                produto.setImagem(
+                        "https://images7.kabum.com.br/produtos/fotos/641847/notebook-vaio-fe15-amd-ryzen-5-8gb-512gb-ssd-placa-de-video-amd-tela-15-6-fhd-antirreflexo-60hz-linux-cinza-vjfe59f11xb1911h_1729882859_g.jpg");
+                produto.setEstoque(10);
+                produto.setLoja(lojaRepository.findById(1L).orElse(null));
+                produto.setCategoriaProduto(categoriaProdutoRepository.findById(1L).orElse(null));
+                produto.setStatus(statusRepository.findById(1L).orElse(null));
+                produtoRepository.save(produto);
+                System.out.println("Produto 3 criado");
+            } else {
+                System.out.println("Produto com ID 3 já existe.");
+            }
+            if (!produtoRepository.existsById((long) 12L)) {
+                Produto produto = new Produto();
+                produto.setNome(
+                        "SSD Kingston NV2, 500 GB, M.2 2280, PCIe 4.0 x4, NVMe, Leitura: 3500 MB/s, Gravação: 2100 MB/s, Azul - SNV2S/500G");
+                produto.setDescricao("Descrição do Produto 4");
+                produto.setPreco(3000);
+                produto.setImagem(
+                        "https://images4.kabum.com.br/produtos/fotos/380744/ssd-kingston-nv2-500-gb-m-2-2280-pcie-nvme-leitura-2-100-mb-s-e-gravacao-1-700-mb-s-snv2s-500g_1666032961_m.jpg");
+                produto.setEstoque(10);
+                produto.setLoja(lojaRepository.findById(1L).orElse(null));
+                produto.setCategoriaProduto(categoriaProdutoRepository.findById(1L).orElse(null));
+                produto.setStatus(statusRepository.findById(1L).orElse(null));
+                produtoRepository.save(produto);
+                System.out.println("Produto 4 criado");
+            } else {
+                System.out.println("Produto com ID 4 já existe.");
+            }
+            if (!produtoRepository.existsById((long) 13L)) {
+                Produto produto = new Produto();
+                produto.setNome(
+                        "Notebook Gamer Acer Nitro V15 ANV15-51-7837 Intel Core I7, 8GB RAM, DDR5, Nvidia RTX 3050, 512GB SSD, 15.6\", Linux, Preto - NH.QQDAL.008");
+                produto.setDescricao("Descrição do Produto 1" );
+                produto.setPreco(1000);
+                produto.setImagem(
+                        "https://images6.kabum.com.br/produtos/fotos/649716/notebook-acer-gamer-nitro-v15-anv15-51-7837-intel-core-i7-8gb-ram-ddr5-15-6-nvidia-rtx-3050-512gb-ssd-linux-preto-nh-qqdal-008_1730306499_m.jpg");
+                produto.setEstoque(10);
+                produto.setLoja(lojaRepository.findById(1L).orElse(null));
+                produto.setCategoriaProduto(categoriaProdutoRepository.findById(1L).orElse(null));
+                produto.setStatus(statusRepository.findById(1L).orElse(null));
+                produtoRepository.save(produto);
+                System.out.println("Produto 1 criado.");
+            } else {
+                System.out.println("Produto com ID 1 já existe.");
+            }
+            if (!produtoRepository.existsById((long) 14L)) {
+                Produto produto = new Produto();
+                produto.setNome(
+                        "Processador Intel Core i7-12700K, 3.6GHz (5.0GHz Max Turbo), 12 Núcleos, 20 Threads, LGA 1700, Vídeo Integrado - BX8071512700K");
+                produto.setDescricao("Descrição do Produto 2");
+                produto.setPreco(2000);
+                produto.setImagem(
+                        "https://images8.kabum.com.br/produtos/fotos/241048/processador-intel-core-i7-12700k-cache-25mb-3-6ghz-5-0ghz-max-turbo-lga-1700-bx8071512700k_1634830258_m.jpg");
+                produto.setEstoque(10);
+                produto.setLoja(lojaRepository.findById(1L).orElse(null));
+                produto.setCategoriaProduto(categoriaProdutoRepository.findById(1L).orElse(null));
+                produto.setStatus(statusRepository.findById(1L).orElse(null));
+                produtoRepository.save(produto);
+                System.out.println("Produto 2 criado");
+            } else {
+                System.out.println("Produto com ID 2 já existe.");
+            }
+            if (!produtoRepository.existsById((long) 15L)) {
+                Produto produto = new Produto();
+                produto.setNome(
+                        "Notebook VAIO FE15, AMD Ryzen 5, 8GB, 512GB SSD, Placa de vídeo AMD, Tela 15,6\" FHD Antirreflexo, 60Hz, Linux, Cinza - VJFE59F11XB1911H");
+                produto.setDescricao("Descrição do Produto 3");
+                produto.setPreco(3000);
+                produto.setImagem(
+                        "https://images7.kabum.com.br/produtos/fotos/641847/notebook-vaio-fe15-amd-ryzen-5-8gb-512gb-ssd-placa-de-video-amd-tela-15-6-fhd-antirreflexo-60hz-linux-cinza-vjfe59f11xb1911h_1729882859_g.jpg");
+                produto.setEstoque(10);
+                produto.setLoja(lojaRepository.findById(1L).orElse(null));
+                produto.setCategoriaProduto(categoriaProdutoRepository.findById(1L).orElse(null));
+                produto.setStatus(statusRepository.findById(1L).orElse(null));
+                produtoRepository.save(produto);
+                System.out.println("Produto 3 criado");
+            } else {
+                System.out.println("Produto com ID 3 já existe.");
+            }
+            if (!produtoRepository.existsById((long) 16L)) {
+                Produto produto = new Produto();
+                produto.setNome(
+                        "SSD Kingston NV2, 500 GB, M.2 2280, PCIe 4.0 x4, NVMe, Leitura: 3500 MB/s, Gravação: 2100 MB/s, Azul - SNV2S/500G");
+                produto.setDescricao("Descrição do Produto 4");
+                produto.setPreco(3000);
+                produto.setImagem(
+                        "https://images4.kabum.com.br/produtos/fotos/380744/ssd-kingston-nv2-500-gb-m-2-2280-pcie-nvme-leitura-2-100-mb-s-e-gravacao-1-700-mb-s-snv2s-500g_1666032961_m.jpg");
+                produto.setEstoque(10);
+                produto.setLoja(lojaRepository.findById(1L).orElse(null));
+                produto.setCategoriaProduto(categoriaProdutoRepository.findById(1L).orElse(null));
+                produto.setStatus(statusRepository.findById(1L).orElse(null));
+                produtoRepository.save(produto);
+                System.out.println("Produto 4 criado");
+            } else {
+                System.out.println("Produto com ID 4 já existe.");
             }
         }
-
-    }
 }

@@ -25,7 +25,7 @@ const MinhaLoja = () => {
     const [statusList, setStatusList] = useState([]);
     const [produtos, setProdutos] = useState([]);
     const [editingProduto, setEditingProduto] = useState(null);
-
+    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         axios.get('http://localhost:8080/lojas/minha-loja', { withCredentials: true })
@@ -302,6 +302,10 @@ const MinhaLoja = () => {
         }
     };
 
+    const filteredProdutos = produtos.filter(produto =>
+        produto.nome.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     const renderContent = () => {
         switch(activeTab) {
             case 'dados':
@@ -323,12 +327,19 @@ const MinhaLoja = () => {
                             >
                                 Cadastrar Novo Produto
                             </Button>
+                            <input 
+                                type="text" 
+                                placeholder="Pesquisar produtos..." 
+                                value={searchTerm} 
+                                onChange={(e) => setSearchTerm(e.target.value)} 
+                                className="search-bar"
+                            />
                         </div>
                         <div className="minha-loja-produtos-list">
-                            {produtos.length === 0 ? (
-                                <p>Nenhum produto cadastrado</p>
+                            {filteredProdutos.length === 0 ? (
+                                <p>Nenhum produto encontrado</p>
                             ) : (
-                                produtos.map(produto => (
+                                filteredProdutos.map(produto => (
                                     <Produto 
                                         key={produto.id} 
                                         produto={produto} 
