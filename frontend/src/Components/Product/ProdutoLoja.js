@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './Produto.css'; // Arquivo CSS específico para o componente Produto
+import './ProdutoLoja.css';
 
-const Produto = ({ produto, onEdit, pageStyle }) => {
+const ProdutoLoja = ({ produto, onEdit, pageStyle }) => {
     const formatarPreco = (preco) => {
         return new Intl.NumberFormat('pt-BR', {
             style: 'currency',
@@ -32,10 +32,10 @@ const Produto = ({ produto, onEdit, pageStyle }) => {
     );
 };
 
-Produto.propTypes = {
+ProdutoLoja.propTypes = {
     produto: PropTypes.object.isRequired,
     onEdit: PropTypes.func.isRequired,
     pageStyle: PropTypes.string
 };
 
-export default Produto;
+export default ProdutoLoja;

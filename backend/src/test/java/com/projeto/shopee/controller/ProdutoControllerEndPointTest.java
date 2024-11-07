@@ -15,35 +15,36 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.mock.web.MockHttpSession;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.projeto.shopee.dto.LojaDTO;
+import com.projeto.shopee.dto.ProdutoDTO;
 import com.projeto.shopee.dto.UsuarioDTO;
 import com.projeto.shopee.dto.EnderecoDTO;
+import com.projeto.shopee.dto.LojaDTO;
 import com.projeto.shopee.dto.UsuarioAutenticarDTO;
-import com.projeto.shopee.entities.Loja;
 import com.projeto.shopee.entities.Usuario;
-import com.projeto.shopee.repository.LojaRepository;
-import com.projeto.shopee.repository.UsuarioRepository;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.projeto.shopee.repository.ProdutoRepository;
+import com.projeto.shopee.repository.UsuarioRepository;
+import com.projeto.shopee.repository.LojaRepository;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class LojaControllerEndPointTest {
+public class ProdutoControllerEndPointTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @Autowired
-    private LojaRepository lojaRepository;
+    private ProdutoRepository produtoRepository;
 
     @Autowired
     private UsuarioRepository usuarioRepository;
 
     @Autowired
-    private ProdutoRepository produtoRepository;
+    private LojaRepository lojaRepository;
 
-    private LojaDTO novaLoja;
+    private ProdutoDTO novoProduto;
     private UsuarioDTO novoUsuario;
+    private LojaDTO novaLoja;
     private ObjectMapper objectMapper = new ObjectMapper();
     private MockHttpSession session;
 
@@ -76,15 +77,14 @@ public class LojaControllerEndPointTest {
 
         novaLoja = new LojaDTO();
         novaLoja.setNome("Loja Teste");
-        novaLoja.setCategoriaLojaId(1L); 
-
-        objectMapper.registerModule(new JavaTimeModule()); 
+        novaLoja.setCategoriaLojaId(1L);
+        objectMapper.registerModule(new JavaTimeModule());
 
         session = new MockHttpSession();
     }
 
     @Test
-    void criarUsuarioECriarLoja() throws Exception {
+    void criarUsuarioLojaProduto() throws Exception {
         String usuarioNovoJson = objectMapper.writeValueAsString(novoUsuario);
         this.mockMvc.perform(post("/usuarios")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -94,40 +94,31 @@ public class LojaControllerEndPointTest {
         Usuario usuarioCriado = usuarioRepository.findByEmail(novoUsuario.getEmail());
 
         session.setAttribute("userId", usuarioCriado.getId());
+
         novaLoja.setUsuarioId(usuarioCriado.getId());
 
         String lojaNovaJson = objectMapper.writeValueAsString(novaLoja);
         this.mockMvc.perform(post("/lojas")
-                .session(session) 
+                .session(session)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(lojaNovaJson))
                 .andExpect(status().isOk());
-    }
 
-    @Test
-    void naoDeveCriarLojaSeUsuarioJaPossui() throws Exception {
-        String usuarioNovoJson = objectMapper.writeValueAsString(novoUsuario);
-        this.mockMvc.perform(post("/usuarios")
+        novoProduto = new ProdutoDTO();
+        novoProduto.setNome("Produto Teste");
+        novoProduto.setDescricao("Descrição do Produto Teste");
+        novoProduto.setCategoriaProdutoId(1L);
+        novoProduto.setPreco(100.0);
+        novoProduto.setEstoque(10);
+        novoProduto.setLojaId(1L);
+        novoProduto.setStatusId(1L);
+        novoProduto.setImagem("imagem.jpg");
+
+        String produtoNovoJson = objectMapper.writeValueAsString(novoProduto);
+        this.mockMvc.perform(post("/produtos")
+                .session(session)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(usuarioNovoJson))
+                .content(produtoNovoJson))
                 .andExpect(status().isOk());
-
-        Usuario usuarioCriado = usuarioRepository.findByEmail(novoUsuario.getEmail());
-
-        session.setAttribute("userId", usuarioCriado.getId());
-        novaLoja.setUsuarioId(usuarioCriado.getId());
-
-        Loja lojaExistente = new Loja();
-        lojaExistente.setNome("Loja Existente");
-        lojaExistente.setUsuario(usuarioCriado);
-        lojaRepository.save(lojaExistente);
-
- 
-        String lojaNovaJson = objectMapper.writeValueAsString(novaLoja);
-        this.mockMvc.perform(post("/lojas")
-                .session(session) 
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(lojaNovaJson))
-                .andExpect(status().isBadRequest());
     }
-} 
+}

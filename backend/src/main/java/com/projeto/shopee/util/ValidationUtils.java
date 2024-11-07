@@ -6,6 +6,7 @@ import java.time.Period;
 
 public class ValidationUtils {
 
+    // validações de usuário
     public static boolean isValidCpf(String cpf) {
         if (!cpf.matches("\\d{11}")) {
             return false;
@@ -59,37 +60,67 @@ public class ValidationUtils {
         return telefone != null && telefone.matches("\\d{11}");
     }
 
-    public static boolean isValidNomeLoja(String nome) {
-        return nome != null && nome.trim().length() >= 2;
-    }
-
-    public static boolean isValidCategoriaLoja(Long categoriaLojaId) {
-        return categoriaLojaId != null;
-    }
-
+    
     public static boolean isValidNomeCompleto(String nome) {
         return nome != null && !nome.isEmpty() && nome.split(" ").length >= 2;
     }
-
+    
     public static boolean isValidDataNascimento(LocalDate dataNascimento) {
         return dataNascimento != null && isOlderThan12Years(dataNascimento);
     }
-
+    
     public static boolean isValidEndereco(EnderecoDTO enderecoDTO) {
         if (enderecoDTO == null) return false;
         return isValidCep(enderecoDTO.getCep()) &&
-               isValidString(enderecoDTO.getRua()) &&
-               isValidString(enderecoDTO.getNumero()) &&
-               isValidString(enderecoDTO.getCidade()) &&
-               isValidString(enderecoDTO.getEstado()) &&
-               isValidString(enderecoDTO.getPais());
+        isValidString(enderecoDTO.getRua()) &&
+        isValidString(enderecoDTO.getNumero()) &&
+        isValidString(enderecoDTO.getCidade()) &&
+        isValidString(enderecoDTO.getEstado()) &&
+        isValidString(enderecoDTO.getPais());
     }
-
-    private static boolean isValidCep(String cep) {
+    
+    public static boolean isValidCep(String cep) {
         return cep != null && cep.length() == 8;
     }
-
-    private static boolean isValidString(String value) {
+    
+    public static boolean isValidString(String value) {
         return value != null && !value.isEmpty();
+    }
+
+    // validações de loja
+    public static boolean isValidNomeLoja(String nome) {
+        return nome != null && nome.trim().length() >= 2;
+    }
+    
+    public static boolean isValidCategoriaLoja(Long categoriaLojaId) {
+        return categoriaLojaId != null;
+    }
+    // validações de produto
+    public static boolean isValidNomeProduto(String nome) {
+        return nome != null && !nome.trim().isEmpty() && nome.length() <= 100;
+    }
+
+    public static boolean isValidPreco(double preco) {
+        return preco >= 0 && preco < 99999;
+    }
+
+    public static boolean isValidImagem(String imagem) {
+        return imagem != null && !imagem.trim().isEmpty();
+    }
+
+    public static boolean isValidEstoque(int estoque) {
+        return estoque >= 0 && estoque <= 99999;
+    }
+
+    public static boolean isValidCategoriaProduto(Long categoriaProdutoId) {
+        return categoriaProdutoId != null;
+    }
+
+    public static boolean isValidStatus(Long statusId) {
+        return statusId != null && (statusId == 1 || statusId == 2);
+    }
+
+    public static boolean isValidDescricao(String descricao) {
+        return descricao != null && !descricao.trim().isEmpty() && descricao.length() >= 5 && descricao.length() <= 500;
     }
 }

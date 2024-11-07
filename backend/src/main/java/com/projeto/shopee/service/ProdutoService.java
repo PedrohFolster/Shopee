@@ -16,6 +16,7 @@ import com.projeto.shopee.repository.LojaRepository;
 import com.projeto.shopee.repository.ProdutoRepository;
 import com.projeto.shopee.repository.StatusRepository;
 import com.projeto.shopee.util.ProdutoMapper;
+import com.projeto.shopee.util.ValidationUtils;
 
 @Service
 public class ProdutoService {
@@ -52,6 +53,28 @@ public class ProdutoService {
 
     public ProdutoDTO createProduto(ProdutoDTO produtoDTO, Long usuarioId) {
         System.out.println("ProdutoDTO recebido: " + produtoDTO);
+
+        if (!ValidationUtils.isValidNomeProduto(produtoDTO.getNome())) {
+            throw new RuntimeException("Nome do produto inválido");
+        }
+        if (!ValidationUtils.isValidPreco(produtoDTO.getPreco())) {
+            throw new RuntimeException("Preço do produto inválido");
+        }
+        if (!ValidationUtils.isValidImagem(produtoDTO.getImagem())) {
+            throw new RuntimeException("Imagem do produto inválida");
+        }
+        if (!ValidationUtils.isValidEstoque(produtoDTO.getEstoque())) {
+            throw new RuntimeException("Estoque do produto inválido");
+        }
+        if (!categoriaProdutoRepository.existsById(produtoDTO.getCategoriaProdutoId())) {
+            throw new RuntimeException("Categoria do produto inválida");
+        }
+        if (!ValidationUtils.isValidStatus(produtoDTO.getStatusId())) {
+            throw new RuntimeException("Status do produto inválido");
+        }
+        if (!ValidationUtils.isValidDescricao(produtoDTO.getDescricao())) {
+            throw new RuntimeException("Descrição do produto inválida");
+        }
 
         Loja loja = lojaRepository.findByUsuarioId(usuarioId)
             .orElseThrow(() -> new RuntimeException("Usuário não possui uma loja"));

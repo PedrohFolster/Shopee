@@ -12,6 +12,7 @@ import com.projeto.shopee.entities.Loja;
 import com.projeto.shopee.exception.UsuarioJaPossuiLojaException;
 import com.projeto.shopee.exception.InvalidLojaDataException;
 import com.projeto.shopee.repository.LojaRepository;
+import com.projeto.shopee.repository.CategoriaLojaRepository;
 import com.projeto.shopee.util.LojaMapper;
 import com.projeto.shopee.util.ValidationUtils;
 
@@ -20,6 +21,9 @@ public class LojaService {
 
     @Autowired
     private LojaRepository lojaRepository;
+
+    @Autowired
+    private CategoriaLojaRepository categoriaLojaRepository;
 
     @Autowired
     private LojaMapper lojaMapper;
@@ -45,6 +49,11 @@ public class LojaService {
         if (lojaRepository.existsByUsuarioId(lojaDTO.getUsuarioId())) {
             throw new UsuarioJaPossuiLojaException("Usuário já possui uma loja.");
         }
+
+        if (!categoriaLojaRepository.existsById(lojaDTO.getCategoriaLojaId())) {
+            throw new InvalidLojaDataException("Categoria da loja inválida.");
+        }
+
         Loja loja = lojaMapper.toEntity(lojaDTO);
         Loja novaLoja = lojaRepository.save(loja);
         return lojaMapper.toDTO(novaLoja);

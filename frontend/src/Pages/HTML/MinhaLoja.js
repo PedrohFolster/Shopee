@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import Header from '../../Components/Menu/Items/Header/Header';
 import Button from '../../Components/Button/Button';
-import Produto from '../../Components/Product/Produto';
+import ProdutoLoja from '../../Components/Product/ProdutoLoja';
 import '../CSS/MinhaLoja.css';
 import '../CSS/CriarProduto.css';
 
@@ -291,17 +290,6 @@ const MinhaLoja = () => {
     };
 
 
-    const mapearStatus = (statusId) => {
-        switch (statusId) {
-            case 1:
-                return 'Ativo';
-            case 2:
-                return 'Inativo';
-            default:
-                return 'Desconhecido';
-        }
-    };
-
     const filteredProdutos = produtos.filter(produto =>
         produto.nome.toLowerCase().includes(searchTerm.toLowerCase())
     );
@@ -340,7 +328,7 @@ const MinhaLoja = () => {
                                 <p>Nenhum produto encontrado</p>
                             ) : (
                                 filteredProdutos.map(produto => (
-                                    <Produto 
+                                    <ProdutoLoja 
                                         key={produto.id} 
                                         produto={produto} 
                                         onEdit={handleEditarProduto} 
