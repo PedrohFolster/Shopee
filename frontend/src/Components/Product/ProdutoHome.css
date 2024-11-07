@@ -47,6 +47,8 @@
     border-radius: 4px;
     cursor: pointer;
     width: 100%;
+    max-width: 250px;
+    max-height: 31px;
 }
 
 .produto-item.home-style button:hover {
