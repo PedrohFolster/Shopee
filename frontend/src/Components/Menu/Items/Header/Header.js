@@ -10,7 +10,7 @@ import FavoritesLink from './Items/FavoritesLink';
 import NavBar from '../NavBar/NavBar';
 import { AuthContext } from '../../../../Util/Authentication';
 
-const Header = ({ searchHidden = false, navbarHidden = false }) => {
+const Header = ({ searchHidden = false, navbarHidden = true }) => {
   const [activeLink, setActiveLink] = useState("");
   const { isAuthenticated } = useContext(AuthContext);
 
