@@ -231,7 +231,7 @@ button[type="button-register"] {
     color: #721c24;
 }
 
-/* Estilos responsivos para o modal */
+
 @media (max-width: 768px) {
     .modal-content {
         width: 95%;
@@ -242,8 +242,19 @@ button[type="button-register"] {
         width: 100%;
     }
 }
+@media (max-width: 1024px) {
+    .produto-item {
+        width: calc(50% - 10px);
+    }
+}
 
-.produtos-list {
+@media (max-width: 768px) {
+    .produto-item {
+        width: 100%;
+    }
+}
+
+.minha-loja-produtos-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 20px;
@@ -258,87 +269,10 @@ button[type="button-register"] {
     justify-items: center;
 }
 
-.produto-item {
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 15px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 390px;
-}
-
-.produto-item img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 4px;
-    margin-bottom: 10px;
-}
-
-.produto-item h3 {
-    margin: 0 0 10px 0;
-    color: #333;
-    font-size: 16px;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    width: 100%;
-}
-
-.produto-item .preco {
-    color: #ff6600;
-    font-weight: bold;
-    font-size: 18px;
-    margin: 5px 0;
-}
-
-.produto-item .estoque {
-    color: #666;
-    font-size: 14px;
-    margin: 5px 0;
-}
-
 .produto-acoes {
     display: flex;
     gap: 10px;
     margin-top: auto;
-}
-
-button[type="button-edit"] {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 4px;
-    cursor: pointer;
-    flex: 1;
-}
-
-button[type="button-delete"] {
-    background-color: #f44336;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 4px;
-    cursor: pointer;
-    flex: 1;
-}
-
-@media (max-width: 1024px) {
-    .produto-item {
-        width: calc(50% - 10px);
-    }
-}
-
-@media (max-width: 768px) {
-    .produto-item {
-        width: 100%;
-    }
 }
 
 .produto-info {
@@ -347,7 +281,3 @@ button[type="button-delete"] {
     margin: 5px 0;
 }
 
-.produto-item .status {
-    color: #666;
-    font-size: 14px;
-}   

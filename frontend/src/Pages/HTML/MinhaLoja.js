@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../Components/Menu/Items/Header/Header';
 import Button from '../../Components/Button/Button';
+import Produto from '../../Components/Product/Produto';
 import '../CSS/MinhaLoja.css';
 import '../CSS/CriarProduto.css';
 
@@ -289,12 +290,6 @@ const MinhaLoja = () => {
         );
     };
 
-    const formatarPreco = (preco) => {
-        return new Intl.NumberFormat('pt-BR', {
-            style: 'currency',
-            currency: 'BRL'
-        }).format(preco);
-    };
 
     const mapearStatus = (statusId) => {
         switch (statusId) {
@@ -329,28 +324,17 @@ const MinhaLoja = () => {
                                 Cadastrar Novo Produto
                             </Button>
                         </div>
-                        <div className="produtos-list">
+                        <div className="minha-loja-produtos-list">
                             {produtos.length === 0 ? (
                                 <p>Nenhum produto cadastrado</p>
                             ) : (
                                 produtos.map(produto => (
-                                    <div key={produto.id} className="produto-item">
-                                        <img src={produto.imagem} alt={produto.nome} />
-                                        <h3>{produto.nome}</h3>
-                                        <p className="preco">{formatarPreco(produto.preco)}</p>
-                                        <div className="produto-info">
-                                            <p className="estoque">Estoque: {produto.estoque}</p>
-                                            <p className="status">Status: {mapearStatus(produto.statusId)}</p>
-                                        </div>
-                                        <div className="produto-acoes">
-                                            <Button 
-                                                type="button-edit" 
-                                                onClick={() => handleEditarProduto(produto)}
-                                            >
-                                                Editar
-                                            </Button>
-                                        </div>
-                                    </div>
+                                    <Produto 
+                                        key={produto.id} 
+                                        produto={produto} 
+                                        onEdit={handleEditarProduto} 
+                                        pageStyle="minha-loja-style"
+                                    />
                                 ))
                             )}
                         </div>

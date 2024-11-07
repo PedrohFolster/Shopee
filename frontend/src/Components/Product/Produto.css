@@ -1,0 +1,76 @@
+.produto-item.minha-loja-style {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    min-height: 420px;
+    width: 250px;
+}
+
+.produto-item.minha-loja-style img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.produto-item.minha-loja-style h3 {
+    margin: 0 0 10px 0;
+    color: #333;
+    font-size: 16px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    height: 42px;
+}
+
+.produto-item.minha-loja-style .preco {
+    color: #ff6600;
+    font-weight: bold;
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+.produto-info.minha-loja-style {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+
+.produto-item.minha-loja-style .estoque {
+    color: #666;
+    font-size: 14px;
+}
+
+.produto-item.minha-loja-style .status {
+    color: #666;
+    font-size: 14px;
+}
+
+.produto-acoes.minha-loja-style {
+    display: flex;
+    gap: 10px;
+    margin-top: auto;
+}
+
+.produto-item.minha-loja-style button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    flex: 1;
+}
+
+.produto-item.minha-loja-style button:hover {
+    background-color: #45a049;
+}
