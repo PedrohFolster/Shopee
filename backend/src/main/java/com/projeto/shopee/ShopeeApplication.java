@@ -69,29 +69,15 @@ public class ShopeeApplication implements CommandLineRunner {
         }
 
         String[] categoriasProduto = {
-                "Smartphone", "Notebook", "Tablet", "Fone de Ouvido", "Monitor",
-                "Placa de Vídeo", "Processador", "Memória RAM", "SSD", "HD Externo",
-                "Blusa", "Calça Jeans", "Jaqueta", "Camiseta", "Vestido", "Shorts",
-                "Saia", "Tênis", "Sandália", "Relógio", "Brinco", "Colar", "Shampoo",
-                "Condicionador", "Perfume", "Creme Hidratante", "Secador de Cabelo",
-                "Maquiagem", "Base", "Rímel", "Batom", "Tinta de Parede", "Furadeira",
-                "Martelo", "Serra Elétrica", "Parafusadeira", "Parafuso", "Cimento",
-                "Argamassa", "Piso", "Cabo HDMI", "Mouse", "Teclado", "Roteador",
-                "Switch de Rede", "Controle de Videogame", "Console de Videogame",
-                "Livro", "Caderno", "Caneta", "Lápis", "Mochila Escolar", "Papel Sulfite",
-                "Cadeira Gamer", "Sofá", "Cama Box", "Geladeira", "Micro-ondas",
-                "Fogão", "Máquina de Lavar", "Bicicleta", "Patins", "Skate", "Halteres",
-                "Esteira", "Roupa de Natação", "Kit de Ferramentas", "Chave Inglesa",
-                "Caixa de Som", "Projetor", "Camera Digital", "Drone", "Bola de Futebol",
-                "Rede de Vôlei", "Violão", "Teclado Musical", "Guitarra", "Baixo",
-                "Bateria", "Petiscos para Cachorro", "Ração para Gato", "Brinquedo para Pet",
-                "Caixa de Areia para Gato", "Caminha para Pet", "Planta Ornamentais",
-                "Ferramentas de Jardinagem", "Vasos de Plantas", "Sementes", "Adubo",
-                "Carrinho de Bebê", "Mamadeira", "Fralda Descartável", "Bebedouro Automático",
-                "Mala de Viagem", "Travesseiro", "Edredom", "Lençol", "Tupperware",
-                "Panela", "Talheres", "Jogo de Pratos", "Copos de Vidro", "Vinho",
-                "Cerveja Artesanal", "Chocolates", "Doces Finos", "Suplemento Alimentar",
-                "Roupas Fitness", "Pesos", "Tapete de Yoga"
+                "Eletrônicos", "Hardware", "Moda e Vestuário", "Beleza e Cuidados Pessoais",
+                "Casa e Decoração", "Automotivo", "Esportes e Lazer", "Brinquedos e Jogos",
+                "Livros e Papelaria", "Ferramentas e Construção", "Alimentos e Bebidas",
+                "Saúde e Bem-estar", "Joias e Acessórios", "Pet Shop", "Instrumentos Musicais",
+                "Informática", "Bebês e Maternidade", "Jardinagem e Agricultura",
+                "Viagens e Turismo", "Móveis e Eletrodomésticos", "Fotografia e Filmagem",
+                "Segurança e Vigilância", "Energia Renovável", "Material Escolar",
+                "Artigos de Cozinha", "Artigos Religiosos", "Artigos para Festa",
+                "Artesanato", "Fitness e Academia"
         };
 
         for (String nome : categoriasProduto) {
@@ -351,7 +337,7 @@ public class ShopeeApplication implements CommandLineRunner {
                         "https://images8.kabum.com.br/produtos/fotos/241048/processador-intel-core-i7-12700k-cache-25mb-3-6ghz-5-0ghz-max-turbo-lga-1700-bx8071512700k_1634830258_m.jpg");
                 produto.setEstoque(10);
                 produto.setLoja(lojaRepository.findById(1L).orElse(null));
-                produto.setCategoriaProduto(categoriaProdutoRepository.findById(1L).orElse(null));
+                produto.setCategoriaProduto(categoriaProdutoRepository.findById(3L).orElse(null));
                 produto.setStatus(statusRepository.findById(1L).orElse(null));
                 produtoRepository.save(produto);
                 System.out.println("Produto 2 criado");
@@ -368,7 +354,7 @@ public class ShopeeApplication implements CommandLineRunner {
                         "https://images7.kabum.com.br/produtos/fotos/641847/notebook-vaio-fe15-amd-ryzen-5-8gb-512gb-ssd-placa-de-video-amd-tela-15-6-fhd-antirreflexo-60hz-linux-cinza-vjfe59f11xb1911h_1729882859_g.jpg");
                 produto.setEstoque(10);
                 produto.setLoja(lojaRepository.findById(1L).orElse(null));
-                produto.setCategoriaProduto(categoriaProdutoRepository.findById(1L).orElse(null));
+                produto.setCategoriaProduto(categoriaProdutoRepository.findById(3L).orElse(null));
                 produto.setStatus(statusRepository.findById(1L).orElse(null));
                 produtoRepository.save(produto);
                 System.out.println("Produto 3 criado");
@@ -385,7 +371,7 @@ public class ShopeeApplication implements CommandLineRunner {
                         "https://images4.kabum.com.br/produtos/fotos/380744/ssd-kingston-nv2-500-gb-m-2-2280-pcie-nvme-leitura-2-100-mb-s-e-gravacao-1-700-mb-s-snv2s-500g_1666032961_m.jpg");
                 produto.setEstoque(10);
                 produto.setLoja(lojaRepository.findById(1L).orElse(null));
-                produto.setCategoriaProduto(categoriaProdutoRepository.findById(1L).orElse(null));
+                produto.setCategoriaProduto(categoriaProdutoRepository.findById(3L).orElse(null));
                 produto.setStatus(statusRepository.findById(1L).orElse(null));
                 produtoRepository.save(produto);
                 System.out.println("Produto 4 criado");
@@ -402,7 +388,7 @@ public class ShopeeApplication implements CommandLineRunner {
                         "https://images6.kabum.com.br/produtos/fotos/649716/notebook-acer-gamer-nitro-v15-anv15-51-7837-intel-core-i7-8gb-ram-ddr5-15-6-nvidia-rtx-3050-512gb-ssd-linux-preto-nh-qqdal-008_1730306499_m.jpg");
                 produto.setEstoque(10);
                 produto.setLoja(lojaRepository.findById(1L).orElse(null));
-                produto.setCategoriaProduto(categoriaProdutoRepository.findById(1L).orElse(null));
+                produto.setCategoriaProduto(categoriaProdutoRepository.findById(3L).orElse(null));
                 produto.setStatus(statusRepository.findById(1L).orElse(null));
                 produtoRepository.save(produto);
                 System.out.println("Produto 1 criado.");
@@ -419,7 +405,7 @@ public class ShopeeApplication implements CommandLineRunner {
                         "https://images8.kabum.com.br/produtos/fotos/241048/processador-intel-core-i7-12700k-cache-25mb-3-6ghz-5-0ghz-max-turbo-lga-1700-bx8071512700k_1634830258_m.jpg");
                 produto.setEstoque(10);
                 produto.setLoja(lojaRepository.findById(1L).orElse(null));
-                produto.setCategoriaProduto(categoriaProdutoRepository.findById(1L).orElse(null));
+                produto.setCategoriaProduto(categoriaProdutoRepository.findById(2L).orElse(null));
                 produto.setStatus(statusRepository.findById(1L).orElse(null));
                 produtoRepository.save(produto);
                 System.out.println("Produto 2 criado");
@@ -436,7 +422,7 @@ public class ShopeeApplication implements CommandLineRunner {
                         "https://images7.kabum.com.br/produtos/fotos/641847/notebook-vaio-fe15-amd-ryzen-5-8gb-512gb-ssd-placa-de-video-amd-tela-15-6-fhd-antirreflexo-60hz-linux-cinza-vjfe59f11xb1911h_1729882859_g.jpg");
                 produto.setEstoque(10);
                 produto.setLoja(lojaRepository.findById(1L).orElse(null));
-                produto.setCategoriaProduto(categoriaProdutoRepository.findById(1L).orElse(null));
+                produto.setCategoriaProduto(categoriaProdutoRepository.findById(2L).orElse(null));
                 produto.setStatus(statusRepository.findById(1L).orElse(null));
                 produtoRepository.save(produto);
                 System.out.println("Produto 3 criado");
@@ -453,7 +439,7 @@ public class ShopeeApplication implements CommandLineRunner {
                         "https://images4.kabum.com.br/produtos/fotos/380744/ssd-kingston-nv2-500-gb-m-2-2280-pcie-nvme-leitura-2-100-mb-s-e-gravacao-1-700-mb-s-snv2s-500g_1666032961_m.jpg");
                 produto.setEstoque(10);
                 produto.setLoja(lojaRepository.findById(1L).orElse(null));
-                produto.setCategoriaProduto(categoriaProdutoRepository.findById(1L).orElse(null));
+                produto.setCategoriaProduto(categoriaProdutoRepository.findById(2L).orElse(null));
                 produto.setStatus(statusRepository.findById(1L).orElse(null));
                 produtoRepository.save(produto);
                 System.out.println("Produto 4 criado");

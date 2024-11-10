@@ -54,7 +54,9 @@ const Home = () => {
   const produtosFiltrados = produtos.filter(produto => {
     const precoValido = (!filtros.precoMin || produto.preco >= parseFloat(filtros.precoMin)) &&
                         (!filtros.precoMax || produto.preco <= parseFloat(filtros.precoMax));
-    const categoriaValida = !filtros.categoria || produto.categoriaprodutoid === parseInt(filtros.categoria, 10);
+    
+
+    const categoriaValida = !filtros.categoria || produto.categoriaProdutoId === parseInt(filtros.categoria, 10);
     return precoValido && categoriaValida;
   });
 
