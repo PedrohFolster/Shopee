@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Range } from 'react-range';
 import Header from '../../Components/Menu/Items/Header/Header';
 import ProdutoHome from '../../Components/Product/ProdutoHome';
 import '../CSS/Home.css';
@@ -8,8 +9,7 @@ const Home = () => {
   const [produtos, setProdutos] = useState([]);
   const [categorias, setCategorias] = useState([]);
   const [filtros, setFiltros] = useState({
-    precoMin: '',
-    precoMax: '',
+    preco: [0, 10000],
     categoria: ''
   });
 
@@ -45,17 +45,13 @@ const Home = () => {
 
   const limparFiltros = () => {
     setFiltros({
-      precoMin: '',
-      precoMax: '',
+      preco: [0, 10000],
       categoria: ''
     });
   };
 
   const produtosFiltrados = produtos.filter(produto => {
-    const precoValido = (!filtros.precoMin || produto.preco >= parseFloat(filtros.precoMin)) &&
-                        (!filtros.precoMax || produto.preco <= parseFloat(filtros.precoMax));
-    
-
+    const precoValido = produto.preco >= filtros.preco[0] && produto.preco <= filtros.preco[1];
     const categoriaValida = !filtros.categoria || produto.categoriaProdutoId === parseInt(filtros.categoria, 10);
     return precoValido && categoriaValida;
   });
@@ -67,43 +63,41 @@ const Home = () => {
         <aside className='filtros'>
           <h3>Filtrar Produtos</h3>
           <div className='filtro-item'>
-            <label>Preço Mínimo:</label>
-            <input
-              type='number'
-              name='precoMin'
-              value={filtros.precoMin}
-              onChange={handleFiltroChange}
-            />
-          </div>
-          <div className='filtro-item'>
-            <label>Preço Máximo:</label>
-            <input
-              type='number'
-              name='precoMax'
-              value={filtros.precoMax}
-              onChange={handleFiltroChange}
-            />
-          </div>
-          <div className='filtro-item'>
             <label>Faixa de Preço:</label>
-            <div className='range-slider'>
-              <input
-                type='range'
-                min='0'
-                max='10000'
-                value={filtros.precoMin}
-                onChange={(e) => setFiltros({ ...filtros, precoMin: e.target.value })}
-              />
-              <input
-                type='range'
-                min='0'
-                max='10000'
-                value={filtros.precoMax}
-                onChange={(e) => setFiltros({ ...filtros, precoMax: e.target.value })}
-              />
-            </div>
-            <div className='range-values'>
-              <span>{filtros.precoMin}</span> - <span>{filtros.precoMax}</span>
+            <Range
+              step={100}
+              min={0}
+              max={10000}
+              values={filtros.preco}
+              onChange={(values) => setFiltros({ ...filtros, preco: values })}
+              renderTrack={({ props, children }) => (
+                <div {...props} style={{ ...props.style, height: '6px', background: '#ddd' }}>
+                  {children}
+                </div>
+              )}
+              renderThumb={({ props }) => (
+                <div {...props} style={{ ...props.style, height: '20px', width: '20px', background: '#999' }} />
+              )}
+            />
+            <div className='preco-inputs'>
+              <div className='preco-input'>
+                <label>Mínimo</label>
+                <input
+                  type='number'
+                  name='precoMin'
+                  value={filtros.preco[0]}
+                  onChange={e => setFiltros({ ...filtros, preco: [parseFloat(e.target.value), filtros.preco[1]] })}
+                />
+              </div>
+              <div className='preco-input'>
+                <label>Máximo</label>
+                <input
+                  type='number'
+                  name='precoMax'
+                  value={filtros.preco[1]}
+                  onChange={e => setFiltros({ ...filtros, preco: [filtros.preco[0], parseFloat(e.target.value)] })}
+                />
+              </div>
             </div>
           </div>
           <div className='filtro-item'>
