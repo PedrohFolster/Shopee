@@ -11,7 +11,8 @@ const Home = () => {
   const [categorias, setCategorias] = useState([]);
   const [filtros, setFiltros] = useState({
     preco: [0, 10000],
-    categoria: ''
+    categoria: '',
+    nome: ''
   });
 
   const navigate = useNavigate();
@@ -56,7 +57,8 @@ const Home = () => {
   const produtosFiltrados = produtos.filter(produto => {
     const precoValido = produto.preco >= filtros.preco[0] && produto.preco <= filtros.preco[1];
     const categoriaValida = !filtros.categoria || produto.categoriaProdutoId === parseInt(filtros.categoria, 10);
-    return precoValido && categoriaValida;
+    const nomeValido = produto.nome.toLowerCase().includes(filtros.nome.toLowerCase());
+    return precoValido && categoriaValida && nomeValido;
   });
 
   const handleProdutoClick = (id) => {
@@ -69,6 +71,16 @@ const Home = () => {
       <main className='home-content'>
         <aside className='filtros'>
           <h3>Filtrar Produtos</h3>
+          <div className='filtro-item'>
+            <label>Nome do Produto:</label>
+            <input
+              type='text'
+              name='nome'
+              value={filtros.nome}
+              onChange={handleFiltroChange}
+              placeholder='Buscar por nome'
+            />
+          </div>
           <div className='filtro-item'>
             <label>Faixa de Preço:</label>
             <Range
