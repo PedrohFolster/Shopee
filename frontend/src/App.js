@@ -9,7 +9,7 @@ import MinhaLoja from './Pages/HTML/MinhaLoja';
 import CriarProduto from './Pages/HTML/CriarProduto';
 import Carrinho from './Pages/HTML/Carrinho';
 import Produto from './Pages/HTML/Produto';
-
+import EditarPerfil from './Pages/HTML/EditarPerfil';
 function App() {
   return (
     <Router>
@@ -24,6 +24,7 @@ function App() {
           <Route path="/criar-produto" element={<CriarProduto />} />
           <Route path="/carrinho" element={<Carrinho />} />
           <Route path="/produto/:id" element={<Produto />} />
+          <Route path="/editar-perfil" element={<EditarPerfil />} />
         </Routes>
       </div>
     </Router>

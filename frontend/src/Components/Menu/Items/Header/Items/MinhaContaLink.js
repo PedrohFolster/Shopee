@@ -58,7 +58,7 @@ const MinhaContaLink = ({ activeLink, handleSetActive, usuario }) => {
             </button>
             {isDropdownVisible && (
                 <div className="dropdown-menu">
-                    <Link to="/perfil" onClick={() => handleSetActive("perfil")}>
+                    <Link to="/editar-perfil" onClick={() => handleSetActive("perfil")}>
                         <FontAwesomeIcon icon={faUser} className="menu-icon" />
                         Perfil
                     </Link>
