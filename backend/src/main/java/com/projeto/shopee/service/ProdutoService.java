@@ -164,4 +164,9 @@ public class ProdutoService {
         produto.setStatus(statusInativo);
         produtoRepository.save(produto);
     }
+
+    public List<ProdutoDTO> getProdutosByCategoriaProdutoId(Long categoriaProdutoId) {
+        List<Produto> produtos = produtoRepository.findByCategoriaProdutoId(categoriaProdutoId);
+        return produtoMapper.toDTOs(produtos);
+    }
 }

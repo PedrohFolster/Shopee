@@ -128,7 +128,6 @@ button[type="button-register"] {
   margin-right: 0;
 }
 
-/* Estilização unificada para TODOS os inputs */
 .register-content input,
 .form-row.completo input,
 .form-row-register input,
@@ -146,7 +145,6 @@ button[type="button-register"] {
   max-height: 40px !important;
 }
 
-/* Especificamente para o input de data */
 .register-content input[type="date"] {
   height: 40px;
   padding: 8px 12px;
@@ -155,12 +153,10 @@ button[type="button-register"] {
   appearance: none;
 }
 
-/* Ajuste para o ícone do calendário */
 .register-content input[type="date"]::-webkit-calendar-picker-indicator {
   margin-left: 8px;
 }
 
-/* Garantindo que o componente Input mantenha a altura */
 .input-group {
   height: 40px !important;
 }

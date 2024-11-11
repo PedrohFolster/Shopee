@@ -8,6 +8,7 @@ import CreateLoja from './Pages/HTML/CreateLoja';
 import MinhaLoja from './Pages/HTML/MinhaLoja';
 import CriarProduto from './Pages/HTML/CriarProduto';
 import Carrinho from './Pages/HTML/Carrinho';
+import Produto from './Pages/HTML/Produto';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/MinhaLoja" element={<MinhaLoja />} />
           <Route path="/criar-produto" element={<CriarProduto />} />
           <Route path="/carrinho" element={<Carrinho />} />
+          <Route path="/produto/:id" element={<Produto />} />
         </Routes>
       </div>
     </Router>

@@ -94,7 +94,7 @@ const CriarProduto = () => {
               <option value="">Selecione o Status</option>
               {statusList.map(status => (
                 <option key={status.id} value={status.id}>
-                  {status.nomeStatus} {/* Use "nomeStatus" aqui */}
+                  {status.nomeStatus} l
                 </option>
               ))}
             </select>

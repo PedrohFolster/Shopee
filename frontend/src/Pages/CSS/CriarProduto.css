@@ -41,7 +41,7 @@
     border-radius: 5px;
     box-sizing: border-box;
     resize: vertical;
-    appearance: none; /* Remove a seta padrão do select */
+    appearance: none; 
 }
 
 .form-container button {

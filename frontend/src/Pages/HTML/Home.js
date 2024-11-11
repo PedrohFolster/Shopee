@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Range } from 'react-range';
+import { useNavigate } from 'react-router-dom';
 import Header from '../../Components/Menu/Items/Header/Header';
 import ProdutoHome from '../../Components/Product/ProdutoHome';
 import '../CSS/Home.css';
@@ -12,6 +13,8 @@ const Home = () => {
     preco: [0, 10000],
     categoria: ''
   });
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get('http://localhost:8080/produtos/ativos')
@@ -56,6 +59,10 @@ const Home = () => {
     return precoValido && categoriaValida;
   });
 
+  const handleProdutoClick = (id) => {
+    navigate(`/produto/${id}`);
+  };
+
   return (
     <div className='home'>
       <Header />
@@ -71,12 +78,12 @@ const Home = () => {
               values={filtros.preco}
               onChange={(values) => setFiltros({ ...filtros, preco: values })}
               renderTrack={({ props, children }) => (
-                <div {...props} style={{ ...props.style, height: '6px', background: '#ddd' }}>
+                <div key={props.key} {...props} style={{ ...props.style, height: '6px', background: '#ddd' }}>
                   {children}
                 </div>
               )}
               renderThumb={({ props }) => (
-                <div {...props} style={{ ...props.style, height: '20px', width: '20px', background: '#999' }} />
+                <div key={props.key} {...props} style={{ ...props.style, height: '20px', width: '20px', background: '#999', borderRadius: '50%' }} />
               )}
             />
             <div className='preco-inputs'>
@@ -124,6 +131,7 @@ const Home = () => {
                 key={produto.id} 
                 produto={produto} 
                 onAddToCart={adicionarAoCarrinho} 
+                onNameClick={() => handleProdutoClick(produto.id)}
               />
             ))
           ) : (

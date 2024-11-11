@@ -37,12 +37,12 @@
     margin-bottom: 20px;
     color: #ff6600;
     text-decoration: none;
-    display: block; /* Altera para block para permitir centralização */
+    display: block;
     padding: 0;
     justify-content: center;
-    width: fit-content; /* Ajusta a largura para o conteúdo */
-    margin-left: auto; /* Centraliza horizontalmente */
-    margin-right: auto; /* Centraliza horizontalmente */
+    width: fit-content; 
+    margin-left: auto; 
+    margin-right: auto; 
 }
 
 .register-link:hover {
@@ -96,13 +96,13 @@ button[type="submit"] {
 }
 
 .centered-form .form-row {
-    width: 100%; /* Garante que a linha ocupe toda a largura disponível */
+    width: 100%; 
     display: flex;
-    justify-content: center; /* Centraliza os campos dentro da linha */
+    justify-content: center; 
     margin-bottom: 15px;
 }
 
 button[type="button-login"] {
-    width: 100%; /* Expande o botão para ocupar toda a largura */
-    max-width: 400px; /* Define uma largura máxima para o botão */
+    width: 100%; 
+    max-width: 400px; 
 }

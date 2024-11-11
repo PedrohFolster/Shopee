@@ -142,18 +142,22 @@
 
 .home-content {
   display: flex;
+  margin-left: 320px;
   gap: 20px;
 }
 
 .filtros {
-  width: 400px;
+  width: 300px;
+  position: fixed;
+  top: 84px;
+  left: 0;
+  height: calc(100vh - 100px);
+  overflow-y: auto;
+  z-index: 1000;
   background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  height: 1080px;
-  position: sticky;
-  top: 20px; /* Distância do topo da página */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
 }
 
 .filtros h3 {

@@ -92,36 +92,66 @@ const MinhaLoja = () => {
     };
 
     const validarCampos = () => {
-        if (!nome.trim() || /\s{2,}/.test(nome)) {
-            setMensagem('O campo nome está inválido.');
+        if (!isValidNomeProduto(nome)) {
+            setMensagem('O nome do produto está inválido. Deve ter entre 1 e 100 caracteres.');
             return false;
         }
-        if (!/^\d+$/.test(preco) || parseFloat(preco) >= 99999) {
-            setMensagem('O preço está inválido. Deve ser um número abaixo de 99999.');
+        if (!isValidPreco(preco)) {
+            setMensagem('O preço está inválido. Deve ser um número entre 0 e 99999.');
             return false;
         }
-        if (!imagem.trim()) {
+        if (!isValidImagem(imagem)) {
             setMensagem('O campo imagem está inválido.');
             return false;
         }
-        if (!/^\d+$/.test(estoque) || parseInt(estoque, 10) >= 99999) {
-            setMensagem('O campo estoque está inválido. Deve ser um número abaixo de 99999.');
+        if (!isValidEstoque(estoque)) {
+            setMensagem('O campo estoque está inválido. Deve ser um número entre 0 e 99999.');
             return false;
         }
-        if (!categoriaProdutoId.trim()) {
+        if (!isValidCategoriaProduto(categoriaProdutoId)) {
             setMensagem('A categoria é obrigatória.');
             return false;
         }
-        if (!statusId.trim()) {
+        if (!isValidStatus(statusId)) {
             setMensagem('O status é obrigatório.');
             return false;
         }
-        
-        if (!descricao.trim() || /\s{2,}/.test(descricao) || descricao.length > 500) {
-            setMensagem('O campo descrição está inválido.');
+        if (!isValidDescricao(descricao)) {
+            setMensagem('O campo descrição está inválido. Deve ter entre 5 e 500 caracteres.');
             return false;
         }
         return true;
+    };
+
+    // Funções de validação
+    const isValidNomeProduto = (nome) => {
+        return nome && nome.trim().length > 0 && nome.length <= 100;
+    };
+
+    const isValidPreco = (preco) => {
+        const precoNum = parseFloat(preco);
+        return !isNaN(precoNum) && precoNum >= 0 && precoNum < 99999;
+    };
+
+    const isValidImagem = (imagem) => {
+        return imagem && imagem.trim().length > 0;
+    };
+
+    const isValidEstoque = (estoque) => {
+        const estoqueNum = parseInt(estoque, 10);
+        return !isNaN(estoqueNum) && estoqueNum >= 0 && estoqueNum <= 99999;
+    };
+
+    const isValidCategoriaProduto = (categoriaProdutoId) => {
+        return categoriaProdutoId && categoriaProdutoId.trim().length > 0;
+    };
+
+    const isValidStatus = (statusId) => {
+        return statusId && (statusId === '1' || statusId === '2');
+    };
+
+    const isValidDescricao = (descricao) => {
+        return descricao && descricao.trim().length >= 5 && descricao.length <= 500;
     };
 
     const handleSubmit = (e) => {

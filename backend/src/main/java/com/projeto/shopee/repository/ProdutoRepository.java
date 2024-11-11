@@ -11,4 +11,5 @@ import com.projeto.shopee.entities.Produto;
 public interface ProdutoRepository extends JpaRepository<Produto, Long> {
     List<Produto> findByLojaId(Long lojaId);
     List<Produto> findByStatusNomeStatus(String nomeStatus);
+    List<Produto> findByCategoriaProdutoId(Long categoriaProdutoId);
 }

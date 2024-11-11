@@ -30,7 +30,6 @@
     height: 40px;
 }
 
-/* Estilo para o input de nome */
 .create-loja input[type="text"] {
     width: 400px !important;
     height: 40px !important;
@@ -44,7 +43,6 @@
     display: block !important;
 }
 
-/* Estilo para o select de categoria */
 .create-loja .categoria-loja-select {
     width: 400px !important;
     height: 40px !important;
@@ -57,7 +55,6 @@
     margin: 0;
 }
 
-/* Estilos de foco */
 .create-loja input[type="text"]:focus,
 .create-loja .categoria-loja-select:focus {
     outline: none;

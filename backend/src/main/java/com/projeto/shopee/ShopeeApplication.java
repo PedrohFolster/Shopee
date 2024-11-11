@@ -178,7 +178,7 @@ public class ShopeeApplication implements CommandLineRunner {
                 Produto produto = new Produto();
                 produto.setNome(
                         "Notebook Gamer Acer Nitro V15 ANV15-51-7837 Intel Core I7, 8GB RAM, DDR5, Nvidia RTX 3050, 512GB SSD, 15.6\", Linux, Preto - NH.QQDAL.008");
-                produto.setDescricao("Descrição do Produto 1" );
+                produto.setDescricao("SSD Kingston NV2 500 GB, M.2 2280 PCIe, NVMe, Leitura: 3500 MB/s e Gravação: 2100 MB" );
                 produto.setPreco(1000);
                 produto.setImagem(
                         "https://images6.kabum.com.br/produtos/fotos/649716/notebook-acer-gamer-nitro-v15-anv15-51-7837-intel-core-i7-8gb-ram-ddr5-15-6-nvidia-rtx-3050-512gb-ssd-linux-preto-nh-qqdal-008_1730306499_m.jpg");
@@ -430,6 +430,142 @@ public class ShopeeApplication implements CommandLineRunner {
                 System.out.println("Produto com ID 3 já existe.");
             }
             if (!produtoRepository.existsById((long) 16L)) {
+                Produto produto = new Produto();
+                produto.setNome(
+                        "SSD Kingston NV2, 500 GB, M.2 2280, PCIe 4.0 x4, NVMe, Leitura: 3500 MB/s, Gravação: 2100 MB/s, Azul - SNV2S/500G");
+                produto.setDescricao("Descrição do Produto 4");
+                produto.setPreco(3000);
+                produto.setImagem(
+                        "https://images4.kabum.com.br/produtos/fotos/380744/ssd-kingston-nv2-500-gb-m-2-2280-pcie-nvme-leitura-2-100-mb-s-e-gravacao-1-700-mb-s-snv2s-500g_1666032961_m.jpg");
+                produto.setEstoque(10);
+                produto.setLoja(lojaRepository.findById(1L).orElse(null));
+                produto.setCategoriaProduto(categoriaProdutoRepository.findById(2L).orElse(null));
+                produto.setStatus(statusRepository.findById(1L).orElse(null));
+                produtoRepository.save(produto);
+                System.out.println("Produto 4 criado");
+            } else {
+                System.out.println("Produto com ID 4 já existe.");
+            }
+            if (!produtoRepository.existsById((long) 17L)) {
+                Produto produto = new Produto();
+                produto.setNome(
+                        "SSD Kingston NV2, 500 GB, M.2 2280, PCIe 4.0 x4, NVMe, Leitura: 3500 MB/s, Gravação: 2100 MB/s, Azul - SNV2S/500G");
+                produto.setDescricao("Descrição do Produto 4");
+                produto.setPreco(3000);
+                produto.setImagem(
+                        "https://images4.kabum.com.br/produtos/fotos/380744/ssd-kingston-nv2-500-gb-m-2-2280-pcie-nvme-leitura-2-100-mb-s-e-gravacao-1-700-mb-s-snv2s-500g_1666032961_m.jpg");
+                produto.setEstoque(10);
+                produto.setLoja(lojaRepository.findById(1L).orElse(null));
+                produto.setCategoriaProduto(categoriaProdutoRepository.findById(2L).orElse(null));
+                produto.setStatus(statusRepository.findById(1L).orElse(null));
+                produtoRepository.save(produto);
+                System.out.println("Produto 4 criado");
+            } else {
+                System.out.println("Produto com ID 4 já existe.");
+            }
+            if (!produtoRepository.existsById((long) 18L)) {
+                Produto produto = new Produto();
+                produto.setNome(
+                        "SSD Kingston NV2, 500 GB, M.2 2280, PCIe 4.0 x4, NVMe, Leitura: 3500 MB/s, Gravação: 2100 MB/s, Azul - SNV2S/500G");
+                produto.setDescricao("Descrição do Produto 4");
+                produto.setPreco(3000);
+                produto.setImagem(
+                        "https://images4.kabum.com.br/produtos/fotos/380744/ssd-kingston-nv2-500-gb-m-2-2280-pcie-nvme-leitura-2-100-mb-s-e-gravacao-1-700-mb-s-snv2s-500g_1666032961_m.jpg");
+                produto.setEstoque(10);
+                produto.setLoja(lojaRepository.findById(1L).orElse(null));
+                produto.setCategoriaProduto(categoriaProdutoRepository.findById(2L).orElse(null));
+                produto.setStatus(statusRepository.findById(1L).orElse(null));
+                produtoRepository.save(produto);
+                System.out.println("Produto 4 criado");
+            } else {
+                System.out.println("Produto com ID 4 já existe.");
+            }
+            if (!produtoRepository.existsById((long) 19L)) {
+                Produto produto = new Produto();
+                produto.setNome(
+                        "SSD Kingston NV2, 500 GB, M.2 2280, PCIe 4.0 x4, NVMe, Leitura: 3500 MB/s, Gravação: 2100 MB/s, Azul - SNV2S/500G");
+                produto.setDescricao("Descrição do Produto 4");
+                produto.setPreco(3000);
+                produto.setImagem(
+                        "https://images4.kabum.com.br/produtos/fotos/380744/ssd-kingston-nv2-500-gb-m-2-2280-pcie-nvme-leitura-2-100-mb-s-e-gravacao-1-700-mb-s-snv2s-500g_1666032961_m.jpg");
+                produto.setEstoque(10);
+                produto.setLoja(lojaRepository.findById(1L).orElse(null));
+                produto.setCategoriaProduto(categoriaProdutoRepository.findById(2L).orElse(null));
+                produto.setStatus(statusRepository.findById(1L).orElse(null));
+                produtoRepository.save(produto);
+                System.out.println("Produto 4 criado");
+            } else {
+                System.out.println("Produto com ID 4 já existe.");
+            }
+            if (!produtoRepository.existsById((long) 20L)) {
+                Produto produto = new Produto();
+                produto.setNome(
+                        "SSD Kingston NV2, 500 GB, M.2 2280, PCIe 4.0 x4, NVMe, Leitura: 3500 MB/s, Gravação: 2100 MB/s, Azul - SNV2S/500G");
+                produto.setDescricao("Descrição do Produto 4");
+                produto.setPreco(3000);
+                produto.setImagem(
+                        "https://images4.kabum.com.br/produtos/fotos/380744/ssd-kingston-nv2-500-gb-m-2-2280-pcie-nvme-leitura-2-100-mb-s-e-gravacao-1-700-mb-s-snv2s-500g_1666032961_m.jpg");
+                produto.setEstoque(10);
+                produto.setLoja(lojaRepository.findById(1L).orElse(null));
+                produto.setCategoriaProduto(categoriaProdutoRepository.findById(2L).orElse(null));
+                produto.setStatus(statusRepository.findById(1L).orElse(null));
+                produtoRepository.save(produto);
+                System.out.println("Produto 4 criado");
+            } else {
+                System.out.println("Produto com ID 4 já existe.");
+            }
+            if (!produtoRepository.existsById((long) 21L)) {
+                Produto produto = new Produto();
+                produto.setNome(
+                        "SSD Kingston NV2, 500 GB, M.2 2280, PCIe 4.0 x4, NVMe, Leitura: 3500 MB/s, Gravação: 2100 MB/s, Azul - SNV2S/500G");
+                produto.setDescricao("Descrição do Produto 4");
+                produto.setPreco(3000);
+                produto.setImagem(
+                        "https://images4.kabum.com.br/produtos/fotos/380744/ssd-kingston-nv2-500-gb-m-2-2280-pcie-nvme-leitura-2-100-mb-s-e-gravacao-1-700-mb-s-snv2s-500g_1666032961_m.jpg");
+                produto.setEstoque(10);
+                produto.setLoja(lojaRepository.findById(1L).orElse(null));
+                produto.setCategoriaProduto(categoriaProdutoRepository.findById(2L).orElse(null));
+                produto.setStatus(statusRepository.findById(1L).orElse(null));
+                produtoRepository.save(produto);
+                System.out.println("Produto 4 criado");
+            } else {
+                System.out.println("Produto com ID 4 já existe.");
+            }
+            if (!produtoRepository.existsById((long) 22L)) {
+                Produto produto = new Produto();
+                produto.setNome(
+                        "SSD Kingston NV2, 500 GB, M.2 2280, PCIe 4.0 x4, NVMe, Leitura: 3500 MB/s, Gravação: 2100 MB/s, Azul - SNV2S/500G");
+                produto.setDescricao("Descrição do Produto 4");
+                produto.setPreco(3000);
+                produto.setImagem(
+                        "https://images4.kabum.com.br/produtos/fotos/380744/ssd-kingston-nv2-500-gb-m-2-2280-pcie-nvme-leitura-2-100-mb-s-e-gravacao-1-700-mb-s-snv2s-500g_1666032961_m.jpg");
+                produto.setEstoque(10);
+                produto.setLoja(lojaRepository.findById(1L).orElse(null));
+                produto.setCategoriaProduto(categoriaProdutoRepository.findById(2L).orElse(null));
+                produto.setStatus(statusRepository.findById(1L).orElse(null));
+                produtoRepository.save(produto);
+                System.out.println("Produto 4 criado");
+            } else {
+                System.out.println("Produto com ID 4 já existe.");
+            }
+            if (!produtoRepository.existsById((long) 23L)) {
+                Produto produto = new Produto();
+                produto.setNome(
+                        "SSD Kingston NV2, 500 GB, M.2 2280, PCIe 4.0 x4, NVMe, Leitura: 3500 MB/s, Gravação: 2100 MB/s, Azul - SNV2S/500G");
+                produto.setDescricao("Descrição do Produto 4");
+                produto.setPreco(3000);
+                produto.setImagem(
+                        "https://images4.kabum.com.br/produtos/fotos/380744/ssd-kingston-nv2-500-gb-m-2-2280-pcie-nvme-leitura-2-100-mb-s-e-gravacao-1-700-mb-s-snv2s-500g_1666032961_m.jpg");
+                produto.setEstoque(10);
+                produto.setLoja(lojaRepository.findById(1L).orElse(null));
+                produto.setCategoriaProduto(categoriaProdutoRepository.findById(2L).orElse(null));
+                produto.setStatus(statusRepository.findById(1L).orElse(null));
+                produtoRepository.save(produto);
+                System.out.println("Produto 4 criado");
+            } else {
+                System.out.println("Produto com ID 4 já existe.");
+            }
+            if (!produtoRepository.existsById((long) 24L)) {
                 Produto produto = new Produto();
                 produto.setNome(
                         "SSD Kingston NV2, 500 GB, M.2 2280, PCIe 4.0 x4, NVMe, Leitura: 3500 MB/s, Gravação: 2100 MB/s, Azul - SNV2S/500G");

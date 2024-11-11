@@ -100,4 +100,10 @@ public class ProdutoController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @GetMapping("/categoria/{categoriaProdutoId}")
+    public ResponseEntity<List<ProdutoDTO>> getProdutosByCategoriaProdutoId(@PathVariable Long categoriaProdutoId) {
+        List<ProdutoDTO> produtos = produtoService.getProdutosByCategoriaProdutoId(categoriaProdutoId);
+        return ResponseEntity.ok(produtos);
+    }
 }

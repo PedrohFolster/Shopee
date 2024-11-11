@@ -22,6 +22,7 @@ public class SecurityConstants {
         "/produtos",
         "/produtos/{id}",
         "/produtos/ativos",
-        "/produtos/finalizar-compra"
+        "/produtos/finalizar-compra",
+        "/produtos/categoria/{categoriaProdutoId}"
     };
 }

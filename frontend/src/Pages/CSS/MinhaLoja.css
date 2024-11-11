@@ -148,7 +148,6 @@ button[type="button-register"] {
     margin-right: 0;
 }
 
-/* Ajustes responsivos */
 @media (max-width: 768px) {
     .minha-loja-container {
         flex-direction: column;
