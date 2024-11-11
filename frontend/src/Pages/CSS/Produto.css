@@ -1,16 +1,18 @@
 .produto-page {
     display: flex;
     justify-content: center;
-    padding: 40px 0;
+    padding: 10px 0;
   }
   
   .produto-container {
-    width: 100%;
-    max-width: 1400px;
+    width: 80%;
+    max-width: 1200px;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     background-color: #fff;
+    margin: 0 auto;
+
   }
   
   .produto-content {
@@ -26,12 +28,14 @@
     margin-bottom: 10px;
     text-align: center;
     height: 64px;
-    width: 100%;
     word-wrap: break-word;
     overflow-wrap: break-word;
   }
   
   .produto-imagem {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 512px;
     height: auto;
   }
@@ -41,13 +45,10 @@
     max-width: 328px;
     height: auto;
     border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    object-fit: cover;
   }
   
   .produto-detalhes {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -57,7 +58,6 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 20px;
   }
   
   .produto-preco {
@@ -83,13 +83,36 @@
     color: #555;
   }
   
+  .produto-descricao-container {
+    height: 150px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+  }
+  
+  .botao-carrinho {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: #ff5722;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .botao-carrinho:hover {
+    background-color: #e64a19;
+  }
+  
   .produtos-relacionados {
-    margin-top: 40px;
+    margin: 100px;
   }
   
   .produtos-relacionados h2 {
     font-size: 20px;
     margin-bottom: 20px;
+    text-align: center;
   }
   
   .swiper-container {
@@ -104,10 +127,18 @@
     gap: 16px;
     scroll-behavior: smooth;
     padding: 0 40px;
+    width: 100%;
   }
   
   .swiper::-webkit-scrollbar {
     display: none;
+  }
+  
+  .produto-swiper-item {
+    flex: 0 0 auto;
+    width: calc(100% / 6 - 16px);
+    max-width: 200px;
+    box-sizing: border-box;
   }
   
   .swiper-button {

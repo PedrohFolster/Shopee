@@ -473,7 +473,7 @@ public class ShopeeApplication implements CommandLineRunner {
                         "https://images4.kabum.com.br/produtos/fotos/380744/ssd-kingston-nv2-500-gb-m-2-2280-pcie-nvme-leitura-2-100-mb-s-e-gravacao-1-700-mb-s-snv2s-500g_1666032961_m.jpg");
                 produto.setEstoque(10);
                 produto.setLoja(lojaRepository.findById(1L).orElse(null));
-                produto.setCategoriaProduto(categoriaProdutoRepository.findById(2L).orElse(null));
+                produto.setCategoriaProduto(categoriaProdutoRepository.findById(1L).orElse(null));
                 produto.setStatus(statusRepository.findById(1L).orElse(null));
                 produtoRepository.save(produto);
                 System.out.println("Produto 4 criado");
@@ -490,7 +490,7 @@ public class ShopeeApplication implements CommandLineRunner {
                         "https://images4.kabum.com.br/produtos/fotos/380744/ssd-kingston-nv2-500-gb-m-2-2280-pcie-nvme-leitura-2-100-mb-s-e-gravacao-1-700-mb-s-snv2s-500g_1666032961_m.jpg");
                 produto.setEstoque(10);
                 produto.setLoja(lojaRepository.findById(1L).orElse(null));
-                produto.setCategoriaProduto(categoriaProdutoRepository.findById(2L).orElse(null));
+                produto.setCategoriaProduto(categoriaProdutoRepository.findById(1L).orElse(null));
                 produto.setStatus(statusRepository.findById(1L).orElse(null));
                 produtoRepository.save(produto);
                 System.out.println("Produto 4 criado");
@@ -507,7 +507,7 @@ public class ShopeeApplication implements CommandLineRunner {
                         "https://images4.kabum.com.br/produtos/fotos/380744/ssd-kingston-nv2-500-gb-m-2-2280-pcie-nvme-leitura-2-100-mb-s-e-gravacao-1-700-mb-s-snv2s-500g_1666032961_m.jpg");
                 produto.setEstoque(10);
                 produto.setLoja(lojaRepository.findById(1L).orElse(null));
-                produto.setCategoriaProduto(categoriaProdutoRepository.findById(2L).orElse(null));
+                produto.setCategoriaProduto(categoriaProdutoRepository.findById(1L).orElse(null));
                 produto.setStatus(statusRepository.findById(1L).orElse(null));
                 produtoRepository.save(produto);
                 System.out.println("Produto 4 criado");
@@ -524,7 +524,7 @@ public class ShopeeApplication implements CommandLineRunner {
                         "https://images4.kabum.com.br/produtos/fotos/380744/ssd-kingston-nv2-500-gb-m-2-2280-pcie-nvme-leitura-2-100-mb-s-e-gravacao-1-700-mb-s-snv2s-500g_1666032961_m.jpg");
                 produto.setEstoque(10);
                 produto.setLoja(lojaRepository.findById(1L).orElse(null));
-                produto.setCategoriaProduto(categoriaProdutoRepository.findById(2L).orElse(null));
+                produto.setCategoriaProduto(categoriaProdutoRepository.findById(1L).orElse(null));
                 produto.setStatus(statusRepository.findById(1L).orElse(null));
                 produtoRepository.save(produto);
                 System.out.println("Produto 4 criado");
@@ -541,7 +541,7 @@ public class ShopeeApplication implements CommandLineRunner {
                         "https://images4.kabum.com.br/produtos/fotos/380744/ssd-kingston-nv2-500-gb-m-2-2280-pcie-nvme-leitura-2-100-mb-s-e-gravacao-1-700-mb-s-snv2s-500g_1666032961_m.jpg");
                 produto.setEstoque(10);
                 produto.setLoja(lojaRepository.findById(1L).orElse(null));
-                produto.setCategoriaProduto(categoriaProdutoRepository.findById(2L).orElse(null));
+                produto.setCategoriaProduto(categoriaProdutoRepository.findById(1L).orElse(null));
                 produto.setStatus(statusRepository.findById(1L).orElse(null));
                 produtoRepository.save(produto);
                 System.out.println("Produto 4 criado");
@@ -558,7 +558,7 @@ public class ShopeeApplication implements CommandLineRunner {
                         "https://images4.kabum.com.br/produtos/fotos/380744/ssd-kingston-nv2-500-gb-m-2-2280-pcie-nvme-leitura-2-100-mb-s-e-gravacao-1-700-mb-s-snv2s-500g_1666032961_m.jpg");
                 produto.setEstoque(10);
                 produto.setLoja(lojaRepository.findById(1L).orElse(null));
-                produto.setCategoriaProduto(categoriaProdutoRepository.findById(2L).orElse(null));
+                produto.setCategoriaProduto(categoriaProdutoRepository.findById(1L).orElse(null));
                 produto.setStatus(statusRepository.findById(1L).orElse(null));
                 produtoRepository.save(produto);
                 System.out.println("Produto 4 criado");
@@ -575,7 +575,7 @@ public class ShopeeApplication implements CommandLineRunner {
                         "https://images4.kabum.com.br/produtos/fotos/380744/ssd-kingston-nv2-500-gb-m-2-2280-pcie-nvme-leitura-2-100-mb-s-e-gravacao-1-700-mb-s-snv2s-500g_1666032961_m.jpg");
                 produto.setEstoque(10);
                 produto.setLoja(lojaRepository.findById(1L).orElse(null));
-                produto.setCategoriaProduto(categoriaProdutoRepository.findById(2L).orElse(null));
+                produto.setCategoriaProduto(categoriaProdutoRepository.findById(1L).orElse(null));
                 produto.setStatus(statusRepository.findById(1L).orElse(null));
                 produtoRepository.save(produto);
                 System.out.println("Produto 4 criado");

@@ -10,6 +10,9 @@ const Produto = () => {
   const [produto, setProduto] = useState(null);
   const [produtosRelacionados, setProdutosRelacionados] = useState([]);
   const swiperRef = useRef(null);
+  const [produtosVisiveis, setProdutosVisiveis] = useState([]);
+  const maxProdutosVisiveis = 6;
+  const [indiceAtual, setIndiceAtual] = useState(0);
 
   useEffect(() => {
     const fetchProduto = async () => {
@@ -26,7 +29,11 @@ const Produto = () => {
       try {
         const response = await axios.get(`http://localhost:8080/produtos/categoria/${categoriaId}`);
         const produtosFiltrados = response.data.filter(produto => produto.id !== produtoId);
-        setProdutosRelacionados(produtosFiltrados);
+        
+        const produtosEmbaralhados = produtosFiltrados.sort(() => Math.random() - 0.5);
+        
+        setProdutosRelacionados(produtosEmbaralhados);
+        setProdutosVisiveis(produtosEmbaralhados.slice(0, maxProdutosVisiveis));
       } catch (error) {
         console.error('Erro ao buscar produtos relacionados:', error);
       }
@@ -43,14 +50,32 @@ const Produto = () => {
   };
 
   const scrollLeft = () => {
-    if (swiperRef.current) {
-      swiperRef.current.scrollBy({ left: -200, behavior: 'smooth' });
+    if (indiceAtual > 0) {
+      const novoIndice = Math.max(indiceAtual - maxProdutosVisiveis, 0);
+      setIndiceAtual(novoIndice);
+      setProdutosVisiveis(produtosRelacionados.slice(novoIndice, novoIndice + maxProdutosVisiveis));
+      
+      if (swiperRef.current) {
+        swiperRef.current.scrollTo({
+          left: swiperRef.current.scrollLeft - swiperRef.current.clientWidth,
+          behavior: 'smooth'
+        });
+      }
     }
   };
 
   const scrollRight = () => {
-    if (swiperRef.current) {
-      swiperRef.current.scrollBy({ left: 200, behavior: 'smooth' });
+    if (indiceAtual + maxProdutosVisiveis < produtosRelacionados.length) {
+      const novoIndice = Math.min(indiceAtual + maxProdutosVisiveis, produtosRelacionados.length - maxProdutosVisiveis);
+      setIndiceAtual(novoIndice);
+      setProdutosVisiveis(produtosRelacionados.slice(novoIndice, novoIndice + maxProdutosVisiveis));
+      
+      if (swiperRef.current) {
+        swiperRef.current.scrollTo({
+          left: swiperRef.current.scrollLeft + swiperRef.current.clientWidth,
+          behavior: 'smooth'
+        });
+      }
     }
   };
 
@@ -66,11 +91,11 @@ const Produto = () => {
             <img src={produto.imagem} alt={produto.nome} />
           </div>
           <div className='produto-detalhes'>
-            <div className='produto-preco-botao'>
-              <p className='produto-preco'>R$ {produto.preco.toFixed(2)}</p>
-              <button onClick={() => adicionarAoCarrinho(produto)}>Adicionar ao Carrinho</button>
+            <p className='produto-preco'>R$ {produto.preco.toFixed(2)}</p>
+            <div className='produto-descricao-container'>
+              <p className='produto-descricao'>{produto.descricao}</p>
             </div>
-            <p className='produto-descricao'>{produto.descricao}</p>
+            <button className='botao-carrinho' onClick={() => adicionarAoCarrinho(produto)}>Adicionar ao Carrinho</button>
           </div>
         </div>
         <div className='produtos-relacionados'>
@@ -78,7 +103,7 @@ const Produto = () => {
           <div className='swiper-container'>
             <button className='swiper-button swiper-button-left' onClick={scrollLeft}>&lt;</button>
             <div className='swiper' ref={swiperRef}>
-              {produtosRelacionados.map(produtoRelacionado => (
+              {produtosVisiveis.map(produtoRelacionado => (
                 <ProdutoSwiperItem 
                   key={produtoRelacionado.id} 
                   produto={produtoRelacionado} 
