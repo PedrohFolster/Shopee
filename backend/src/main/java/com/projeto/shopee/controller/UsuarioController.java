@@ -1,6 +1,7 @@
 package com.projeto.shopee.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
@@ -68,6 +70,16 @@ public class UsuarioController {
             return ResponseEntity.ok(usuario);
         } catch (Exception e) {
             return ResponseEntity.status(500).body(null);
+        }
+    }
+
+    @PostMapping("/validar-senha")
+    public ResponseEntity<?> validarSenha(@SessionAttribute("userId") Long userId, @RequestParam String senha) {
+        try {
+            boolean isValid = usuarioService.validarSenha(userId, senha);
+            return ResponseEntity.ok().body(Map.of("valid", isValid));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Erro ao validar senha.");
         }
     }
 }

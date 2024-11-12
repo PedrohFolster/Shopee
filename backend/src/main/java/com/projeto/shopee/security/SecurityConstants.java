@@ -25,6 +25,7 @@ public class SecurityConstants {
         "/produtos/finalizar-compra",
         "/produtos/categoria/{categoriaProdutoId}",
         "/usuarios/perfil",
-        "/usuarios/{id}"
+        "/usuarios/{id}",
+        "/usuarios/validar-senha"
     };
 }

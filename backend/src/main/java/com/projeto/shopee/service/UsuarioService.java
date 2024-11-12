@@ -1,5 +1,6 @@
 package com.projeto.shopee.service;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,7 +9,10 @@ import org.springframework.stereotype.Service;
 
 import com.projeto.shopee.dto.UsuarioDTO;
 import com.projeto.shopee.entities.Usuario;
+import com.projeto.shopee.entities.UsuarioAutenticar;
+import com.projeto.shopee.repository.UsuarioAutenticarRepository;
 import com.projeto.shopee.repository.UsuarioRepository;
+import com.projeto.shopee.util.Hashing;
 import com.projeto.shopee.util.UsuarioMapper;
 import com.projeto.shopee.util.ValidationUtils;
 
@@ -21,6 +25,9 @@ public class UsuarioService {
     @Autowired
     private UsuarioMapper usuarioMapper;
 
+    @Autowired
+    private UsuarioAutenticarRepository usuarioAutenticarRepository;
+
     public List<UsuarioDTO> getAllUsuarios() {
         List<Usuario> usuarios = usuarioRepository.findAll();
         return usuarioMapper.toDTOs(usuarios);
@@ -32,7 +39,7 @@ public class UsuarioService {
     }
 
     public UsuarioDTO createUsuario(UsuarioDTO usuarioDTO) {
-        validateUsuario(usuarioDTO);
+        validateUsuario(usuarioDTO, true);
         Usuario usuario = usuarioMapper.toEntity(usuarioDTO);
         usuario = usuarioRepository.save(usuario);
         return usuarioMapper.toDTO(usuario);
@@ -42,7 +49,12 @@ public class UsuarioService {
         if (!usuarioRepository.existsById(id)) {
             throw new IllegalArgumentException("Usuário não encontrado");
         }
-        validateUsuario(usuarioDTO);
+        
+        String cpfSemFormatacao = usuarioDTO.getCpf().replaceAll("\\D", "");
+        usuarioDTO.setCpf(cpfSemFormatacao);
+        
+        validateUsuario(usuarioDTO, false);
+        
         usuarioDTO.setId(id);
         Usuario usuario = usuarioMapper.toEntity(usuarioDTO);
         usuario = usuarioRepository.save(usuario);
@@ -58,7 +70,17 @@ public class UsuarioService {
         usuarioRepository.deleteById(id);
     }
 
-    private void validateUsuario(UsuarioDTO usuarioDTO) {
+    public boolean validarSenha(Long userId, String senha) throws NoSuchAlgorithmException {
+        Optional<UsuarioAutenticar> usuarioAutenticarOpt = usuarioAutenticarRepository.findById(userId);
+        if (usuarioAutenticarOpt.isPresent()) {
+            UsuarioAutenticar usuarioAutenticar = usuarioAutenticarOpt.get();
+            String hashedSenha = Hashing.hash(senha);
+            return usuarioAutenticar.getPasswordHash().equals(hashedSenha);
+        }
+        return false;
+    }
+
+    private void validateUsuario(UsuarioDTO usuarioDTO, boolean validatePassword) {
         if (!ValidationUtils.isValidNomeCompleto(usuarioDTO.getNome())) {
             throw new IllegalArgumentException("Nome completo é obrigatório e deve conter pelo menos dois nomes");
         }
@@ -74,7 +96,8 @@ public class UsuarioService {
         if (!ValidationUtils.isValidDataNascimento(usuarioDTO.getDataNascimento())) {
             throw new IllegalArgumentException("Data de nascimento é obrigatória e o usuário deve ter mais de 12 anos");
         }
-        if (usuarioDTO.getUsuarioAutenticarDTO() == null || !ValidationUtils.isValidPassword(usuarioDTO.getUsuarioAutenticarDTO().getPasswordHash())) {
+        if (validatePassword && (usuarioDTO.getUsuarioAutenticarDTO() == null || !ValidationUtils.isValidPassword(usuarioDTO.getUsuarioAutenticarDTO().getPasswordHash()))) {
+            System.out.println("Senha recebida: " + usuarioDTO.getUsuarioAutenticarDTO().getPasswordHash());
             throw new IllegalArgumentException("Senha inválida. Deve conter pelo menos uma letra maiúscula, letras, números e um caractere especial");
         }
         if (!ValidationUtils.isValidEndereco(usuarioDTO.getEnderecoDTO())) {

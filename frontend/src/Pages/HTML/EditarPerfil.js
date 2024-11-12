@@ -14,25 +14,13 @@ function EditarPerfil() {
         email: '',
         telefone: '',
         dataNascimento: '',
-        enderecoDTO: {
-            id: '',
-            cep: '',
-            rua: '',
-            numero: '',
-            cidade: '',
-            estado: '',
-            pais: '',
-            complemento: ''
-        },
         usuarioAutenticarDTO: {
             id: '',
-            username: '',
             passwordHash: ''
         }
     });
 
-    const [novaSenha, setNovaSenha] = useState('');
-    const [confirmarSenha, setConfirmarSenha] = useState('');
+    const [senhaAtual, setSenhaAtual] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
@@ -52,64 +40,44 @@ function EditarPerfil() {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        if (name === 'cpf') {
-            if (value.replace(/\D/g, '').length <= 11) {
-                setUsuario(prevState => ({
-                    ...prevState,
-                    [name]: formatarCpf(value)
-                }));
-            }
-        } else if (name === 'telefone') {
-            if (value.replace(/\D/g, '').length <= 11) {
-                setUsuario(prevState => ({
-                    ...prevState,
-                    [name]: formatarTelefone(value)
-                }));
-            }
-        } else {
-            setUsuario(prevState => ({
-                ...prevState,
-                [name]: value
-            }));
-        }
+        setUsuario(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (!validarCpf(usuario.cpf)) {
-            setErrorMessage("CPF inválido.");
+        if (!senhaAtual) {
+            setErrorMessage("Por favor, informe sua senha atual.");
             return;
         }
-        if (novaSenha || confirmarSenha) {
-            if (novaSenha !== confirmarSenha) {
-                setErrorMessage("As senhas não coincidem.");
-                return;
-            }
-            if (!validarSenha(novaSenha)) {
-                setErrorMessage("Senha inválida. Deve conter pelo menos uma letra maiúscula, letras, números e um caractere especial.");
-                return;
-            }
-            usuario.usuarioAutenticarDTO.passwordHash = novaSenha; // Substitua por hash real
-        }
-        const usuarioSemFormatacao = {
-            ...usuario,
-            cpf: usuario.cpf.replace(/\D/g, ''),
-            telefone: usuario.telefone.replace(/\D/g, ''),
-            enderecoDTO: { ...usuario.enderecoDTO },
-            usuarioAutenticarDTO: { ...usuario.usuarioAutenticarDTO }
-        };
-        axios.put(`http://localhost:8080/usuarios/${usuario.id}`, usuarioSemFormatacao, { withCredentials: true })
-            .then(response => {
-                alert("Perfil atualizado com sucesso!");
-            })
-            .catch(error => {
-                setErrorMessage("Erro ao atualizar perfil.");
-            });
-    };
 
-    const validarSenha = (senha) => {
-        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-        return regex.test(senha);
+        axios.post('http://localhost:8080/usuarios/validar-senha', null, {
+            params: { senha: senhaAtual },
+            withCredentials: true
+        })
+        .then(response => {
+            if (response.data.valid) {
+                const usuarioSemFormatacao = {
+                    ...usuario,
+                    telefone: usuario.telefone.replace(/\D/g, ''),
+                    usuarioAutenticarDTO: { ...usuario.usuarioAutenticarDTO }
+                };
+                axios.put(`http://localhost:8080/usuarios/${usuario.id}`, usuarioSemFormatacao, { withCredentials: true })
+                    .then(response => {
+                        alert("Perfil atualizado com sucesso!");
+                    })
+                    .catch(error => {
+                        setErrorMessage("Erro ao atualizar perfil.");
+                    });
+            } else {
+                setErrorMessage("Senha incorreta.");
+            }
+        })
+        .catch(error => {
+            setErrorMessage("Erro ao validar senha.");
+        });
     };
 
     return (
@@ -135,7 +103,7 @@ function EditarPerfil() {
                             type="text"
                             name="cpf"
                             value={usuario.cpf}
-                            onChange={handleChange}
+                            readOnly
                             placeholder="CPF*"
                             required
                         />
@@ -169,19 +137,11 @@ function EditarPerfil() {
                     <div className="form-row completo">
                         <Input
                             type="password"
-                            name="novaSenha"
-                            value={novaSenha}
-                            onChange={(e) => setNovaSenha(e.target.value)}
-                            placeholder="Nova senha"
-                        />
-                    </div>
-                    <div className="form-row completo">
-                        <Input
-                            type="password"
-                            name="confirmarSenha"
-                            value={confirmarSenha}
-                            onChange={(e) => setConfirmarSenha(e.target.value)}
-                            placeholder="Confirme sua senha"
+                            name="senhaAtual"
+                            value={senhaAtual}
+                            onChange={(e) => setSenhaAtual(e.target.value)}
+                            placeholder="Senha atual*"
+                            required
                         />
                     </div>
                     <Button type="submit">Atualizar Perfil</Button>
