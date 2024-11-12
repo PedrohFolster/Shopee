@@ -63,7 +63,7 @@ const Register = () => {
         return;
       }
       if (!email.includes('@')) {
-        setErrorMessage('E-mail inválido');
+        setErrorMessage('E-mail inválido frontend1');
         return;
       }
       if (senha !== confirmarSenha) {

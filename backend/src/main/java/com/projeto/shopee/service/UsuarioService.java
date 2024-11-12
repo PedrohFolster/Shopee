@@ -46,19 +46,22 @@ public class UsuarioService {
     }
 
     public UsuarioDTO updateUsuario(Long id, UsuarioDTO usuarioDTO) {
-        if (!usuarioRepository.existsById(id)) {
-            throw new IllegalArgumentException("Usuário não encontrado");
-        }
-        
-        String cpfSemFormatacao = usuarioDTO.getCpf().replaceAll("\\D", "");
-        usuarioDTO.setCpf(cpfSemFormatacao);
-        
+        // Valida os dados do usuário, sem validar a senha
         validateUsuario(usuarioDTO, false);
-        
-        usuarioDTO.setId(id);
-        Usuario usuario = usuarioMapper.toEntity(usuarioDTO);
-        usuario = usuarioRepository.save(usuario);
-        return usuarioMapper.toDTO(usuario);
+
+        // Verifica se o usuário existe
+        Usuario usuarioExistente = usuarioRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+        // Atualiza apenas os campos necessários
+        usuarioExistente.setNome(usuarioDTO.getNome());
+        usuarioExistente.setEmail(usuarioDTO.getEmail());
+        usuarioExistente.setTelefone(usuarioDTO.getTelefone());
+        usuarioExistente.setDataNascimento(usuarioDTO.getDataNascimento());
+
+        // Salva as alterações no banco de dados
+        usuarioExistente = usuarioRepository.save(usuarioExistente);
+        return usuarioMapper.toDTO(usuarioExistente);
     }
 
     public Long findByEmail(String email) {
@@ -85,12 +88,12 @@ public class UsuarioService {
             throw new IllegalArgumentException("Nome completo é obrigatório e deve conter pelo menos dois nomes");
         }
         if (!ValidationUtils.isValidEmail(usuarioDTO.getEmail())) {
-            throw new IllegalArgumentException("E-mail inválido");
+            throw new IllegalArgumentException("E-mail inválido backend");
         }
         if (!ValidationUtils.isValidTelefone(usuarioDTO.getTelefone())) {
             throw new IllegalArgumentException("Telefone inválido");
         }
-        if (usuarioDTO.getCpf() == null || !ValidationUtils.isValidCpf(usuarioDTO.getCpf())) {
+        if (validatePassword && (usuarioDTO.getCpf() == null || !ValidationUtils.isValidCpf(usuarioDTO.getCpf()))) {
             throw new IllegalArgumentException("CPF inválido");
         }
         if (!ValidationUtils.isValidDataNascimento(usuarioDTO.getDataNascimento())) {

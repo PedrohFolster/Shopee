@@ -40,16 +40,70 @@ function EditarPerfil() {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setUsuario(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
+        if (name === 'telefone') {
+            if (value.replace(/\D/g, '').length <= 11) {
+                setUsuario(prevState => ({
+                    ...prevState,
+                    [name]: formatarTelefone(value)
+                }));
+            }
+        } else {
+            setUsuario(prevState => ({
+                ...prevState,
+                [name]: value
+            }));
+        }
+    };
+
+    // Funções de validação
+    const isValidNomeCompleto = (nome) => {
+        return nome && nome.split(' ').length >= 2;
+    };
+
+    const isValidEmail = (email) => {
+        return email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    };
+
+    const isValidDataNascimento = (dataNascimento) => {
+        if (!dataNascimento) return false;
+        const birthDate = new Date(dataNascimento);
+        const today = new Date();
+        const age = today.getFullYear() - birthDate.getFullYear();
+        const monthDiff = today.getMonth() - birthDate.getMonth();
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+            return age - 1 >= 12;
+        }
+        return age >= 12;
+    };
+
+    const isValidTelefone = (telefone) => {
+        return telefone && /^\d{11}$/.test(telefone.replace(/\D/g, ''));
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        setErrorMessage('');
+
         if (!senhaAtual) {
             setErrorMessage("Por favor, informe sua senha atual.");
+            return;
+        }
+
+        // Validações
+        if (!isValidNomeCompleto(usuario.nome)) {
+            setErrorMessage("Nome completo deve conter pelo menos dois nomes.");
+            return;
+        }
+        if (!isValidEmail(usuario.email)) {
+            setErrorMessage("E-mail inválido.");
+            return;
+        }
+        if (!isValidDataNascimento(usuario.dataNascimento)) {
+            setErrorMessage("Data de nascimento inválida ou usuário deve ter pelo menos 12 anos.");
+            return;
+        }
+        if (!isValidTelefone(usuario.telefone)) {
+            setErrorMessage("Telefone inválido.");
             return;
         }
 
@@ -62,7 +116,10 @@ function EditarPerfil() {
                 const usuarioSemFormatacao = {
                     ...usuario,
                     telefone: usuario.telefone.replace(/\D/g, ''),
-                    usuarioAutenticarDTO: { ...usuario.usuarioAutenticarDTO }
+                    usuarioAutenticarDTO: { 
+                        ...usuario.usuarioAutenticarDTO,
+                        passwordHash: undefined
+                    }
                 };
                 axios.put(`http://localhost:8080/usuarios/${usuario.id}`, usuarioSemFormatacao, { withCredentials: true })
                     .then(response => {
@@ -95,7 +152,6 @@ function EditarPerfil() {
                             value={usuario.nome}
                             onChange={handleChange}
                             placeholder="Nome completo*"
-                            required
                         />
                     </div>
                     <div className="form-row-register">
@@ -105,7 +161,7 @@ function EditarPerfil() {
                             value={usuario.cpf}
                             readOnly
                             placeholder="CPF*"
-                            required
+                            
                         />
                         <Input
                             type="email"
@@ -113,7 +169,7 @@ function EditarPerfil() {
                             value={usuario.email}
                             onChange={handleChange}
                             placeholder="E-mail*"
-                            required
+                            
                         />
                     </div>
                     <div className="form-row-register">
@@ -123,7 +179,7 @@ function EditarPerfil() {
                             value={usuario.dataNascimento}
                             onChange={handleChange}
                             placeholder="Data de nascimento*"
-                            required
+                            
                         />
                         <Input
                             type="tel"
@@ -131,7 +187,7 @@ function EditarPerfil() {
                             value={usuario.telefone}
                             onChange={handleChange}
                             placeholder="Telefone*"
-                            required
+                            
                         />
                     </div>
                     <div className="form-row completo">
@@ -141,7 +197,6 @@ function EditarPerfil() {
                             value={senhaAtual}
                             onChange={(e) => setSenhaAtual(e.target.value)}
                             placeholder="Senha atual*"
-                            required
                         />
                     </div>
                     <Button type="submit">Atualizar Perfil</Button>
