@@ -136,7 +136,7 @@ public class ProdutoService {
             .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
         
         if (produto.getEstoque() < quantidade) {
-            throw new RuntimeException("Estoque insuficiente");
+            throw new RuntimeException("Estoque insuficiente para o produto: " + produto.getNome());
         }
         
         produto.setEstoque(produto.getEstoque() - quantidade);

@@ -7,7 +7,7 @@ import Login from './Pages/HTML/Login';
 import CreateLoja from './Pages/HTML/CreateLoja';
 import MinhaLoja from './Pages/HTML/MinhaLoja';
 import CriarProduto from './Pages/HTML/CriarProduto';
-import Carrinho from './Pages/HTML/Carrinho';
+import Carrinho from './Pages/HTML/Carrinho/Carrinho';
 import Produto from './Pages/HTML/Produto';
 import EditarPerfil from './Pages/HTML/EditarPerfil';
 function App() {
