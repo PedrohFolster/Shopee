@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Header from '../../Components/Menu/Items/Header/Header';
-import Input from '../../Components/Input/Input';
-import Button from '../../Components/Button/Button';
+import FormularioPerfil from '../../Components/EditarPerfil/FormularioPerfil';
+import MensagemErro from '../../Components/EditarPerfil/MensagemErro';
 import '../CSS/Register.css';
-import { formatarCpf, validarCpf } from '../../Util/CpfFormatter';
+import { formatarCpf } from '../../Util/CpfFormatter';
 import { formatarTelefone } from '../../Util/TelefoneFormatter';
+import { isValidNomeCompleto, isValidEmail, isValidDataNascimento, isValidTelefone } from '../../Util/ValidacoesPerfil';
 
 function EditarPerfil() {
     const [usuario, setUsuario] = useState({
@@ -53,31 +54,6 @@ function EditarPerfil() {
                 [name]: value
             }));
         }
-    };
-
-    // Funções de validação
-    const isValidNomeCompleto = (nome) => {
-        return nome && nome.split(' ').length >= 2;
-    };
-
-    const isValidEmail = (email) => {
-        return email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    };
-
-    const isValidDataNascimento = (dataNascimento) => {
-        if (!dataNascimento) return false;
-        const birthDate = new Date(dataNascimento);
-        const today = new Date();
-        const age = today.getFullYear() - birthDate.getFullYear();
-        const monthDiff = today.getMonth() - birthDate.getMonth();
-        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-            return age - 1 >= 12;
-        }
-        return age >= 12;
-    };
-
-    const isValidTelefone = (telefone) => {
-        return telefone && /^\d{11}$/.test(telefone.replace(/\D/g, ''));
     };
 
     const handleSubmit = (e) => {
@@ -143,67 +119,17 @@ function EditarPerfil() {
             <main className="register-content">
                 <h2>EDITAR PERFIL</h2>
                 <div className="separator"></div>
-                {errorMessage && <div className="error-message">{errorMessage}</div>}
-                <form onSubmit={handleSubmit}>
-                    <div className="form-row completo">
-                        <Input
-                            type="text"
-                            name="nome"
-                            value={usuario.nome}
-                            onChange={handleChange}
-                            placeholder="Nome completo*"
-                        />
-                    </div>
-                    <div className="form-row-register">
-                        <Input
-                            type="text"
-                            name="cpf"
-                            value={usuario.cpf}
-                            readOnly
-                            placeholder="CPF*"
-                            
-                        />
-                        <Input
-                            type="email"
-                            name="email"
-                            value={usuario.email}
-                            onChange={handleChange}
-                            placeholder="E-mail*"
-                            
-                        />
-                    </div>
-                    <div className="form-row-register">
-                        <Input
-                            type="date"
-                            name="dataNascimento"
-                            value={usuario.dataNascimento}
-                            onChange={handleChange}
-                            placeholder="Data de nascimento*"
-                            
-                        />
-                        <Input
-                            type="tel"
-                            name="telefone"
-                            value={usuario.telefone}
-                            onChange={handleChange}
-                            placeholder="Telefone*"
-                            
-                        />
-                    </div>
-                    <div className="form-row completo">
-                        <Input
-                            type="password"
-                            name="senhaAtual"
-                            value={senhaAtual}
-                            onChange={(e) => setSenhaAtual(e.target.value)}
-                            placeholder="Senha atual*"
-                        />
-                    </div>
-                    <Button type="submit">Atualizar Perfil</Button>
-                </form>
+                {errorMessage && <MensagemErro mensagem={errorMessage} />}
+                <FormularioPerfil 
+                    usuario={usuario}
+                    handleChange={handleChange}
+                    senhaAtual={senhaAtual}
+                    setSenhaAtual={setSenhaAtual}
+                    handleSubmit={handleSubmit}
+                />
             </main>
         </div>
     );
 }
 
-export default EditarPerfil;
+export default EditarPerfil; 
