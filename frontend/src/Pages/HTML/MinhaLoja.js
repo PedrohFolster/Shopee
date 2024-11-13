@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import Header from '../../Components/Menu/Items/Header/Header';
 import LojaInfo from '../../Components/Loja/LojaInfo';
@@ -6,8 +6,11 @@ import ProdutosList from '../../Components/Loja/ProdutosList';
 import ProdutoModal from '../../Components/Loja/ProdutoModal';
 import '../CSS/MinhaLoja.css';
 import '../CSS/CriarProduto.css';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../Util/Authentication';
 
 const MinhaLoja = () => {
+    const { isAuthenticated } = useContext(AuthContext);
     const [lojaInfo, setLojaInfo] = useState(null);
     const [error, setError] = useState(null);
     const [activeTab, setActiveTab] = useState('dados');
@@ -26,6 +29,24 @@ const MinhaLoja = () => {
     const [produtos, setProdutos] = useState([]);
     const [editingProduto, setEditingProduto] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!isAuthenticated) {
+            navigate('/login');
+            return;
+        }
+
+        axios.get('http://localhost:8080/lojas/verificar-loja', { withCredentials: true })
+            .then(response => {
+                if (response.data !== "Redirecionar para /minha-loja") {
+                    navigate("/CreateLoja");
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao verificar loja:', error);
+            });
+    }, [isAuthenticated]);
 
   useEffect(() => {
     axios.get('http://localhost:8080/lojas/minha-loja', { withCredentials: true })
