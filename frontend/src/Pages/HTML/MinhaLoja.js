@@ -8,24 +8,24 @@ import '../CSS/MinhaLoja.css';
 import '../CSS/CriarProduto.css';
 
 const MinhaLoja = () => {
-  const [lojaInfo, setLojaInfo] = useState(null);
-  const [error, setError] = useState(null);
-  const [activeTab, setActiveTab] = useState('dados');
-  const [showModal, setShowModal] = useState(false);
-  
-  const [nome, setNome] = useState('');
-  const [descricao, setDescricao] = useState('');
-  const [preco, setPreco] = useState('');
-  const [imagem, setImagem] = useState('');
-  const [estoque, setEstoque] = useState('');
-  const [categoriaProdutoId, setCategoriaProdutoId] = useState('');
-  const [statusId, setStatusId] = useState('');
-  const [mensagem, setMensagem] = useState('');
-  const [categorias, setCategorias] = useState([]);
-  const [statusList, setStatusList] = useState([]);
-  const [produtos, setProdutos] = useState([]);
-  const [editingProduto, setEditingProduto] = useState(null);
-  const [searchTerm, setSearchTerm] = useState('');
+    const [lojaInfo, setLojaInfo] = useState(null);
+    const [error, setError] = useState(null);
+    const [activeTab, setActiveTab] = useState('dados');
+    const [showModal, setShowModal] = useState(false);
+    
+    const [nome, setNome] = useState('');
+    const [descricao, setDescricao] = useState('');
+    const [preco, setPreco] = useState('');
+    const [imagem, setImagem] = useState('');
+    const [estoque, setEstoque] = useState('');
+    const [categoriaProdutoId, setCategoriaProdutoId] = useState('');
+    const [statusId, setStatusId] = useState('');
+    const [mensagem, setMensagem] = useState('');
+    const [categorias, setCategorias] = useState([]);
+    const [statusList, setStatusList] = useState([]);
+    const [produtos, setProdutos] = useState([]);
+    const [editingProduto, setEditingProduto] = useState(null);
+    const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     axios.get('http://localhost:8080/lojas/minha-loja', { withCredentials: true })

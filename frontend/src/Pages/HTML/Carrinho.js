@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import ProdutosList from '../../Components/Produto/ProdutosList';
+import ProdutosList from '../../Components/Carrinho/ProdutosList';
+import Header from '../../Components/Menu/Items/Header/Header';
 import '../CSS/Carrinho.css';
 
 const Carrinho = () => {
@@ -41,15 +42,18 @@ const Carrinho = () => {
   };
 
   return (
-    <div className="carrinho-container">
-      <h2 className="carrinho-title">Carrinho</h2>
-      <ProdutosList 
-        produtos={carrinho} 
-        aumentarQuantidade={aumentarQuantidade} 
-        diminuirQuantidade={diminuirQuantidade} 
-      />
-      <button className="finalizar-button" onClick={finalizarCompra}>Finalizar Compra</button>
-    </div>
+    <>
+      <Header searchHidden={true} navbarHidden={true} />
+      <div className="carrinho-container">
+        <h2 className="carrinho-title">Carrinho</h2>
+        <ProdutosList 
+          produtos={carrinho} 
+          aumentarQuantidade={aumentarQuantidade} 
+          diminuirQuantidade={diminuirQuantidade} 
+        />
+        <button className="finalizar-button" onClick={finalizarCompra}>Finalizar Compra</button>
+      </div>
+    </>
   );
 };
 

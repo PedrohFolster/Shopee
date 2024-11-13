@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
-import Header from '../../Components/Menu/Items/Header/Header';
-import Input from '../../Components/Input/Input';
-import Button from '../../Components/Button/Button';
+import RegisterHeader from '../../Components/Register/RegisterHeader';
+import RegisterFormStep1 from '../../Components/Register/RegisterFormStep1';
+import RegisterFormStep2 from '../../Components/Register/RegisterFormStep2';
 import '../CSS/Register.css';
 import { formatarCpf, validarCpf } from '../../Util/CpfFormatter';
 import { fetchAddressByCep } from '../../Util/CepAPI';
@@ -63,7 +63,7 @@ const Register = () => {
         return;
       }
       if (!email.includes('@')) {
-        setErrorMessage('E-mail inválido frontend1');
+        setErrorMessage('E-mail inválido');
         return;
       }
       if (senha !== confirmarSenha) {
@@ -158,168 +158,28 @@ const Register = () => {
 
   return (
     <div className="register">
-      <Header searchHidden={true} navbarHidden={true}/>
+      <RegisterHeader />
       <main className="register-content">
-        {step === 2 && (
-          <button className="back-button" onClick={handlePreviousStep}>
-            &#8592; Voltar
-          </button>
-        )}
         <h2>CRIAR CONTA</h2>
         <div className="separator"></div>
-        {errorMessage && <div className="error-message">{errorMessage}</div>}
         <form onSubmit={(e) => e.preventDefault()}>
           {step === 1 && (
-            <>
-              <div className="form-row completo">
-                <Input
-                  type="text"
-                  id="nomeCompleto"
-                  name="nomeCompleto"
-                  value={formData.nomeCompleto}
-                  onChange={handleChange}
-                  placeholder="Nome completo*"
-                  required
-                />
-              </div>
-              <div className="form-row-register">
-                <Input
-                  type="text"
-                  id="cpf"
-                  name="cpf"
-                  value={formData.cpf}
-                  onChange={handleChange}
-                  placeholder="CPF*"
-                  required
-                  className={!validarCpf(formData.cpf) ? 'input-error' : ''}
-                />
-                <Input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="E-mail*"
-                  required
-                />
-              </div>
-              <div className="form-row-register">
-                <Input
-                  type="date"
-                  id="dataNascimento"
-                  name="dataNascimento"
-                  value={formData.dataNascimento}
-                  onChange={handleChange}
-                  placeholder="Data de nascimento*"
-                  required
-                />
-                <Input
-                  type="tel"
-                  id="telefone"
-                  name="telefone"
-                  value={formData.telefone}
-                  onChange={handleChange}
-                  placeholder="Telefone*"
-                  required
-                />
-              </div>
-              <div className="form-row-register">
-                <Input
-                  type="password"
-                  id="senha"
-                  name="senha"
-                  value={formData.senha}
-                  onChange={handleChange}
-                  placeholder="Crie sua senha*"
-                  required
-                />
-                <Input
-                  type="password"
-                  id="confirmarSenha"
-                  name="confirmarSenha"
-                  value={formData.confirmarSenha}
-                  onChange={handleChange}
-                  placeholder="Confirme sua senha*"
-                  required
-                />
-              </div>
-              <Button type="button-register" onClick={handleNextStep}>Próxima Etapa</Button>
-            </>
+            <RegisterFormStep1 
+              formData={formData} 
+              handleChange={handleChange} 
+              handleNextStep={handleNextStep} 
+              errorMessage={errorMessage}
+            />
           )}
           {step === 2 && (
-            <>
-              <div className="form-row-register">
-                <Input
-                  type="text"
-                  id="cep"
-                  name="cep"
-                  value={formData.cep}
-                  onChange={handleCepChange}
-                  placeholder="CEP*"
-                  required
-                />
-                <Input
-                  type="text"
-                  id="cidade"
-                  name="cidade"
-                  value={formData.cidade}
-                  onChange={handleChange}
-                  placeholder="Cidade*"
-                  required
-                />
-              </div>
-              <div className="form-row-register">
-                <Input
-                  type="text"
-                  id="rua"
-                  name="rua"
-                  value={formData.rua}
-                  onChange={handleChange}
-                  placeholder="Rua*"
-                  required
-                />
-                <Input
-                  type="text"
-                  id="numero"
-                  name="numero"
-                  value={formData.numero}
-                  onChange={handleChange}
-                  placeholder="Número*"
-                  required
-                />
-              </div>
-              <div className="form-row-register">
-                <Input
-                  type="text"
-                  id="estado"
-                  name="estado"
-                  value={formData.estado}
-                  onChange={handleChange}
-                  placeholder="Estado*"
-                  required
-                />
-                <Input
-                  type="text"
-                  id="pais"
-                  name="pais"
-                  value={formData.pais}
-                  onChange={handleChange}
-                  placeholder="País*"
-                  required
-                />
-              </div>
-              <div className="form-row completo">
-                <Input
-                  type="text"
-                  id="complemento"
-                  name="complemento"
-                  value={formData.complemento}
-                  onChange={handleChange}
-                  placeholder="Complemento"
-                />
-              </div>
-              <Button type="button-register" onClick={handleNextStep}>Finalizar Cadastro</Button>
-            </>
+            <RegisterFormStep2 
+              formData={formData} 
+              handleChange={handleChange} 
+              handleCepChange={handleCepChange} 
+              handlePreviousStep={handlePreviousStep} 
+              handleNextStep={handleNextStep} 
+              errorMessage={errorMessage}
+            />
           )}
         </form>
         <Link to="/login" className="login-link">Já tem uma conta? Faça login</Link>
