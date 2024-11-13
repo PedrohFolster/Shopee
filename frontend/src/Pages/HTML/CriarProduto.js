@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import "../CSS/CriarProduto.css";
-import Header from '../../Components/Menu/Items/Header/Header';
 import axios from 'axios';
+import Header from '../../Components/Menu/Items/Header/Header';
+import FormularioProduto from '../../Components/CriarProduto/FormularioProduto';
+import Mensagem from '../../Components/CriarProduto/Mensagem';
+import '../CSS/CriarProduto.css';
 
 const CriarProduto = () => {
   const [nome, setNome] = useState('');
@@ -66,45 +68,26 @@ const CriarProduto = () => {
       <Header />
       <div className="form-container">
         <h1>Criar Produto</h1>
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <input type="text" placeholder="Nome" value={nome} onChange={(e) => setNome(e.target.value)} required />
-          </div>
-          <div className="form-group">
-            <input type="number" placeholder="Preço" value={preco} onChange={(e) => setPreco(e.target.value)} required />
-          </div>
-          <div className="form-group">
-            <input type="text" placeholder="Imagem" value={imagem} onChange={(e) => setImagem(e.target.value)} />
-          </div>
-          <div className="form-group">
-            <input type="number" placeholder="Estoque" value={estoque} onChange={(e) => setEstoque(e.target.value)} required />
-          </div>
-          <div className="form-group">
-            <select value={categoriaProdutoId} onChange={(e) => setCategoriaProdutoId(e.target.value)} required>
-              <option value="">Selecione a Categoria</option>
-              {categorias.map(categoria => (
-                <option key={categoria.id} value={categoria.id}>
-                  {categoria.nome}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="form-group">
-            <select value={statusId} onChange={(e) => setStatusId(e.target.value)} required>
-              <option value="">Selecione o Status</option>
-              {statusList.map(status => (
-                <option key={status.id} value={status.id}>
-                  {status.nomeStatus} l
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="form-group-full">
-            <textarea placeholder="Descrição" value={descricao} onChange={(e) => setDescricao(e.target.value)} required />
-          </div>
-          <button type="submit">Salvar Produto</button>
-        </form>
-        {mensagem && <p>{mensagem}</p>}
+        <FormularioProduto
+          nome={nome}
+          setNome={setNome}
+          descricao={descricao}
+          setDescricao={setDescricao}
+          preco={preco}
+          setPreco={setPreco}
+          imagem={imagem}
+          setImagem={setImagem}
+          estoque={estoque}
+          setEstoque={setEstoque}
+          categoriaProdutoId={categoriaProdutoId}
+          setCategoriaProdutoId={setCategoriaProdutoId}
+          statusId={statusId}
+          setStatusId={setStatusId}
+          categorias={categorias}
+          statusList={statusList}
+          handleSubmit={handleSubmit}
+        />
+        {mensagem && <Mensagem texto={mensagem} />}
       </div>
     </div>
   );

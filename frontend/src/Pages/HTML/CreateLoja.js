@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Header from '../../Components/Menu/Items/Header/Header';
-import Input from '../../Components/Input/Input';
-import Button from '../../Components/Button/Button';
+import LojaForm from '../../Components/LojaForm/LojaForm';
 import '../CSS/CreateLoja.css';
 import { useNavigate } from 'react-router-dom';
 
@@ -56,40 +55,15 @@ const CriarLoja = () => {
             <Header searchHidden={true} navbarHidden={true} />
             <main className="create-loja-form">
                 <h2>CRIAR LOJA</h2>
-                <form onSubmit={handleSubmit}>
-                    <div className="form-row-createloja">
-                        <Input
-                            type="text"
-                            id="nome"
-                            name="nome"
-                            value={nome}
-                            onChange={(e) => setNome(e.target.value)}
-                            placeholder="Nome da Loja*"
-                            required
-                        />
-                    </div>
-                    <div className="form-row-createloja">
-                        <select
-                            className="categoria-loja-select"
-                            value={categoriaId}
-                            onChange={(e) => setCategoriaId(e.target.value)}
-                            required
-                        >
-                            <option value="">Selecione uma categoria*</option>
-                            {categorias.map(categoria => (
-                                <option key={categoria.id} value={categoria.id}>
-                                    {categoria.nome}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                    {error && <div className="error-message">{error}</div>}
-                    <div className="form-row-button-createloja">
-                        <Button type="criar-loja-btn" onClick={handleSubmit}>
-                            Criar Loja
-                        </Button>
-                    </div>
-                </form>
+                <LojaForm 
+                    nome={nome}
+                    setNome={setNome}
+                    categoriaId={categoriaId}
+                    setCategoriaId={setCategoriaId}
+                    categorias={categorias}
+                    handleSubmit={handleSubmit}
+                    error={error}
+                />
             </main>
         </div>
     );

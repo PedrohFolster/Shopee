@@ -1,6 +1,6 @@
 import React from 'react';
 import ProdutoItem from './ProdutoItem';
-import '../../CSS/Carrinho.css';
+import '../../Pages/CSS/Produto.css';
 
 const ProdutosList = ({ produtos, aumentarQuantidade, diminuirQuantidade }) => (
     <div className="produtos-list">

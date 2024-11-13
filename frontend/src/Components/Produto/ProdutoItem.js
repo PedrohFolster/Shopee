@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../CSS/Carrinho.css';
+import '../../Pages/CSS/Produto.css';
 
 const ProdutoItem = ({ produto, aumentarQuantidade, diminuirQuantidade }) => (
   <div className="produto-item">

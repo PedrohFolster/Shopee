@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import ProdutosList from '../Carrinho/ProdutosList';
-import '../../CSS/Carrinho.css';
+import ProdutosList from '../../Components/Produto/ProdutosList';
+import '../CSS/Carrinho.css';
 
 const Carrinho = () => {
   const [carrinho, setCarrinho] = useState(
