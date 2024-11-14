@@ -78,7 +78,7 @@ public class UsuarioService {
         if (usuarioAutenticarOpt.isPresent()) {
             UsuarioAutenticar usuarioAutenticar = usuarioAutenticarOpt.get();
             String hashedSenha = Hashing.hash(senha);
-            return usuarioAutenticar.getPasswordHash().equals(hashedSenha);
+            return usuarioAutenticar.getPassword().equals(hashedSenha);
         }
         return false;
     }
@@ -99,8 +99,8 @@ public class UsuarioService {
         if (!ValidationUtils.isValidDataNascimento(usuarioDTO.getDataNascimento())) {
             throw new IllegalArgumentException("Data de nascimento é obrigatória e o usuário deve ter mais de 12 anos");
         }
-        if (validatePassword && (usuarioDTO.getUsuarioAutenticarDTO() == null || !ValidationUtils.isValidPassword(usuarioDTO.getUsuarioAutenticarDTO().getPasswordHash()))) {
-            System.out.println("Senha recebida: " + usuarioDTO.getUsuarioAutenticarDTO().getPasswordHash());
+        if (validatePassword && (usuarioDTO.getUsuarioAutenticarDTO() == null || !ValidationUtils.isValidPassword(usuarioDTO.getUsuarioAutenticarDTO().getPassword()))) {
+            System.out.println("Senha recebida: " + usuarioDTO.getUsuarioAutenticarDTO().getPassword());
             throw new IllegalArgumentException("Senha inválida. Deve conter pelo menos uma letra maiúscula, letras, números e um caractere especial");
         }
         if (!ValidationUtils.isValidEndereco(usuarioDTO.getEnderecoDTO())) {

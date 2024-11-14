@@ -6,13 +6,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthenticationService {
 
-    private final JwtService jwtService;
+    private  final JwtService jwtService;
 
     public AuthenticationService(JwtService jwtService) {
         this.jwtService = jwtService;
     }
 
     public String authenticate(Authentication authentication) {
-        return jwtService.generateToken(authentication);
+        return jwtService.getGenereteToken(authentication);
     }
 }

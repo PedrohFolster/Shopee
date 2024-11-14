@@ -3,6 +3,7 @@ package com.projeto.shopee.entities;
 import java.security.NoSuchAlgorithmException;
 
 import com.projeto.shopee.util.Hashing;
+import com.projeto.shopee.dto.UsuarioAutenticarDTO;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,15 +17,24 @@ public class UsuarioAutenticar {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String username;
-    private String passwordHash;
+    private String login;
+    private String password;
+    private String perfil;
 
-    public UsuarioAutenticar(Long id, String username, String passwordHash) {
+    public UsuarioAutenticar(Long id, String login, String password, String perfil) {
         this.id = id;
-        this.username = username;
-        this.passwordHash = passwordHash;
+        this.login = login;
+        this.password = password;
+        this.perfil = perfil;
     }
-    
+
+    public UsuarioAutenticar(UsuarioAutenticarDTO dto) throws NoSuchAlgorithmException {
+        this.id = dto.getId();
+        this.login = dto.getLogin();
+        this.password = Hashing.hash(dto.getPassword());
+        this.perfil = dto.getPerfil();
+    }
+
     public UsuarioAutenticar() {
     }
     
@@ -34,17 +44,23 @@ public class UsuarioAutenticar {
     public void setId(Long id) {
         this.id = id;
     }
-    public String getUsername() {
-        return username;
+    public String getLogin() {
+        return login;
     }
-    public void setUsername(String username) {
-        this.username = username;
+    public void setLogin(String login) {
+        this.login = login;
     }
-    public String getPasswordHash() {
-        return passwordHash;
+    public String getPassword() {
+        return password;
     }
-    public void setPasswordHash(String passwordHash) throws NoSuchAlgorithmException {
-        this.passwordHash = Hashing.hash(passwordHash);
+    public void setPassword(String password) throws NoSuchAlgorithmException {
+        this.password = Hashing.hash(password);
+    }
+    public String getPerfil() {
+        return perfil;
+    }
+    public void setPerfil(String perfil) {
+        this.perfil = perfil;
     }
 
     

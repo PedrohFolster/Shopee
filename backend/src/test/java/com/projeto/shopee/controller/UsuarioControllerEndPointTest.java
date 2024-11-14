@@ -15,10 +15,10 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.projeto.shopee.dto.EnderecoDTO;
 import com.projeto.shopee.dto.UsuarioAutenticarDTO;
 import com.projeto.shopee.dto.UsuarioDTO;
-import com.projeto.shopee.dto.EnderecoDTO;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -54,8 +54,9 @@ public class UsuarioControllerEndPointTest {
         novoUsuario.setEnderecoDTO(novoEnderecoDTO);
 
         novoUsuarioAutenticar = new UsuarioAutenticarDTO();
-        novoUsuarioAutenticar.setUsername("teste@teste.com");
-        novoUsuarioAutenticar.setPasswordHash("Senha123!");
+        novoUsuarioAutenticar.setLogin("teste@teste.com");
+        novoUsuarioAutenticar.setPassword("Senha123!");
+        novoUsuarioAutenticar.setPerfil("Administrador");
         novoUsuario.setUsuarioAutenticarDTO(novoUsuarioAutenticar);
 
         objectMapper.registerModule(new JavaTimeModule());

@@ -70,8 +70,9 @@ public class LojaControllerEndPointTest {
         novoUsuario.setEnderecoDTO(novoEnderecoDTO);
 
         UsuarioAutenticarDTO novoUsuarioAutenticar = new UsuarioAutenticarDTO();
-        novoUsuarioAutenticar.setUsername("teste@teste.com");
-        novoUsuarioAutenticar.setPasswordHash("Senha123!");
+        novoUsuarioAutenticar.setLogin("teste@teste.com");
+        novoUsuarioAutenticar.setPassword("Senha123!");
+        novoUsuarioAutenticar.setPerfil("Administrador");
         novoUsuario.setUsuarioAutenticarDTO(novoUsuarioAutenticar);
 
         novaLoja = new LojaDTO();

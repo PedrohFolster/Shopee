@@ -41,8 +41,9 @@ public class UsuarioMapper {
         if (usuario.getUsuarioAutenticar() != null) {
             usuarioDTO.setUsuarioAutenticarDTO(new UsuarioAutenticarDTO(
                 usuario.getUsuarioAutenticar().getId(), 
-                usuario.getUsuarioAutenticar().getUsername(),
-                usuario.getUsuarioAutenticar().getPasswordHash()
+                usuario.getUsuarioAutenticar().getLogin(),
+                usuario.getUsuarioAutenticar().getPassword(),
+                usuario.getUsuarioAutenticar().getPerfil()
             ));
         }
 
@@ -74,9 +75,9 @@ public class UsuarioMapper {
         if (usuarioDTO.getUsuarioAutenticarDTO() != null) {
             UsuarioAutenticar usuarioAutenticar = new UsuarioAutenticar();
             usuarioAutenticar.setId(usuarioDTO.getUsuarioAutenticarDTO().getId());
-            usuarioAutenticar.setUsername(usuarioDTO.getUsuarioAutenticarDTO().getUsername());
+            usuarioAutenticar.setLogin(usuarioDTO.getUsuarioAutenticarDTO().getLogin());
             try {
-                usuarioAutenticar.setPasswordHash(usuarioDTO.getUsuarioAutenticarDTO().getPasswordHash());
+                usuarioAutenticar.setPassword(usuarioDTO.getUsuarioAutenticarDTO().getPassword());
             } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
             }

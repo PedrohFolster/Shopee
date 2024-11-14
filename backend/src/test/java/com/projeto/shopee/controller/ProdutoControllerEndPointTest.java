@@ -11,20 +11,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.mock.web.MockHttpSession;
+import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.projeto.shopee.dto.ProdutoDTO;
-import com.projeto.shopee.dto.UsuarioDTO;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.projeto.shopee.dto.EnderecoDTO;
 import com.projeto.shopee.dto.LojaDTO;
+import com.projeto.shopee.dto.ProdutoDTO;
 import com.projeto.shopee.dto.UsuarioAutenticarDTO;
+import com.projeto.shopee.dto.UsuarioDTO;
 import com.projeto.shopee.entities.Usuario;
+import com.projeto.shopee.repository.LojaRepository;
 import com.projeto.shopee.repository.ProdutoRepository;
 import com.projeto.shopee.repository.UsuarioRepository;
-import com.projeto.shopee.repository.LojaRepository;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -71,8 +71,9 @@ public class ProdutoControllerEndPointTest {
         novoUsuario.setEnderecoDTO(novoEnderecoDTO);
 
         UsuarioAutenticarDTO novoUsuarioAutenticar = new UsuarioAutenticarDTO();
-        novoUsuarioAutenticar.setUsername("teste@teste.com");
-        novoUsuarioAutenticar.setPasswordHash("Senha123!");
+        novoUsuarioAutenticar.setLogin("teste@teste.com");
+        novoUsuarioAutenticar.setPassword("Senha123!");
+        novoUsuarioAutenticar.setPerfil("Administrador");
         novoUsuario.setUsuarioAutenticarDTO(novoUsuarioAutenticar);
 
         novaLoja = new LojaDTO();

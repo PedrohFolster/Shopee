@@ -2,37 +2,39 @@ package com.projeto.shopee.security;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.projeto.shopee.dto.LoginRequestDTO;
+import com.projeto.shopee.entities.UsuarioAutenticar;
 
 public class UserAuthenticated implements UserDetails {
 
-    private final String login;
-    private final String password;
-    private final Long userId;
+    private final UsuarioAutenticar usuario;
 
-    public UserAuthenticated(LoginRequestDTO loginRequestDTO, Long userId) {
-        this.login = loginRequestDTO.getUsername();
-        this.password = loginRequestDTO.getPassword();
-        this.userId = userId;
+    public UserAuthenticated(UsuarioAutenticar usuario) {
+        this.usuario = usuario;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        String perfil = usuario.getPerfil();
+        if (perfil == null || perfil.trim().isEmpty()) {
+            throw new IllegalArgumentException("Perfil não pode ser nulo ou vazio");
+        }
+        return List.of(new SimpleGrantedAuthority(perfil));
     }
 
     @Override
     public String getPassword() {
-        return password;
+        return usuario.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return login;
+        return usuario.getLogin();
     }
 
     @Override
@@ -53,9 +55,5 @@ public class UserAuthenticated implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    public Long getUserId() {
-        return userId;
     }
 }

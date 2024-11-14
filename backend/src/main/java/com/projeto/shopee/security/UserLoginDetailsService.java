@@ -5,7 +5,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.projeto.shopee.dto.LoginRequestDTO;
 import com.projeto.shopee.entities.UsuarioAutenticar;
 import com.projeto.shopee.repository.UsuarioAutenticarRepository;
 
@@ -20,10 +19,10 @@ public class UserLoginDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UsuarioAutenticar usuario = usuarioAutenticarRepository.findByUsername(username);
-        if (usuario == null) {
-            throw new UsernameNotFoundException("Usuário não encontrado: " + username);
-        }
-        return new UserAuthenticated(new LoginRequestDTO(usuario.getUsername(), usuario.getPasswordHash()), usuario.getId());
+        return usuarioAutenticarRepository.findByLogin(username)
+                .map(UserAuthenticated::new)
+                .orElseThrow(
+                        () -> new UsernameNotFoundException("Usuário não encontrado: " + username)
+                );
     }
 }

@@ -7,20 +7,20 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.projeto.shopee.entities.CategoriaLoja;
+import com.projeto.shopee.entities.CategoriaProduto;
 import com.projeto.shopee.entities.Endereco;
+import com.projeto.shopee.entities.Loja;
+import com.projeto.shopee.entities.Produto;
 import com.projeto.shopee.entities.Status;
 import com.projeto.shopee.entities.Usuario;
 import com.projeto.shopee.entities.UsuarioAutenticar;
-import com.projeto.shopee.entities.Loja;
-import com.projeto.shopee.entities.Produto;
-import com.projeto.shopee.repository.StatusRepository;
-import com.projeto.shopee.repository.UsuarioRepository;
-import com.projeto.shopee.repository.LojaRepository;
-import com.projeto.shopee.repository.ProdutoRepository;
 import com.projeto.shopee.repository.CategoriaLojaRepository;
 import com.projeto.shopee.repository.CategoriaProdutoRepository;
-import com.projeto.shopee.entities.CategoriaLoja;
-import com.projeto.shopee.entities.CategoriaProduto;
+import com.projeto.shopee.repository.LojaRepository;
+import com.projeto.shopee.repository.ProdutoRepository;
+import com.projeto.shopee.repository.StatusRepository;
+import com.projeto.shopee.repository.UsuarioRepository;
 
 @SpringBootApplication
 public class ShopeeApplication implements CommandLineRunner {
@@ -123,8 +123,9 @@ public class ShopeeApplication implements CommandLineRunner {
             usuario.setEndereco(endereco);
 
             UsuarioAutenticar usuarioAutenticar = new UsuarioAutenticar();
-            usuarioAutenticar.setUsername("1@gmail.com");
-            usuarioAutenticar.setPasswordHash("Caruso123!");
+            usuarioAutenticar.setLogin("1@gmail.com");
+            usuarioAutenticar.setPassword("Caruso123!");
+            usuarioAutenticar.setPerfil("Administrador");
             usuario.setUsuarioAutenticar(usuarioAutenticar);
 
             usuarioRepository.save(usuario);
@@ -152,8 +153,9 @@ public class ShopeeApplication implements CommandLineRunner {
             usuario.setEndereco(endereco);
 
             UsuarioAutenticar usuarioAutenticar = new UsuarioAutenticar();
-            usuarioAutenticar.setUsername("2@gmail.com");
-            usuarioAutenticar.setPasswordHash("Caruso123!");
+            usuarioAutenticar.setLogin("2@gmail.com");
+            usuarioAutenticar.setPassword("Caruso123!");
+            usuarioAutenticar.setPerfil("Administrador");
             usuario.setUsuarioAutenticar(usuarioAutenticar);
 
             usuarioRepository.save(usuario);

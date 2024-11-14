@@ -3,16 +3,18 @@ package com.projeto.shopee.dto;
 public class UsuarioAutenticarDTO {
 
     private Long id;
-    private String username;
-    private String passwordHash;
-
-    public UsuarioAutenticarDTO(Long id, String username, String passwordHash) {
-        this.id = id;
-        this.username = username;
-        this.passwordHash = passwordHash;
-    }
+    private String login;
+    private String password;
+    private String perfil;
 
     public UsuarioAutenticarDTO() {
+    }
+
+    public UsuarioAutenticarDTO(Long id, String login, String password, String perfil) {
+        this.id = id;
+        this.login = login;
+        this.password = password;
+        this.perfil = perfil;
     }
 
     public Long getId() {
@@ -23,20 +25,27 @@ public class UsuarioAutenticarDTO {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getLogin() {
+        return login;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
-    public String getPasswordHash() {
-        return passwordHash;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
+    public String getPerfil() {
+        return perfil;
+    }
+
+    public void setPerfil(String perfil) {
+        this.perfil = perfil;
+    }
 }

@@ -12,14 +12,20 @@ import com.projeto.shopee.security.SessionFilter;
 @RequestMapping("/validate-session")
 public class SessionController {
 
-@GetMapping
-public ResponseEntity<Void> validateSession(@RequestHeader("session-id") String sessionId) {
-    System.out.println("Session ID recebido: " + sessionId);
+    private final SessionFilter sessionFilter;
 
-    if (SessionFilter.isValidSession(sessionId)) {
-        return ResponseEntity.ok().build();
-    } else {
-        return ResponseEntity.status(401).build();
+    public SessionController(SessionFilter sessionFilter) {
+        this.sessionFilter = sessionFilter;
     }
-}
+
+    @GetMapping
+    public ResponseEntity<Void> validateSession(@RequestHeader("Authorization") String token) {
+        System.out.println("Token JWT recebido: " + token);
+
+        if (sessionFilter.isValidSession(token.replace("Bearer ", ""))) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.status(401).build();
+        }
+    }
 }
