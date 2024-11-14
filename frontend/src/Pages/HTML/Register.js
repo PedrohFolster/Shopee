@@ -98,7 +98,7 @@ const Register = () => {
       const telefoneSemFormatacao = formData.telefone.replace(/\D/g, '');
       const cpfSemFormatacao = formData.cpf.replace(/\D/g, '');
       const dataNascimentoFormatada = formData.dataNascimento.split('T')[0];
-
+  
       const response = await axios.post('http://localhost:8080/usuarios', {
         nome: formData.nomeCompleto,
         email: formData.email,
@@ -115,18 +115,19 @@ const Register = () => {
           complemento: formData.complemento
         },
         usuarioAutenticarDTO: {
-          username: formData.email,
-          passwordHash: formData.senha
+          login: formData.email,
+          password: formData.senha,
+          perfil: 'CLIENTE' // Perfil definido diretamente como 'CLIENTE'
         }
       });
-
+  
       if (response.status === 200) {
         alert('Usuário registrado com sucesso!');
         navigate('/login');
       }
     } catch (error) {
-      if (error.response && error.response.data) {
-        setErrorMessage(error.response.data);
+      if (error.response && error.response.data && error.response.data.message) {
+        setErrorMessage(error.response.data.message);
       } else {
         setErrorMessage('Erro ao registrar usuário');
       }

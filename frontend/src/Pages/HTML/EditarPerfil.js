@@ -17,7 +17,7 @@ function EditarPerfil() {
         dataNascimento: '',
         usuarioAutenticarDTO: {
             id: '',
-            passwordHash: ''
+            password: ''
         }
     });
 
@@ -25,18 +25,22 @@ function EditarPerfil() {
     const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
-        axios.get('http://localhost:8080/usuarios/perfil', { withCredentials: true })
-            .then(response => {
-                const data = response.data;
-                setUsuario({
-                    ...data,
-                    cpf: formatarCpf(data.cpf),
-                    telefone: formatarTelefone(data.telefone)
-                });
-            })
-            .catch(error => {
-                setErrorMessage("Erro ao buscar dados do usuário.");
+        const token = localStorage.getItem('token');
+        axios.get('http://localhost:8080/usuarios/perfil', {
+            headers: { 'Authorization': `Bearer ${token}` },
+            withCredentials: true
+        })
+        .then(response => {
+            const data = response.data;
+            setUsuario({
+                ...data,
+                cpf: formatarCpf(data.cpf),
+                telefone: formatarTelefone(data.telefone)
             });
+        })
+        .catch(error => {
+            setErrorMessage("Erro ao buscar dados do usuário.");
+        });
     }, []);
 
     const handleChange = (e) => {
@@ -83,7 +87,9 @@ function EditarPerfil() {
             return;
         }
 
+        const token = localStorage.getItem('token');
         axios.post('http://localhost:8080/usuarios/validar-senha', null, {
+            headers: { 'Authorization': `Bearer ${token}` },
             params: { senha: senhaAtual },
             withCredentials: true
         })
@@ -94,16 +100,19 @@ function EditarPerfil() {
                     telefone: usuario.telefone.replace(/\D/g, ''),
                     usuarioAutenticarDTO: { 
                         ...usuario.usuarioAutenticarDTO,
-                        passwordHash: undefined
+                        password: undefined
                     }
                 };
-                axios.put(`http://localhost:8080/usuarios/${usuario.id}`, usuarioSemFormatacao, { withCredentials: true })
-                    .then(response => {
-                        alert("Perfil atualizado com sucesso!");
-                    })
-                    .catch(error => {
-                        setErrorMessage("Erro ao atualizar perfil.");
-                    });
+                axios.put(`http://localhost:8080/usuarios/${usuario.id}`, usuarioSemFormatacao, {
+                    headers: { 'Authorization': `Bearer ${token}` },
+                    withCredentials: true
+                })
+                .then(response => {
+                    alert("Perfil atualizado com sucesso!");
+                })
+                .catch(error => {
+                    setErrorMessage("Erro ao atualizar perfil.");
+                });
             } else {
                 setErrorMessage("Senha incorreta.");
             }
@@ -132,4 +141,4 @@ function EditarPerfil() {
     );
 }
 
-export default EditarPerfil; 
+export default EditarPerfil;

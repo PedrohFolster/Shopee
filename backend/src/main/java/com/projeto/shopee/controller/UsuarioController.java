@@ -47,7 +47,7 @@ public class UsuarioController {
             UsuarioDTO novoUsuario = usuarioService.createUsuario(usuarioDTO);
             return ResponseEntity.ok(novoUsuario);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
         }
     }
 
@@ -69,8 +69,8 @@ public class UsuarioController {
 
     @GetMapping("/perfil")
     public ResponseEntity<UsuarioDTO> getPerfilUsuario(@RequestHeader("Authorization") String token) {
-        Long userId = jwtService.getUserIdFromToken(token.substring(7));
         try {
+            Long userId = jwtService.getUserIdFromToken(token.substring(7)); // Remove "Bearer " do token
             UsuarioDTO usuario = usuarioService.getUsuarioById(userId);
             return ResponseEntity.ok(usuario);
         } catch (Exception e) {
@@ -80,8 +80,8 @@ public class UsuarioController {
 
     @PostMapping("/validar-senha")
     public ResponseEntity<?> validarSenha(@RequestHeader("Authorization") String token, @RequestParam String senha) {
-        Long userId = jwtService.getUserIdFromToken(token.substring(7));
         try {
+            Long userId = jwtService.getUserIdFromToken(token.substring(7));
             boolean isValid = usuarioService.validarSenha(userId, senha);
             return ResponseEntity.ok().body(Map.of("valid", isValid));
         } catch (Exception e) {

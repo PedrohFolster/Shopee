@@ -1,6 +1,5 @@
 package com.projeto.shopee.service;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Optional;
 
@@ -73,12 +72,11 @@ public class UsuarioService {
         usuarioRepository.deleteById(id);
     }
 
-    public boolean validarSenha(Long userId, String senha) throws NoSuchAlgorithmException {
+    public boolean validarSenha(Long userId, String senha) {
         Optional<UsuarioAutenticar> usuarioAutenticarOpt = usuarioAutenticarRepository.findById(userId);
         if (usuarioAutenticarOpt.isPresent()) {
             UsuarioAutenticar usuarioAutenticar = usuarioAutenticarOpt.get();
-            String hashedSenha = Hashing.hash(senha);
-            return usuarioAutenticar.getPassword().equals(hashedSenha);
+            return Hashing.matches(senha, usuarioAutenticar.getPassword());
         }
         return false;
     }

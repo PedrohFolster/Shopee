@@ -81,6 +81,7 @@ public class UsuarioMapper {
             } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
             }
+            usuarioAutenticar.setPerfil(usuarioDTO.getUsuarioAutenticarDTO().getPerfil());
             usuario.setUsuarioAutenticar(usuarioAutenticar);
         }
 

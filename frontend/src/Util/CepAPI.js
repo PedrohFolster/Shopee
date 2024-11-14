@@ -5,7 +5,6 @@ export const fetchAddressByCep = async (cep) => {
     const sanitizedCep = cep.replace('-', '');
 
     const response = await axios.get(`https://viacep.com.br/ws/${sanitizedCep}/json/`, {
-      withCredentials: false
     });
 
     if (response.data.erro) {
