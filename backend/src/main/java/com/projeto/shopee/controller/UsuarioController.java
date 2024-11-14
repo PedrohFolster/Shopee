@@ -11,12 +11,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.projeto.shopee.dto.UsuarioDTO;
+import com.projeto.shopee.security.JwtService;
 import com.projeto.shopee.service.UsuarioService;
 
 @RestController
@@ -25,6 +26,9 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioService usuarioService;
+
+    @Autowired
+    private JwtService jwtService;
 
     @GetMapping
     public List<UsuarioDTO> getAllUsuarios() {
@@ -64,7 +68,8 @@ public class UsuarioController {
     }
 
     @GetMapping("/perfil")
-    public ResponseEntity<UsuarioDTO> getPerfilUsuario(@SessionAttribute("userId") Long userId) {
+    public ResponseEntity<UsuarioDTO> getPerfilUsuario(@RequestHeader("Authorization") String token) {
+        Long userId = jwtService.getUserIdFromToken(token.substring(7));
         try {
             UsuarioDTO usuario = usuarioService.getUsuarioById(userId);
             return ResponseEntity.ok(usuario);
@@ -74,7 +79,8 @@ public class UsuarioController {
     }
 
     @PostMapping("/validar-senha")
-    public ResponseEntity<?> validarSenha(@SessionAttribute("userId") Long userId, @RequestParam String senha) {
+    public ResponseEntity<?> validarSenha(@RequestHeader("Authorization") String token, @RequestParam String senha) {
+        Long userId = jwtService.getUserIdFromToken(token.substring(7));
         try {
             boolean isValid = usuarioService.validarSenha(userId, senha);
             return ResponseEntity.ok().body(Map.of("valid", isValid));

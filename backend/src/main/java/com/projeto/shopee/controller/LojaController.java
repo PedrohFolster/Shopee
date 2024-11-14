@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.projeto.shopee.dto.LojaDTO;
 import com.projeto.shopee.exception.UsuarioJaPossuiLojaException;
+import com.projeto.shopee.security.JwtService;
 import com.projeto.shopee.service.LojaService;
-
-import jakarta.servlet.http.HttpSession;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -28,31 +28,34 @@ public class LojaController {
     @Autowired
     private LojaService lojaService;
 
+    @Autowired
+    private JwtService jwtService;
+
     @GetMapping
     public List<LojaDTO> getAllLojas() {
         return lojaService.getAllLojas();
     }
 
-@GetMapping("/{id}")
-public ResponseEntity<?> getLojaById(@PathVariable Long id, HttpSession session) {
-    Long usuarioId = (Long) session.getAttribute("userId");
-    if (usuarioId == null) {
-        System.out.println("Usuário não autenticado");
-        return ResponseEntity.status(401).body("Usuário não autenticado");
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getLojaById(@PathVariable Long id, @RequestHeader("Authorization") String token) {
+        Long usuarioId = jwtService.getUserIdFromToken(token.substring(7));
+        if (usuarioId == null) {
+            System.out.println("Usuário não autenticado");
+            return ResponseEntity.status(401).body("Usuário não autenticado");
+        }
+        System.out.println("Usuário autenticado com ID: " + usuarioId);
+        LojaDTO loja = lojaService.getLojaById(id);
+        if (loja == null) {
+            System.out.println("Loja não encontrada com ID: " + id);
+            return ResponseEntity.status(404).body("Loja não encontrada");
+        }
+        System.out.println("Loja encontrada: " + loja.getNome());
+        return ResponseEntity.ok(loja);
     }
-    System.out.println("Usuário autenticado com ID: " + usuarioId);
-    LojaDTO loja = lojaService.getLojaById(id);
-    if (loja == null) {
-        System.out.println("Loja não encontrada com ID: " + id);
-        return ResponseEntity.status(404).body("Loja não encontrada");
-    }
-    System.out.println("Loja encontrada: " + loja.getNome());
-    return ResponseEntity.ok(loja);
-}
 
     @GetMapping("/minha-loja")
-    public ResponseEntity<?> getLojaByUsuario(HttpSession session) {
-        Long usuarioId = (Long) session.getAttribute("userId");
+    public ResponseEntity<?> getLojaByUsuario(@RequestHeader("Authorization") String token) {
+        Long usuarioId = jwtService.getUserIdFromToken(token.substring(7));
         if (usuarioId == null) {
             return ResponseEntity.status(401).body("Usuário não autenticado");
         }
@@ -64,8 +67,8 @@ public ResponseEntity<?> getLojaById(@PathVariable Long id, HttpSession session)
     }
 
     @PostMapping
-    public ResponseEntity<?> createLoja(@RequestBody LojaDTO lojaDTO, HttpSession session) {
-        Long usuarioId = (Long) session.getAttribute("userId");
+    public ResponseEntity<?> createLoja(@RequestBody LojaDTO lojaDTO, @RequestHeader("Authorization") String token) {
+        Long usuarioId = jwtService.getUserIdFromToken(token.substring(7));
         if (usuarioId == null) {
             return ResponseEntity.status(401).body("Usuário não autenticado");
         }
@@ -91,8 +94,8 @@ public ResponseEntity<?> getLojaById(@PathVariable Long id, HttpSession session)
     }
 
     @GetMapping("/verificar-loja")
-    public ResponseEntity<String> verificarLojaUsuario(HttpSession session) {
-        Long usuarioId = (Long) session.getAttribute("userId");
+    public ResponseEntity<String> verificarLojaUsuario(@RequestHeader("Authorization") String token) {
+        Long usuarioId = jwtService.getUserIdFromToken(token.substring(7));
         if (usuarioId == null) {
             return ResponseEntity.status(401).body("Usuário não autenticado");
         }

@@ -21,16 +21,18 @@ const LoginForm = ({ login }) => {
   const handleSubmit = async () => {
     try {
       const response = await axios.post('http://localhost:8080/login', {
-        username: formData.email,
+        login: formData.email,
         password: formData.senha
       }, { withCredentials: true });
 
-      if (response.status === 200 && response.data.sessionId) {
-        const sessionId = response.data.sessionId;
-        console.log('Session ID:', sessionId);
+      if (response.status === 200 && response.data.userId) {
+        const token = response.data.token;
 
-        document.cookie = `sessionId=${sessionId}; path=/;`;
-        localStorage.setItem('sessionId', sessionId);
+        console.log('Token:', token);
+
+        localStorage.setItem('token', token);
+
+        document.cookie = `token=${token}; path=/; secure; samesite=strict`;
 
         login();
         navigate('/home');

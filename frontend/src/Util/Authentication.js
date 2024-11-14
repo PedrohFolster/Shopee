@@ -4,17 +4,17 @@ import axios from 'axios';
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    return localStorage.getItem('isAuthenticated') === 'true';
-  });
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     const validateSession = async () => {
-      const sessionId = localStorage.getItem('sessionId');
-      if (sessionId) {
+      const token = localStorage.getItem('token');
+      if (token) {
+        console.log(`Bearer ${token}`); // Imprime o token Bearer no console
         try {
           const response = await axios.get('http://localhost:8080/validate-session', {
-            headers: { 'session-id': sessionId }
+            headers: { 'Authorization': `Bearer ${token}` },
+            withCredentials: true
           });
           if (response.status === 200) {
             setIsAuthenticated(true);
@@ -26,55 +26,64 @@ export const AuthProvider = ({ children }) => {
         } catch (error) {
           console.error('Erro ao validar sessão:', error);
           setIsAuthenticated(false);
-          console.log('Erro ao validar sessão');
         }
+      } else {
+        setIsAuthenticated(false);
       }
     };
 
     validateSession();
   }, []);
 
+  useEffect(() => {
+    const requestInterceptor = axios.interceptors.request.use(
+      (config) => {
+        const token = localStorage.getItem('token');
+        if (token) {
+          config.headers['Authorization'] = `Bearer ${token}`;
+          console.log(`Bearer ${token}`);
+        }
+        config.withCredentials = true; // Define withCredentials como true por padrão
+        return config;
+      },
+      (error) => {
+        return Promise.reject(error);
+      }
+    );
+
+    return () => {
+      axios.interceptors.request.eject(requestInterceptor);
+    };
+  }, []);
+
   const login = () => {
     setIsAuthenticated(true);
-    localStorage.setItem('isAuthenticated', 'true');
     console.log('Sessão válida');
   };
 
   const logout = async () => {
-    const sessionId = localStorage.getItem('sessionId');
+    const token = localStorage.getItem('token');
     
     try {
-        await axios.post('http://localhost:8080/logout', {}, {
-            headers: {
-                'session-id': sessionId
-            }
-        });
-        
-  
-        localStorage.removeItem('sessionId');
-        localStorage.removeItem('isAuthenticated');
-        setIsAuthenticated(false);
-        
-        console.log('Logout bem-sucedido');
-    } catch (error) {
-        console.error('Erro ao realizar logout:', error);
-        throw error; 
-    }
-};
+      await axios.post('http://localhost:8080/logout', {}, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+        withCredentials: true
+      });
 
-  const addAuthHeader = (config) => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      config.headers = {
-        ...config.headers,
-        'Authorization': `Bearer ${token}`
-      };
+      localStorage.removeItem('token');
+      setIsAuthenticated(false);
+      
+      console.log('Logout bem-sucedido');
+    } catch (error) {
+      console.error('Erro ao realizar logout:', error);
+      throw error; 
     }
-    return config;
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout, addAuthHeader }}>
+    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

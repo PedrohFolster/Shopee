@@ -1,42 +1,64 @@
 package com.projeto.shopee.security;
 
+import java.time.Instant;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
-import java.util.stream.Collectors;
+import com.projeto.shopee.entities.UsuarioAutenticar;
+import com.projeto.shopee.service.UsuarioAutenticarService;
 
 @Service
 public class JwtService {
     private final JwtEncoder jwtEncoder;
+    private final JwtDecoder jwtDecoder;
+    private final UsuarioAutenticarService usuarioAutenticarService;
 
-    public JwtService(JwtEncoder jwtEncoder) {
+    @Autowired
+    public JwtService(JwtEncoder jwtEncoder, JwtDecoder jwtDecoder, UsuarioAutenticarService usuarioAutenticarService) {
         this.jwtEncoder = jwtEncoder;
+        this.jwtDecoder = jwtDecoder;
+        this.usuarioAutenticarService = usuarioAutenticarService;
     }
 
-    public  String getGenereteToken(Authentication authentication) {
+    public String getGenereteToken(Authentication authentication) {
         Instant now = Instant.now();
         long expiry = 36000L;
 
         String scope = authentication
                 .getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
-                .collect(Collectors
-                        .joining(" "));
+                .collect(Collectors.joining(" "));
+
+        // Obtenha o login do usuário
+        String login = authentication.getName();
+
+        // Use o serviço para obter o ID do usuário pelo login
+        UsuarioAutenticar usuario = usuarioAutenticarService.findByLogin(login);
+        Long userId = usuario.getId();
+
         JwtClaimsSet claims = JwtClaimsSet.builder()
-                .issuer("shopee") //emissor do token
-                .issuedAt(now) // data/hora em que o token foi emitido
-                .expiresAt(now.plusSeconds(expiry)) //expiração do token, em segundos. o token é válido como 36000 segundos (10 horas) após a geração do token:
-                .subject(authentication.getName()) //nome do usuario
-                .claim("scope", scope) //perfis ou permissões 'roles' - "ROLE_USER", "ROLE_ADMIN"
+                .issuer("shopee")
+                .issuedAt(now)
+                .expiresAt(now.plusSeconds(expiry))
+                .subject(login)
+                .claim("scope", scope)
+                .claim("userId", userId) // Adiciona o ID do usuário como uma reivindicação
                 .build();
 
-        return jwtEncoder.encode(
-                        JwtEncoderParameters.from(claims))
-                .getTokenValue();
+        return jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
+    }
+
+    public Long getUserIdFromToken(String token) {
+        Jwt jwt = jwtDecoder.decode(token);
+        return jwt.getClaim("userId"); // Retorna o ID do usuário como Long
     }
 }
