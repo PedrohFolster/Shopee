@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import Header from '../../Components/Menu/Items/Header/Header';
 import LojaForm from '../../Components/LojaForm/LojaForm';
 import '../CSS/CreateLoja.css';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../Util/Authentication';
 
 const CriarLoja = () => {
+    const { isAuthenticated } = useContext(AuthContext);
     const [nome, setNome] = useState('');
     const [categoriaId, setCategoriaId] = useState('');
     const [categorias, setCategorias] = useState([]);
@@ -13,14 +15,31 @@ const CriarLoja = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get('http://localhost:8080/categorias-l')
+        if (!isAuthenticated) {
+            navigate('/login');
+            return;
+        }
+
+        // Verificar se o usuário já possui uma loja
+        axios.get('http://localhost:8080/lojas/verificar-loja', { withCredentials: true })
             .then(response => {
-                setCategorias(response.data);
+                if (response.data === "Redirecionar para /minha-loja") {
+                    navigate("/MinhaLoja");
+                } else {
+                    // Carregar categorias se o usuário não tiver uma loja
+                    axios.get('http://localhost:8080/categorias-l')
+                        .then(response => {
+                            setCategorias(response.data);
+                        })
+                        .catch(error => {
+                            console.error('Erro ao buscar categorias:', error);
+                        });
+                }
             })
             .catch(error => {
-                console.error('Erro ao buscar categorias:', error);
+                console.error('Erro ao verificar loja:', error);
             });
-    }, []);
+    }, [isAuthenticated]);
 
     const handleSubmit = (e) => {
         e.preventDefault();

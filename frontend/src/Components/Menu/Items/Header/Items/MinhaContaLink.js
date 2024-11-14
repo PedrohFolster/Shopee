@@ -11,7 +11,7 @@ axios.defaults.withCredentials = true;
 
 const MinhaContaLink = ({ activeLink, handleSetActive, usuario }) => {
     const [isDropdownVisible, setDropdownVisible] = useState(false);
-    const { logout } = useContext(AuthContext);
+    const { isAuthenticated, logout } = useContext(AuthContext);
     const navigate = useNavigate(); 
     let timer;
 
@@ -37,8 +37,13 @@ const MinhaContaLink = ({ activeLink, handleSetActive, usuario }) => {
     };
 
     const handleLojaClick = async () => {
+        if (!isAuthenticated) {
+            navigate('/login');
+            return;
+        }
+
         try {
-            const response = await axios.get('http://localhost:8080/lojas/verificar-loja'); 
+            const response = await axios.get('http://localhost:8080/lojas/verificar-loja', { withCredentials: true });
             if (response.data === "Redirecionar para /minha-loja") {
                 navigate("/MinhaLoja");
             } else {
