@@ -40,16 +40,12 @@ public class LojaController {
     public ResponseEntity<?> getLojaById(@PathVariable Long id, @RequestHeader("Authorization") String token) {
         Long usuarioId = jwtService.getUserIdFromToken(token.substring(7));
         if (usuarioId == null) {
-            System.out.println("Usuário não autenticado");
             return ResponseEntity.status(401).body("Usuário não autenticado");
         }
-        System.out.println("Usuário autenticado com ID: " + usuarioId);
         LojaDTO loja = lojaService.getLojaById(id);
         if (loja == null) {
-            System.out.println("Loja não encontrada com ID: " + id);
             return ResponseEntity.status(404).body("Loja não encontrada");
         }
-        System.out.println("Loja encontrada: " + loja.getNome());
         return ResponseEntity.ok(loja);
     }
 

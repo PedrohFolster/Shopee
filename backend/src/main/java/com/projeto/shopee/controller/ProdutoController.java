@@ -10,14 +10,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.projeto.shopee.dto.ProdutoDTO;
 import com.projeto.shopee.security.JwtService;
 import com.projeto.shopee.service.ProdutoService;
-
-import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/produtos")
@@ -41,13 +40,10 @@ public class ProdutoController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createProduto(@RequestBody ProdutoDTO produtoDTO, HttpServletRequest request) {
+    public ResponseEntity<?> createProduto(@RequestBody ProdutoDTO produtoDTO, @RequestHeader("Authorization") String token) {
         try {
-            // Obtenha o token JWT do cabeçalho Authorization
-            String token = request.getHeader("Authorization").substring(7); // Remove "Bearer "
-
-            // Decodifique o token para obter o ID do usuário
-            Long userId = jwtService.getUserIdFromToken(token);
+            // Obtenha o ID do usuário do token JWT
+            Long userId = jwtService.getUserIdFromToken(token.substring(7)); // Remove "Bearer "
             System.out.println("ID do usuário logado: " + userId);
 
             // Passe o ID do usuário para o serviço
@@ -73,9 +69,35 @@ public class ProdutoController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/loja/{lojaId}")
+    public ResponseEntity<?> getProdutosByLojaId(@PathVariable Long lojaId, @RequestHeader("Authorization") String token) {
+        try {
+            // Obtenha o ID do usuário do token JWT
+            Long userId = jwtService.getUserIdFromToken(token.substring(7)); // Remove "Bearer "
+            List<ProdutoDTO> produtos = produtoService.getProdutosByLojaIdAndUsuario(lojaId, userId);
+            return ResponseEntity.ok(produtos);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     @GetMapping("/ativos")
     public ResponseEntity<List<ProdutoDTO>> getProdutosAtivos() {
         List<ProdutoDTO> produtosAtivos = produtoService.getProdutosAtivos();
         return ResponseEntity.ok(produtosAtivos);
+    }
+
+    @PostMapping("/finalizar-compra")
+    public ResponseEntity<?> finalizarCompra(@RequestBody List<ProdutoDTO> produtos, @RequestHeader("Authorization") String token) {
+        try {
+            // Obtenha o ID do usuário do token JWT
+            Long userId = jwtService.getUserIdFromToken(token.substring(7)); // Remove "Bearer "
+            for (ProdutoDTO produto : produtos) {
+                produtoService.reduzirEstoque(produto.getId(), 1);
+            }
+            return ResponseEntity.ok("Compra finalizada com sucesso!");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }
