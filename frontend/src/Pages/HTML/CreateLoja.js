@@ -6,6 +6,7 @@ import '../CSS/CreateLoja.css';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Util/Authentication';
 
+
 const CriarLoja = () => {
     const { isAuthenticated } = useContext(AuthContext);
     const [nome, setNome] = useState('');
@@ -15,31 +16,27 @@ const CriarLoja = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!isAuthenticated) {
-            navigate('/login');
-            return;
-        }
+        const verificarLoja = async () => {
+            if (!isAuthenticated) {
+                navigate('/login');
+                return;
+            }
 
-        // Verificar se o usuário já possui uma loja
-        axios.get('http://localhost:8080/lojas/verificar-loja', { withCredentials: true })
-            .then(response => {
+            try {
+                const response = await axios.get('http://localhost:8080/lojas/verificar-loja', { withCredentials: true });
                 if (response.data === "Redirecionar para /minha-loja") {
                     navigate("/MinhaLoja");
                 } else {
-                    // Carregar categorias se o usuário não tiver uma loja
-                    axios.get('http://localhost:8080/categorias-l')
-                        .then(response => {
-                            setCategorias(response.data);
-                        })
-                        .catch(error => {
-                            console.error('Erro ao buscar categorias:', error);
-                        });
+                    const categoriasResponse = await axios.get('http://localhost:8080/categorias-l');
+                    setCategorias(categoriasResponse.data);
                 }
-            })
-            .catch(error => {
+            } catch (error) {
                 console.error('Erro ao verificar loja:', error);
-            });
-    }, [isAuthenticated]);
+            }
+        };
+
+        verificarLoja();
+    }, [isAuthenticated, navigate]);
 
     const handleSubmit = (e) => {
         e.preventDefault();

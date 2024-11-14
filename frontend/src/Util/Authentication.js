@@ -33,7 +33,6 @@ export const AuthProvider = ({ children }) => {
 
     validateSession();
 
-    // Configurar interceptor do Axios
     const requestInterceptor = axios.interceptors.request.use(
       (config) => {
         const token = localStorage.getItem('token');
@@ -47,7 +46,6 @@ export const AuthProvider = ({ children }) => {
       }
     );
 
-    // Limpar interceptor ao desmontar
     return () => {
       axios.interceptors.request.eject(requestInterceptor);
     };
@@ -61,7 +59,8 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     localStorage.removeItem('token');
-    setCookie('token', '', -1); // Limpa o cookie
+    localStorage.removeItem('isAuthenticated');
+    setCookie('token', '', -1); 
     setIsAuthenticated(false);
     console.log('Logout bem-sucedido');
   };

@@ -25,12 +25,12 @@ const FiltroProdutos = ({ filtros, setFiltros, categorias, handleFiltroChange, l
           values={filtros.preco}
           onChange={(values) => setFiltros({ ...filtros, preco: values })}
           renderTrack={({ props, children }) => (
-            <div key={props.key} {...props} style={{ ...props.style, height: '6px', background: '#ddd' }}>
+            <div {...props} style={{ ...props.style, height: '6px', background: '#ddd' }}>
               {children}
             </div>
           )}
-          renderThumb={({ props }) => (
-            <div key={props.key} {...props} style={{ ...props.style, height: '20px', width: '20px', background: '#999', borderRadius: '50%' }} />
+          renderThumb={({ props }, index) => (
+            <div key={index} {...props} style={{ ...props.style, height: '20px', width: '20px', background: '#999', borderRadius: '50%' }} />
           )}
         />
         <div className='preco-inputs'>

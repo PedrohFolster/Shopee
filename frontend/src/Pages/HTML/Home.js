@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect} from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../Util/Authentication';
 import Header from '../../Components/Menu/Items/Header/Header';
 import FiltroProdutos from '../../Components/Product/FiltroProdutos';
 import ListaProdutos from '../../Components/Product/ListaProdutos';
@@ -16,20 +15,12 @@ const Home = () => {
     nome: ''
   });
 
-  const { addAuthHeader } = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProdutos = async () => {
       try {
-        const token = localStorage.getItem('token');
-        if (!token) {
-          throw new Error('Token não encontrado');
-        }
-        const response = await axios.get('http://localhost:8080/produtos/ativos', {
-          headers: { 'Authorization': `Bearer ${token}` },
-          withCredentials: true
-        });
+        const response = await axios.get('http://localhost:8080/produtos/ativos');
         setProdutos(response.data);
       } catch (error) {
         console.error('Erro ao buscar produtos ativos:', error);
@@ -38,14 +29,7 @@ const Home = () => {
 
     const fetchCategorias = async () => {
       try {
-        const token = localStorage.getItem('token');
-        if (!token) {
-          throw new Error('Token não encontrado');
-        }
-        const response = await axios.get('http://localhost:8080/categorias-p', {
-          headers: { 'Authorization': `Bearer ${token}` },
-          withCredentials: true
-        });
+        const response = await axios.get('http://localhost:8080/categorias-p');
         setCategorias(response.data);
       } catch (error) {
         console.error('Erro ao buscar categorias:', error);

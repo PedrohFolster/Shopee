@@ -91,7 +91,7 @@ public class ProdutoController {
     public ResponseEntity<?> finalizarCompra(@RequestBody List<ProdutoDTO> produtos, @RequestHeader("Authorization") String token) {
         try {
             // Obtenha o ID do usuário do token JWT
-            Long userId = jwtService.getUserIdFromToken(token.substring(7)); // Remove "Bearer "
+            // Long userId = jwtService.getUserIdFromToken(token.substring(7)); // Remove "Bearer "
             for (ProdutoDTO produto : produtos) {
                 produtoService.reduzirEstoque(produto.getId(), 1);
             }
@@ -99,5 +99,10 @@ public class ProdutoController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+    @GetMapping("/categoria/{categoriaProdutoId}")
+    public ResponseEntity<List<ProdutoDTO>> getProdutosByCategoriaProdutoId(@PathVariable Long categoriaProdutoId) {
+        List<ProdutoDTO> produtos = produtoService.getProdutosByCategoriaProdutoId(categoriaProdutoId);
+        return ResponseEntity.ok(produtos);
     }
 }

@@ -1,12 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import ProtectedRoute from './Util/ProtectedRoute';
 
 import Home from './Pages/HTML/Home';
 import Register from './Pages/HTML/Register';
 import Login from './Pages/HTML/Login';
 import CreateLoja from './Pages/HTML/CreateLoja';
 import MinhaLoja from './Pages/HTML/MinhaLoja';
-import CriarProduto from './Pages/HTML/CriarProduto';
 import Carrinho from './Pages/HTML/Carrinho';
 import Produto from './Pages/HTML/Produto';
 import EditarPerfil from './Pages/HTML/EditarPerfil';
@@ -19,11 +19,11 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/CreateLoja" element={<CreateLoja />} />
-          <Route path="/MinhaLoja" element={<MinhaLoja />} />
-          <Route path="/carrinho" element={<Carrinho />} />
           <Route path="/produto/:id" element={<Produto />} />
-          <Route path="/editar-perfil" element={<EditarPerfil />} />
+          <Route path="/carrinho" element={<Carrinho />} />
+          <Route path="/CreateLoja" element={<ProtectedRoute element={<CreateLoja />} />} />
+          <Route path="/MinhaLoja" element={<ProtectedRoute element={<MinhaLoja />} />} />
+          <Route path="/editar-perfil" element={<ProtectedRoute element={<EditarPerfil />} />} />
         </Routes>
       </div>
     </Router>
