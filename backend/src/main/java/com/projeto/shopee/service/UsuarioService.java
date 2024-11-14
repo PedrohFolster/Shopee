@@ -45,20 +45,16 @@ public class UsuarioService {
     }
 
     public UsuarioDTO updateUsuario(Long id, UsuarioDTO usuarioDTO) {
-        // Valida os dados do usuário, sem validar a senha
         validateUsuario(usuarioDTO, false);
 
-        // Verifica se o usuário existe
         Usuario usuarioExistente = usuarioRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
-        // Atualiza apenas os campos necessários
         usuarioExistente.setNome(usuarioDTO.getNome());
         usuarioExistente.setEmail(usuarioDTO.getEmail());
         usuarioExistente.setTelefone(usuarioDTO.getTelefone());
         usuarioExistente.setDataNascimento(usuarioDTO.getDataNascimento());
 
-        // Salva as alterações no banco de dados
         usuarioExistente = usuarioRepository.save(usuarioExistente);
         return usuarioMapper.toDTO(usuarioExistente);
     }

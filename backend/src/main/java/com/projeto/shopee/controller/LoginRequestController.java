@@ -39,7 +39,6 @@ public class LoginRequestController {
 
             String token = jwtService.getGenereteToken(authentication);
 
-            // Decodifique o token para obter o ID do usuário
             Long userId = jwtService.getUserIdFromToken(token);
             System.out.println("ID do usuário logado: " + userId);
 

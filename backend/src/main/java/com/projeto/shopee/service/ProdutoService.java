@@ -142,7 +142,6 @@ public class ProdutoService {
         produto.setEstoque(produto.getEstoque() - quantidade);
         produtoRepository.save(produto);
 
-        // Verifica se o estoque está zerado após a redução
         if (produto.getEstoque() == 0) {
             desativarProduto(produtoId);
         }

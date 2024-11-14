@@ -40,13 +40,13 @@ public class ProdutoController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createProduto(@RequestBody ProdutoDTO produtoDTO, @RequestHeader("Authorization") String token) {
+    public ResponseEntity<?> createProduto(@RequestBody ProdutoDTO produtoDTO,
+            @RequestHeader("Authorization") String token) {
         try {
-            // Obtenha o ID do usuário do token JWT
-            Long userId = jwtService.getUserIdFromToken(token.substring(7)); // Remove "Bearer "
+
+            Long userId = jwtService.getUserIdFromToken(token.substring(7));
             System.out.println("ID do usuário logado: " + userId);
 
-            // Passe o ID do usuário para o serviço
             ProdutoDTO novoProduto = produtoService.createProduto(produtoDTO, userId);
             return ResponseEntity.ok(novoProduto);
         } catch (Exception e) {
@@ -70,10 +70,11 @@ public class ProdutoController {
     }
 
     @GetMapping("/loja/{lojaId}")
-    public ResponseEntity<?> getProdutosByLojaId(@PathVariable Long lojaId, @RequestHeader("Authorization") String token) {
+    public ResponseEntity<?> getProdutosByLojaId(@PathVariable Long lojaId,
+            @RequestHeader("Authorization") String token) {
         try {
-            // Obtenha o ID do usuário do token JWT
-            Long userId = jwtService.getUserIdFromToken(token.substring(7)); // Remove "Bearer "
+            
+            Long userId = jwtService.getUserIdFromToken(token.substring(7)); 
             List<ProdutoDTO> produtos = produtoService.getProdutosByLojaIdAndUsuario(lojaId, userId);
             return ResponseEntity.ok(produtos);
         } catch (Exception e) {
@@ -88,10 +89,12 @@ public class ProdutoController {
     }
 
     @PostMapping("/finalizar-compra")
-    public ResponseEntity<?> finalizarCompra(@RequestBody List<ProdutoDTO> produtos, @RequestHeader("Authorization") String token) {
+    public ResponseEntity<?> finalizarCompra(@RequestBody List<ProdutoDTO> produtos,
+            @RequestHeader("Authorization") String token) {
         try {
-            // Obtenha o ID do usuário do token JWT
-            // Long userId = jwtService.getUserIdFromToken(token.substring(7)); // Remove "Bearer "
+            
+            // Long userId = jwtService.getUserIdFromToken(token.substring(7)); 
+           
             for (ProdutoDTO produto : produtos) {
                 produtoService.reduzirEstoque(produto.getId(), 1);
             }
@@ -100,6 +103,7 @@ public class ProdutoController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
     @GetMapping("/categoria/{categoriaProdutoId}")
     public ResponseEntity<List<ProdutoDTO>> getProdutosByCategoriaProdutoId(@PathVariable Long categoriaProdutoId) {
         List<ProdutoDTO> produtos = produtoService.getProdutosByCategoriaProdutoId(categoriaProdutoId);

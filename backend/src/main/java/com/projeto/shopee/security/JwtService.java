@@ -38,10 +38,8 @@ public class JwtService {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(" "));
 
-        // Obtenha o login do usuário
         String login = authentication.getName();
 
-        // Use o serviço para obter o ID do usuário pelo login
         UsuarioAutenticar usuario = usuarioAutenticarService.findByLogin(login);
         Long userId = usuario.getId();
 
@@ -51,7 +49,7 @@ public class JwtService {
                 .expiresAt(now.plusSeconds(expiry))
                 .subject(login)
                 .claim("scope", scope)
-                .claim("userId", userId) // Adiciona o ID do usuário como uma reivindicação
+                .claim("userId", userId) 
                 .build();
 
         return jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
@@ -59,6 +57,6 @@ public class JwtService {
 
     public Long getUserIdFromToken(String token) {
         Jwt jwt = jwtDecoder.decode(token);
-        return jwt.getClaim("userId"); // Retorna o ID do usuário como Long
+        return jwt.getClaim("userId");
     }
 }

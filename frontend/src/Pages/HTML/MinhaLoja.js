@@ -8,7 +8,7 @@ import '../CSS/MinhaLoja.css';
 import '../CSS/CriarProduto.css';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Util/Authentication';
-import api from '../../Util/teste';
+import api from '../../Util/ApiConfig';
 const MinhaLoja = () => {
     const { isAuthenticated } = useContext(AuthContext);
     const [lojaInfo, setLojaInfo] = useState(null);
@@ -144,7 +144,7 @@ const MinhaLoja = () => {
     return true;
   };
 
-  // Funções de validação
+
   const isValidNomeProduto = (nome) => {
     return nome && nome.trim().length > 0 && nome.length <= 100;
   };

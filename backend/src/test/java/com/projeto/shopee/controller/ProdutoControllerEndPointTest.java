@@ -95,11 +95,9 @@ public class ProdutoControllerEndPointTest {
 
         Usuario usuarioCriado = usuarioRepository.findByEmail(novoUsuario.getEmail());
 
-        // Cria um objeto de autenticação para o usuário criado
         Authentication authentication = new UsernamePasswordAuthenticationToken(
                 usuarioCriado.getEmail(), novoUsuario.getUsuarioAutenticarDTO().getPassword());
 
-        // Gera o token JWT
         String token = jwtService.getGenereteToken(authentication);
 
         novaLoja.setUsuarioId(usuarioCriado.getId());

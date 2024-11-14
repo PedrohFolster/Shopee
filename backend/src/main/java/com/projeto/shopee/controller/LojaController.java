@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.projeto.shopee.dto.LojaDTO;
@@ -101,5 +102,11 @@ public class LojaController {
         } else {
             return ResponseEntity.ok("Redirecionar para /criar-loja");
         }
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<LojaDTO>> searchLojasByName(@RequestParam String nome) {
+        List<LojaDTO> lojas = lojaService.searchLojasByName(nome);
+        return ResponseEntity.ok(lojas);
     }
 }

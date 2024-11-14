@@ -5,7 +5,7 @@ import LojaForm from '../../Components/LojaForm/LojaForm';
 import '../CSS/CreateLoja.css';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Util/Authentication';
-import api from '../../Util/teste';
+import api from '../../Util/ApiConfig';
 
 const CriarLoja = () => {
     const { isAuthenticated } = useContext(AuthContext);
@@ -38,7 +38,7 @@ const CriarLoja = () => {
             .catch(error => {
                 console.error('Erro ao verificar loja:', error);
             });
-    }, [isAuthenticated]);
+    }, [isAuthenticated, navigate]);
 
     const handleSubmit = (e) => {
         e.preventDefault();

@@ -1,5 +1,6 @@
 package com.projeto.shopee.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,4 +16,6 @@ public interface LojaRepository extends JpaRepository<Loja, Long> {
     Optional<Loja> findByUsuarioId(Long usuarioId);
 
     Optional<Loja> findByIdAndUsuarioId(Long id, Long usuarioId);
+
+    List<Loja> findByNomeContainingIgnoreCase(String nome);
 }

@@ -70,7 +70,7 @@ public class UsuarioController {
     @GetMapping("/perfil")
     public ResponseEntity<UsuarioDTO> getPerfilUsuario(@RequestHeader("Authorization") String token) {
         try {
-            Long userId = jwtService.getUserIdFromToken(token.substring(7)); // Remove "Bearer " do token
+            Long userId = jwtService.getUserIdFromToken(token.substring(7));
             UsuarioDTO usuario = usuarioService.getUsuarioById(userId);
             return ResponseEntity.ok(usuario);
         } catch (Exception e) {

@@ -117,7 +117,7 @@ const Register = () => {
         usuarioAutenticarDTO: {
           login: formData.email,
           password: formData.senha,
-          perfil: 'CLIENTE' // Perfil definido diretamente como 'CLIENTE'
+          perfil: 'CLIENTE' 
         }
       });
   

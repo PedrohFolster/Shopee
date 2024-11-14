@@ -312,3 +312,25 @@
   color: #555;
   margin: 0 5px;
 }
+
+.search-dropdown {
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-height: 500px;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+.search-item {
+  padding: 8px 16px;
+  cursor: pointer;
+  color: black;
+}
+
+.search-dropdown li:hover {
+  padding: 8px 16px;
+  background-color: #f5f5f5;
+}
