@@ -12,7 +12,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.mock.web.MockHttpSession;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.projeto.shopee.dto.LojaDTO;
@@ -25,6 +24,9 @@ import com.projeto.shopee.repository.LojaRepository;
 import com.projeto.shopee.repository.UsuarioRepository;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.projeto.shopee.repository.ProdutoRepository;
+import com.projeto.shopee.security.JwtService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -42,10 +44,12 @@ public class LojaControllerEndPointTest {
     @Autowired
     private ProdutoRepository produtoRepository;
 
+    @Autowired
+    private JwtService jwtService;
+
     private LojaDTO novaLoja;
     private UsuarioDTO novoUsuario;
     private ObjectMapper objectMapper = new ObjectMapper();
-    private MockHttpSession session;
 
     @BeforeEach
     void setUp() {
@@ -80,8 +84,6 @@ public class LojaControllerEndPointTest {
         novaLoja.setCategoriaLojaId(1L); 
 
         objectMapper.registerModule(new JavaTimeModule()); 
-
-        session = new MockHttpSession();
     }
 
     @Test
@@ -94,12 +96,18 @@ public class LojaControllerEndPointTest {
 
         Usuario usuarioCriado = usuarioRepository.findByEmail(novoUsuario.getEmail());
 
-        session.setAttribute("userId", usuarioCriado.getId());
+        // Cria um objeto de autenticação para o usuário criado
+        Authentication authentication = new UsernamePasswordAuthenticationToken(
+                usuarioCriado.getEmail(), novoUsuario.getUsuarioAutenticarDTO().getPassword());
+
+        // Gera o token JWT
+        String token = jwtService.getGenereteToken(authentication);
+
         novaLoja.setUsuarioId(usuarioCriado.getId());
 
         String lojaNovaJson = objectMapper.writeValueAsString(novaLoja);
         this.mockMvc.perform(post("/lojas")
-                .session(session) 
+                .header("Authorization", "Bearer " + token) // Adiciona o token JWT no cabeçalho
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(lojaNovaJson))
                 .andExpect(status().isOk());
@@ -115,7 +123,13 @@ public class LojaControllerEndPointTest {
 
         Usuario usuarioCriado = usuarioRepository.findByEmail(novoUsuario.getEmail());
 
-        session.setAttribute("userId", usuarioCriado.getId());
+        // Cria um objeto de autenticação para o usuário criado
+        Authentication authentication = new UsernamePasswordAuthenticationToken(
+                usuarioCriado.getEmail(), novoUsuario.getUsuarioAutenticarDTO().getPassword());
+
+        // Gera o token JWT
+        String token = jwtService.getGenereteToken(authentication);
+
         novaLoja.setUsuarioId(usuarioCriado.getId());
 
         Loja lojaExistente = new Loja();
@@ -123,10 +137,9 @@ public class LojaControllerEndPointTest {
         lojaExistente.setUsuario(usuarioCriado);
         lojaRepository.save(lojaExistente);
 
- 
         String lojaNovaJson = objectMapper.writeValueAsString(novaLoja);
         this.mockMvc.perform(post("/lojas")
-                .session(session) 
+                .header("Authorization", "Bearer " + token) // Adiciona o token JWT no cabeçalho
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(lojaNovaJson))
                 .andExpect(status().isBadRequest());
