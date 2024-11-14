@@ -5,7 +5,7 @@ import LojaForm from '../../Components/LojaForm/LojaForm';
 import '../CSS/CreateLoja.css';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Util/Authentication';
-
+import api from '../../Util/teste';
 
 const CriarLoja = () => {
     const { isAuthenticated } = useContext(AuthContext);
@@ -16,27 +16,29 @@ const CriarLoja = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const verificarLoja = async () => {
-            if (!isAuthenticated) {
-                navigate('/login');
-                return;
-            }
+        if (!isAuthenticated) {
+            navigate('/login');
+            return;
+        }
 
-            try {
-                const response = await axios.get('http://localhost:8080/lojas/verificar-loja', { withCredentials: true });
+        api.get('http://localhost:8080/lojas/verificar-loja', { withCredentials: true })
+            .then(response => {
                 if (response.data === "Redirecionar para /minha-loja") {
                     navigate("/MinhaLoja");
                 } else {
-                    const categoriasResponse = await axios.get('http://localhost:8080/categorias-l');
-                    setCategorias(categoriasResponse.data);
+                    axios.get('http://localhost:8080/categorias-l')
+                        .then(response => {
+                            setCategorias(response.data);
+                        })
+                        .catch(error => {
+                            console.error('Erro ao buscar categorias:', error);
+                        });
                 }
-            } catch (error) {
+            })
+            .catch(error => {
                 console.error('Erro ao verificar loja:', error);
-            }
-        };
-
-        verificarLoja();
-    }, [isAuthenticated, navigate]);
+            });
+    }, [isAuthenticated]);
 
     const handleSubmit = (e) => {
         e.preventDefault();

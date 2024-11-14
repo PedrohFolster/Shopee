@@ -14,7 +14,8 @@
 
 .produto-item.minha-loja-style img {
     max-width: 100%;
-    height: auto;
+    height: 250px;
+    width: 250px;
     border-radius: 8px;
 }
 

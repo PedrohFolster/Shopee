@@ -8,7 +8,7 @@ import '../CSS/MinhaLoja.css';
 import '../CSS/CriarProduto.css';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Util/Authentication';
-
+import api from '../../Util/teste';
 const MinhaLoja = () => {
     const { isAuthenticated } = useContext(AuthContext);
     const [lojaInfo, setLojaInfo] = useState(null);
@@ -37,7 +37,7 @@ const MinhaLoja = () => {
             return;
         }
 
-        axios.get('http://localhost:8080/lojas/verificar-loja', { withCredentials: true })
+        api.get('http://localhost:8080/lojas/verificar-loja', { withCredentials: true })
             .then(response => {
                 if (response.data !== "Redirecionar para /minha-loja") {
                     navigate("/CreateLoja");
@@ -49,7 +49,7 @@ const MinhaLoja = () => {
     }, [isAuthenticated]);
 
   useEffect(() => {
-    axios.get('http://localhost:8080/lojas/minha-loja', { withCredentials: true })
+    api.get('http://localhost:8080/lojas/minha-loja', { withCredentials: true })
       .then(lojaResponse => {
         setLojaInfo(lojaResponse.data);
       })
