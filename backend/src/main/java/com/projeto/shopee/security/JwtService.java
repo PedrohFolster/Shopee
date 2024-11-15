@@ -1,6 +1,8 @@
 package com.projeto.shopee.security;
 
 import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ import com.projeto.shopee.service.UsuarioAutenticarService;
 
 @Service
 public class JwtService {
+
     private final JwtEncoder jwtEncoder;
     private final JwtDecoder jwtDecoder;
     private final UsuarioAutenticarService usuarioAutenticarService;
@@ -30,8 +33,8 @@ public class JwtService {
     }
 
     public String getGenereteToken(Authentication authentication) {
-        Instant now = Instant.now();
-        long expiry = 36000L;
+        Instant now = ZonedDateTime.now(ZoneId.of("America/Sao_Paulo")).toInstant();
+        long expiry = 36000L; 
 
         String scope = authentication
                 .getAuthorities().stream()
@@ -45,11 +48,11 @@ public class JwtService {
 
         JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuer("shopee")
-                .issuedAt(now)
-                .expiresAt(now.plusSeconds(expiry))
+                .issuedAt(now.minusSeconds(30)) 
+                .expiresAt(now.plusSeconds(30))
                 .subject(login)
                 .claim("scope", scope)
-                .claim("userId", userId) 
+                .claim("userId", userId)
                 .build();
 
         return jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();

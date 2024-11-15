@@ -20,15 +20,21 @@ export const AuthProvider = ({ children }) => {
             setIsAuthenticated(true);
             console.log('Sessão válida');
           } else {
-            setIsAuthenticated(false);
-            console.log('Sessão inválida');
+            handleSessionInvalid();
           }
         } catch (error) {
           console.error('Erro ao validar sessão:', error);
-          setIsAuthenticated(false);
-          console.log('Erro ao validar sessão');
+          handleSessionInvalid();
         }
       }
+    };
+
+    const handleSessionInvalid = () => {
+      localStorage.removeItem('token');
+      localStorage.removeItem('isAuthenticated');
+      setCookie('token', '', -1);
+      setIsAuthenticated(false);
+      console.log('Sessão inválida ou expirada');
     };
 
     validateSession();
