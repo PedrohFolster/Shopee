@@ -109,4 +109,14 @@ public class ProdutoController {
         List<ProdutoDTO> produtos = produtoService.getProdutosByCategoriaProdutoId(categoriaProdutoId);
         return ResponseEntity.ok(produtos);
     }
+
+    @GetMapping("/{id}/loja")
+    public ResponseEntity<String> getNomeLojaByProdutoId(@PathVariable Long id) {
+        try {
+            String nomeLoja = produtoService.getNomeLojaByProdutoId(id);
+            return ResponseEntity.ok(nomeLoja);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }

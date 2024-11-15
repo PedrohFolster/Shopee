@@ -13,6 +13,7 @@ const Produto = () => {
   const [produtosVisiveis, setProdutosVisiveis] = useState([]);
   const maxProdutosVisiveis = 6;
   const [indiceAtual, setIndiceAtual] = useState(0);
+  const [nomeLoja, setNomeLoja] = useState('');
 
   useEffect(() => {
     const fetchProduto = async () => {
@@ -20,6 +21,7 @@ const Produto = () => {
         const response = await axios.get(`http://localhost:8080/produtos/${id}`);
         setProduto(response.data);
         fetchProdutosRelacionados(response.data.categoriaProdutoId, response.data.id);
+        fetchNomeLoja(response.data.id);
       } catch (error) {
         console.error('Erro ao buscar produto:', error);
       }
@@ -36,6 +38,15 @@ const Produto = () => {
         setProdutosVisiveis(produtosEmbaralhados.slice(0, maxProdutosVisiveis));
       } catch (error) {
         console.error('Erro ao buscar produtos relacionados:', error);
+      }
+    };
+
+    const fetchNomeLoja = async (produtoId) => {
+      try {
+        const response = await axios.get(`http://localhost:8080/produtos/${produtoId}/loja`);
+        setNomeLoja(response.data);
+      } catch (error) {
+        console.error('Erro ao buscar nome da loja:', error);
       }
     };
 
@@ -93,6 +104,7 @@ const Produto = () => {
           <div className='produto-detalhes'>
             <p className='produto-preco'>R$ {produto.preco.toFixed(2)}</p>
             <div className='produto-descricao-container'>
+              <p className='produto-loja'>Vendido por: {nomeLoja}</p> 
               <p className='produto-descricao'>{produto.descricao}</p>
             </div>
             <button className='botao-carrinho' onClick={() => adicionarAoCarrinho(produto)}>Adicionar ao Carrinho</button>

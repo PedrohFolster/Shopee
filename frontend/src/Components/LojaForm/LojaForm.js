@@ -13,7 +13,7 @@ const LojaForm = ({ nome, setNome, categoriaId, setCategoriaId, categorias, hand
                 name="nome"
                 value={nome}
                 onChange={(e) => setNome(e.target.value)}
-                placeholder="Nome da Loja*"
+                placeholder="Nome da Loja"
                 required
             />
         </FormRow>
@@ -24,7 +24,7 @@ const LojaForm = ({ nome, setNome, categoriaId, setCategoriaId, categorias, hand
                 onChange={(e) => setCategoriaId(e.target.value)}
                 required
             >
-                <option value="">Selecione uma categoria*</option>
+                <option value="">Selecione uma categoria para sua loja</option>
                 {categorias.map(categoria => (
                     <option key={categoria.id} value={categoria.id}>
                         {categoria.nome}

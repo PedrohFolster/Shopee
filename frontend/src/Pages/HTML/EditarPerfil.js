@@ -45,6 +45,7 @@ function EditarPerfil() {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+    
         if (name === 'telefone') {
             if (value.replace(/\D/g, '').length <= 11) {
                 setUsuario(prevState => ({
@@ -69,7 +70,6 @@ function EditarPerfil() {
             return;
         }
 
-        // Validações
         if (!isValidNomeCompleto(usuario.nome)) {
             setErrorMessage("Nome completo deve conter pelo menos dois nomes.");
             return;

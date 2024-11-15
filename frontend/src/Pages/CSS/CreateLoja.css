@@ -15,6 +15,7 @@
 .create-loja-form h2 {
     text-align: center;
     margin-bottom: 30px;
+    margin-top: 100px;
     color: #ff6600;
 }
 
@@ -83,4 +84,13 @@ button[type="criar-loja-btn"]:hover {
 
 .custominput {
     width: 400px;
+}
+
+.descricao-loja {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 18px;
+    color: #333;
+    line-height: 1.5;
+    max-width: 600px;
 }

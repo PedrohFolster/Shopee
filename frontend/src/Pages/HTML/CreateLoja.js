@@ -73,6 +73,7 @@ const CriarLoja = () => {
             <Header searchHidden={true} navbarHidden={true} />
             <main className="create-loja-form">
                 <h2>CRIAR LOJA</h2>
+                <p className="descricao-loja">Preencha os campos abaixo para criar sua loja e começar a vender seus produtos!</p>
                 <LojaForm 
                     nome={nome}
                     setNome={setNome}

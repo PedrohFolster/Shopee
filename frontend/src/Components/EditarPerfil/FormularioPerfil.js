@@ -58,4 +58,4 @@ const FormularioPerfil = ({ usuario, handleChange, senhaAtual, setSenhaAtual, ha
     </form>
 );
 
-export default FormularioPerfil; 
+export default FormularioPerfil;

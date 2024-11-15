@@ -1,7 +1,4 @@
-import React from 'react';
-import './Input.css';
-
-const Input = ({ type = 'text', id, name, value, onChange, placeholder, required = false, options = [] }) => {
+const Input = ({ type = 'text', id, name, value, onChange, placeholder, required = false, readOnly = false, options = [] }) => {
   if (type === 'select') {
     return (
       <div className="input-group">
@@ -29,9 +26,10 @@ const Input = ({ type = 'text', id, name, value, onChange, placeholder, required
         id={id}
         name={name}
         value={value}
-        onChange={onChange}
+        onChange={readOnly ? undefined : onChange} 
         placeholder={placeholder}
         required={required}
+        readOnly={readOnly} 
         className="custom-input"
       />
     </div>

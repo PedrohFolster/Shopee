@@ -170,3 +170,9 @@
     display: none;
   }
   
+  .produto-loja {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 5px;
+  }
+  

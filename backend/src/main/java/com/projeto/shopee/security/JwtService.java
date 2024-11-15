@@ -33,6 +33,7 @@ public class JwtService {
     }
 
     public String getGenereteToken(Authentication authentication) {
+
         Instant now = ZonedDateTime.now(ZoneId.of("America/Sao_Paulo")).toInstant();
         long expiry = 36000L; 
 
@@ -49,7 +50,7 @@ public class JwtService {
         JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuer("shopee")
                 .issuedAt(now.minusSeconds(30)) 
-                .expiresAt(now.plusSeconds(30))
+                .expiresAt(now.plusSeconds(expiry))
                 .subject(login)
                 .claim("scope", scope)
                 .claim("userId", userId)

@@ -168,4 +168,14 @@ public class ProdutoService {
         List<Produto> produtos = produtoRepository.findByCategoriaProdutoId(categoriaProdutoId);
         return produtoMapper.toDTOs(produtos);
     }
+
+    public String getNomeLojaByProdutoId(Long produtoId) {
+        Produto produto = produtoRepository.findById(produtoId)
+            .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+        Loja loja = produto.getLoja();
+        if (loja == null) {
+            throw new RuntimeException("Loja não encontrada para o produto");
+        }
+        return loja.getNome();
+    }
 }
