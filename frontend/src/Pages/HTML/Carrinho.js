@@ -29,16 +29,20 @@ const Carrinho = () => {
   };
 
   const finalizarCompra = () => {
-    axios.post('http://localhost:8080/produtos/finalizar-compra', carrinho)
-      .then(response => {
-        alert(response.data);
-        localStorage.removeItem('carrinho');
-        setCarrinho([]);
-      })
-      .catch(error => {
-        console.error('Erro ao finalizar compra:', error);
-        alert('Erro ao finalizar compra.');
-      });
+    axios.post('http://localhost:8080/produtos/finalizar-compra', carrinho, {
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('token')
+      }
+    })
+    .then(response => {
+      alert(response.data);
+      localStorage.removeItem('carrinho');
+      setCarrinho([]);
+    })
+    .catch(error => {
+      console.error('Erro ao finalizar compra:', error);
+      alert('Erro ao finalizar compra.');
+    });
   };
 
   return (
