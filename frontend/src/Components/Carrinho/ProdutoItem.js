@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../../Pages/CSS/Produto.css';
+import ModalConfirmacao from './ModalConfirmacao';
 
 const ProdutoItem = ({ produto, aumentarQuantidade, diminuirQuantidade, removerProduto }) => {
+  const [isModalOpen, setModalOpen] = useState(false);
+
   const handleRemoverClick = () => {
-    if (window.confirm(`Deseja realmente remover ${produto.nome} do carrinho?`)) {
-      removerProduto(produto.id);
-    }
+    setModalOpen(true);
+  };
+
+  const handleConfirmRemove = () => {
+    removerProduto(produto.id);
+    setModalOpen(false);
   };
 
   return (
@@ -19,6 +25,12 @@ const ProdutoItem = ({ produto, aumentarQuantidade, diminuirQuantidade, removerP
         <span>{produto.quantidade}</span>
         <button onClick={() => aumentarQuantidade(produto.id)}>+</button>
       </div>
+      <ModalConfirmacao
+        isOpen={isModalOpen}
+        onClose={() => setModalOpen(false)}
+        onConfirm={handleConfirmRemove}
+        message={`Deseja realmente remover este item do carrinho?`}
+      />
     </div>
   );
 };

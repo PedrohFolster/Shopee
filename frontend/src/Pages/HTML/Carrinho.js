@@ -42,7 +42,17 @@ const Carrinho = () => {
         axios.get(`http://localhost:8080/produtos/${produto.id}`)
       );
       const responses = await Promise.all(promises);
-      return responses.every(response => response.data.status === 'Ativo');
+
+      const produtosAtivos = responses.every(response => {
+        if (response.data.statusId !== 1) {
+          removerProduto(response.data.id);
+          toast.warn(`O produto ${response.data.nome} está inativo e foi removido do carrinho.`);
+          return false;
+        }
+        return true;
+      });
+
+      return produtosAtivos;
     } catch (error) {
       console.error('Erro ao verificar status dos produtos:', error);
       return false;
@@ -51,14 +61,13 @@ const Carrinho = () => {
 
   const finalizarCompra = async () => {
     if (carrinho.length === 0) {
-      toast.warn('O carrinho está vazio. Adicione produtos antes de finalizar a compra.', {
-      });
+      toast.warn('O carrinho está vazio. Adicione produtos antes de finalizar a compra.');
       return;
     }
 
     const produtosAtivos = await verificarProdutosAtivos();
     if (!produtosAtivos) {
-      alert('Um ou mais produtos no carrinho estão inativos. Não é possível finalizar a compra.');
+      toast.error('Um ou mais produtos no carrinho estavam inativos e foram removidos.');
       return;
     }
 
