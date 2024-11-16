@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Header from '../../Components/Menu/Items/Header/Header';
 import ProdutoSwiperItem from '../../Components/Product/ProdutoSwiperItem';
 import '../CSS/Produto.css';
+import { toast } from 'react-toastify';
 
 const Produto = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [produto, setProduto] = useState(null);
   const [produtosRelacionados, setProdutosRelacionados] = useState([]);
   const swiperRef = useRef(null);
@@ -55,9 +57,20 @@ const Produto = () => {
 
   const adicionarAoCarrinho = (produto) => {
     const carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
-    carrinho.push(produto);
-    localStorage.setItem('carrinho', JSON.stringify(carrinho));
-    alert('Produto adicionado ao carrinho!');
+    const produtoExistente = carrinho.find(item => item.id === produto.id);
+
+    if (produtoExistente) {
+      toast.info('Produto já está no carrinho!', {
+        className: 'toast-clickable'
+      });
+    } else {
+      carrinho.push(produto);
+      localStorage.setItem('carrinho', JSON.stringify(carrinho));
+      toast.success('Produto adicionado ao carrinho!', {
+        onClick: () => navigate('/carrinho'),
+        className: 'toast-clickable'
+      });
+    }
   };
 
   const scrollLeft = () => {
@@ -128,7 +141,6 @@ const Produto = () => {
       </div>
     </div>
   );
- 
 };
 
 export default Produto;

@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import ProdutosList from '../../Components/Carrinho/ProdutosList';
 import Header from '../../Components/Menu/Items/Header/Header';
+import ResumoCompra from '../../Components/Carrinho/ResumoCompra';
 import '../CSS/Carrinho.css';
+import { toast } from 'react-toastify';
 
 const Carrinho = () => {
   const [carrinho, setCarrinho] = useState(
@@ -48,6 +50,12 @@ const Carrinho = () => {
   };
 
   const finalizarCompra = async () => {
+    if (carrinho.length === 0) {
+      toast.warn('O carrinho está vazio. Adicione produtos antes de finalizar a compra.', {
+      });
+      return;
+    }
+
     const produtosAtivos = await verificarProdutosAtivos();
     if (!produtosAtivos) {
       alert('Um ou mais produtos no carrinho estão inativos. Não é possível finalizar a compra.');
@@ -70,18 +78,24 @@ const Carrinho = () => {
     });
   };
 
+  const calcularTotal = () => {
+    return carrinho.reduce((total, produto) => total + produto.preco * produto.quantidade, 0).toFixed(2);
+  };
+
   return (
     <>
       <Header searchHidden={true} navbarHidden={true} />
-      <div className="carrinho-container">
+      <div className="carrinho-container carrinho-page">
         <h2 className="carrinho-title">Carrinho</h2>
-        <ProdutosList 
-          produtos={carrinho} 
-          aumentarQuantidade={aumentarQuantidade} 
-          diminuirQuantidade={diminuirQuantidade} 
-          removerProduto={removerProduto}
-        />
-        <button className="finalizar-button" onClick={finalizarCompra}>Finalizar Compra</button>
+        <div className="carrinho-content">
+          <ProdutosList 
+            produtos={carrinho} 
+            aumentarQuantidade={aumentarQuantidade} 
+            diminuirQuantidade={diminuirQuantidade} 
+            removerProduto={removerProduto}
+          />
+          <ResumoCompra produtos={carrinho} total={calcularTotal()} finalizarCompra={finalizarCompra} />
+        </div>
       </div>
     </>
   );

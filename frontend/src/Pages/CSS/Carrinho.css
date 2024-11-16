@@ -14,11 +14,11 @@
     color: #333;
 }
 
-.produtos-list {
-    display: flex;
-    flex-wrap: wrap;
+.carrinho-page .produtos-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     gap: 16px;
-    justify-content: center;
+    flex: 1;
 }
 
 .produto-item {
@@ -33,7 +33,7 @@
 
 .produto-item img {
     max-width: 100%;
-    height: 200px;
+    max-height: 200px;
     border-radius: 8px;
 }
 
@@ -105,3 +105,101 @@
 .remover-button:hover {
     color: #b71c1c;
 }
+
+.carrinho-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.resumo-compra {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    width: 300px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    height: auto;
+    position: sticky;
+    top: 215px;
+    margin-left: 20px;
+}
+
+.resumo-compra h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.resumo-compra p {
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.finalizar-button {
+    background-color: #ff5722;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.finalizar-button:hover {
+    background-color: #e64a19;
+}
+
+.nenhum-produto-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.nenhum-produto {
+    text-align: center;
+    color: #555;
+}
+
+.resumo-lista {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+}
+
+.resumo-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.resumo-nome {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100px;
+    text-align: left;
+    margin-right: 10px;
+}
+
+.resumo-quantidade {
+    font-size: 14px;
+    color: #555;
+    width: 80px;
+    text-align: center;
+    justify-content: center;
+}   
+.resumo-total {
+    margin-left: 10px;
+    font-size: 14px;
+    color: #555;
+    width: 100px;
+    text-align: right;
+}
+

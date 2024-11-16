@@ -15,7 +15,7 @@ const ProdutosList = ({ produtos, aumentarQuantidade, diminuirQuantidade, remove
           />
         ))
       ) : (
-        <p>Nenhum produto no carrinho.</p>
+        <p className="nenhum-produto">Nenhum produto no carrinho.</p>
       )}
     </div>
   );

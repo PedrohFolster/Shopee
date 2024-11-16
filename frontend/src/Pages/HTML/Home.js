@@ -5,6 +5,7 @@ import Header from '../../Components/Menu/Items/Header/Header';
 import FiltroProdutos from '../../Components/Product/FiltroProdutos';
 import ListaProdutos from '../../Components/Product/ListaProdutos';
 import '../CSS/Home.css';
+import { toast } from 'react-toastify';
 
 const Home = () => {
   const [produtos, setProdutos] = useState([]);
@@ -42,9 +43,21 @@ const Home = () => {
 
   const adicionarAoCarrinho = (produto) => {
     const carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
-    carrinho.push(produto);
-    localStorage.setItem('carrinho', JSON.stringify(carrinho));
-    alert('Produto adicionado ao carrinho!');
+    const produtoExistente = carrinho.find(item => item.id === produto.id);
+
+    if (produtoExistente) {
+      toast.info('Produto já está no carrinho!', {
+        className: 'toast-clickable',
+        onClick: () => navigate('/carrinho'),
+      });
+    } else {
+      carrinho.push(produto);
+      localStorage.setItem('carrinho', JSON.stringify(carrinho));
+      toast.success('Produto adicionado ao carrinho!', {
+        onClick: () => navigate('/carrinho'),
+        className: 'toast-clickable'
+      });
+    }
   };
 
   const handleFiltroChange = (e) => {
