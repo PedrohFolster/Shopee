@@ -109,6 +109,10 @@ public class ProdutoService {
             throw new RuntimeException("Produto não está associado a uma loja");
         }
 
+        if (produtoExistente.getEstoque() == 0) {
+            desativarProduto(produtoExistente.getId());
+        }
+
         produtoExistente = produtoRepository.save(produtoExistente);
         return produtoMapper.toDTO(produtoExistente);
     }
