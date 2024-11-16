@@ -1,7 +1,6 @@
 package com.projeto.shopee.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -87,24 +86,6 @@ public class ProdutoController {
     public ResponseEntity<List<ProdutoDTO>> getProdutosAtivos() {
         List<ProdutoDTO> produtosAtivos = produtoService.getProdutosAtivos();
         return ResponseEntity.ok(produtosAtivos);
-    }
-
-    @PostMapping("/finalizar-compra")
-    public ResponseEntity<?> finalizarCompra(@RequestBody List<Map<String, Object>> produtos,
-            @RequestHeader("Authorization") String token) {
-        try {
-            
-            Long userId = jwtService.getUserIdFromToken(token.substring(7)); 
-            
-            for (Map<String, Object> produto : produtos) {
-                Long produtoId = Long.valueOf(produto.get("id").toString());
-                Integer quantidade = Integer.valueOf(produto.get("quantidade").toString());
-                produtoService.reduzirEstoque(produtoId, quantidade);
-            }
-            return ResponseEntity.ok("Compra finalizada com sucesso!");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
     }
 
     @GetMapping("/categoria/{categoriaProdutoId}")

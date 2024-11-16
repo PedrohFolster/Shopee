@@ -28,8 +28,33 @@ const Carrinho = () => {
     localStorage.setItem('carrinho', JSON.stringify(novoCarrinho));
   };
 
-  const finalizarCompra = () => {
-    axios.post('http://localhost:8080/produtos/finalizar-compra', carrinho, {
+  const removerProduto = (id) => {
+    const novoCarrinho = carrinho.filter(produto => produto.id !== id);
+    setCarrinho(novoCarrinho);
+    localStorage.setItem('carrinho', JSON.stringify(novoCarrinho));
+  };
+
+  const verificarProdutosAtivos = async () => {
+    try {
+      const promises = carrinho.map(produto =>
+        axios.get(`http://localhost:8080/produtos/${produto.id}`)
+      );
+      const responses = await Promise.all(promises);
+      return responses.every(response => response.data.status === 'Ativo');
+    } catch (error) {
+      console.error('Erro ao verificar status dos produtos:', error);
+      return false;
+    }
+  };
+
+  const finalizarCompra = async () => {
+    const produtosAtivos = await verificarProdutosAtivos();
+    if (!produtosAtivos) {
+      alert('Um ou mais produtos no carrinho estão inativos. Não é possível finalizar a compra.');
+      return;
+    }
+
+    axios.post('http://localhost:8080/pedidos/finalizar-compra', carrinho, {
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem('token')
       }
@@ -54,6 +79,7 @@ const Carrinho = () => {
           produtos={carrinho} 
           aumentarQuantidade={aumentarQuantidade} 
           diminuirQuantidade={diminuirQuantidade} 
+          removerProduto={removerProduto}
         />
         <button className="finalizar-button" onClick={finalizarCompra}>Finalizar Compra</button>
       </div>

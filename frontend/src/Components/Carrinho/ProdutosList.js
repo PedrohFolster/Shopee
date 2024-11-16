@@ -2,7 +2,7 @@ import React from 'react';
 import ProdutoItem from './ProdutoItem';
 import '../../Pages/CSS/Produto.css';
 
-const ProdutosList = ({ produtos, aumentarQuantidade, diminuirQuantidade }) => (
+const ProdutosList = ({ produtos, aumentarQuantidade, diminuirQuantidade, removerProduto }) => (
     <div className="produtos-list">
       {produtos.length > 0 ? (
         produtos.map((produto, index) => (
@@ -11,6 +11,7 @@ const ProdutosList = ({ produtos, aumentarQuantidade, diminuirQuantidade }) => (
             produto={produto}
             aumentarQuantidade={aumentarQuantidade}
             diminuirQuantidade={diminuirQuantidade}
+            removerProduto={removerProduto}
           />
         ))
       ) : (

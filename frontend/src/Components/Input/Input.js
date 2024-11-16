@@ -1,3 +1,6 @@
+import React from 'react';
+import './Input.css';
+
 const Input = ({ type = 'text', id, name, value, onChange, placeholder, required = false, readOnly = false, options = [] }) => {
   if (type === 'select') {
     return (

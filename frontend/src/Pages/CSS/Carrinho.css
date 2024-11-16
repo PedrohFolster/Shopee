@@ -33,13 +33,14 @@
 
 .produto-item img {
     max-width: 100%;
-    height: auto;
+    height: 200px;
     border-radius: 8px;
 }
 
 .produto-item h2 {
     font-size: 16px;
     margin: 12px 0;
+    height: 105px;
 }
 
 .produto-item p {
@@ -88,4 +89,19 @@
 
 .quantidade-container button:hover {
     background-color: #e64a19;
+}
+
+.remover-button {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background: transparent;
+    border: none;
+    color: #e53935;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.remover-button:hover {
+    color: #b71c1c;
 }
