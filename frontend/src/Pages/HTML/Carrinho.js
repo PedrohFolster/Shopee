@@ -77,13 +77,13 @@ const Carrinho = () => {
       }
     })
     .then(response => {
-      alert(response.data);
+      toast.success(response.data);
       localStorage.removeItem('carrinho');
       setCarrinho([]);
     })
     .catch(error => {
       console.error('Erro ao finalizar compra:', error);
-      alert('Erro ao finalizar compra.');
+      toast.error('Erro ao finalizar compra.');
     });
   };
 

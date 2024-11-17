@@ -6,7 +6,7 @@ import '../CSS/CreateLoja.css';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Util/Authentication';
 import api from '../../Util/ApiConfig';
-
+import { toast } from 'react-toastify';
 const CriarLoja = () => {
     const { isAuthenticated } = useContext(AuthContext);
     const [nome, setNome] = useState('');
@@ -64,7 +64,7 @@ const CriarLoja = () => {
             })
             .catch(error => {
                 console.error('Erro ao criar loja:', error);
-                alert('Erro ao criar loja. Por favor, tente novamente.');
+                toast.error('Erro ao criar loja. Por favor, tente novamente.');
             });
     };
 

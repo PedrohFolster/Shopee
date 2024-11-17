@@ -47,43 +47,66 @@ const Register = () => {
     }
   };
 
-  const handleNextStep = () => {
+  const handleNextStep = async () => {
     setErrorMessage(''); 
     if (step === 1) {
       const { nomeCompleto, cpf, dataNascimento, email, telefone, senha, confirmarSenha } = formData;
       if (!nomeCompleto || !cpf || !dataNascimento || !email || !telefone || !senha || !confirmarSenha) {
-        setErrorMessage('Por favor, preencha todos os campos obrigatórios.');
+        toast.error('Por favor, preencha todos os campos obrigatórios.');
         return;
       }
       if (nomeCompleto.split(' ').length < 2) {
-        setErrorMessage('Nome completo deve conter pelo menos dois nomes.');
+        toast.error('Nome completo deve conter pelo menos dois nomes.');
         return;
       }
       if (!validarCpf(cpf)) {
-        setErrorMessage('CPF inválido');
+        toast.error('CPF inválido');
         return;
       }
       if (!email.includes('@')) {
-        setErrorMessage('E-mail inválido');
+        toast.error('E-mail inválido');
+        return;
+      }
+      if (telefone.replace(/\D/g, '').length !== 11) {
+        toast.error('Telefone deve conter 11 dígitos.');
         return;
       }
       if (senha !== confirmarSenha) {
-        setErrorMessage('As senhas não coincidem');
+        toast.error('As senhas não coincidem');
         return;
       }
       if (!senha.match(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)) {
-        setErrorMessage('Senha deve conter pelo menos uma letra maiúscula, letras, números e um caractere especial.');
+        toast.error('Senha deve conter pelo menos uma letra maiúscula, letras, números e um caractere especial.');
         return;
       }
+
+      try {
+        const response = await axios.get('http://localhost:8080/usuarios/verificar', {
+          params: { email, cpf }
+        });
+        const { emailExiste, cpfExiste } = response.data;
+        if (emailExiste) {
+          toast.error('E-mail já está em uso.');
+          return;
+        }
+        if (cpfExiste) {
+          toast.error('CPF já está em uso.');
+          return;
+        }
+      } catch (error) {
+        toast.error('Erro ao verificar e-mail e CPF.');
+        return;
+      }
+
       setStep(2);
     } else if (step === 2) {
       const { cep, rua, numero, cidade, estado, pais } = formData;
       if (!cep || !rua || !numero || !cidade || !estado || !pais) {
-        setErrorMessage('Por favor, preencha todos os campos obrigatórios.');
+        toast.error('Por favor, preencha todos os campos obrigatórios.');
         return;
       }
       if (cep.length !== 9) {
-        setErrorMessage('CEP inválido');
+        toast.error('CEP inválido');
         return;
       }
       handleSubmit();
@@ -123,15 +146,14 @@ const Register = () => {
       });
   
       if (response.status === 200) {
-        toast.success('Usuário registrado com sucesso!', {
-        });
+        toast.success('Usuário registrado com sucesso!');
         navigate('/login');
       }
     } catch (error) {
       if (error.response && error.response.data && error.response.data.message) {
-        setErrorMessage(error.response.data.message);
+        toast.error(error.response.data.message);
       } else {
-        setErrorMessage('Erro ao registrar usuário');
+        toast.error('Erro ao registrar usuário');
       }
     }
   };
@@ -154,7 +176,7 @@ const Register = () => {
           pais: address.pais || 'Brasil'
         }));
       } catch (error) {
-        setErrorMessage('Erro ao buscar endereço: ' + error.message);
+        toast.error('Erro ao buscar endereço: ' + error.message);
       }
     }
   };

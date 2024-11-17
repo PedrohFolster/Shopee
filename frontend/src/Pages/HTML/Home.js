@@ -24,7 +24,7 @@ const Home = () => {
         const response = await axios.get('http://localhost:8080/produtos/ativos');
         setProdutos(response.data);
       } catch (error) {
-        console.error('Erro ao buscar produtos ativos:', error);
+        toast.error('Erro ao buscar produtos ativos.');
       }
     };
 
@@ -33,7 +33,7 @@ const Home = () => {
         const response = await axios.get('http://localhost:8080/categorias-p');
         setCategorias(response.data);
       } catch (error) {
-        console.error('Erro ao buscar categorias:', error);
+        toast.error('Erro ao buscar categorias.');
       }
     };
 

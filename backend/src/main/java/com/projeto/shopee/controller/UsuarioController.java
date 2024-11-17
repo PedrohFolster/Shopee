@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.projeto.shopee.dto.EnderecoDTO;
 import com.projeto.shopee.dto.UsuarioDTO;
 import com.projeto.shopee.security.JwtService;
 import com.projeto.shopee.service.UsuarioService;
@@ -57,7 +58,7 @@ public class UsuarioController {
             UsuarioDTO usuarioAtualizado = usuarioService.updateUsuario(id, usuarioDTO);
             return ResponseEntity.ok(usuarioAtualizado);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
         }
     }
 
@@ -86,6 +87,33 @@ public class UsuarioController {
             return ResponseEntity.ok().body(Map.of("valid", isValid));
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Erro ao validar senha.");
+        }
+    }
+
+    @GetMapping("/verificar")
+    public ResponseEntity<?> verificarExistencia(@RequestParam String email, @RequestParam String cpf) {
+        boolean emailExiste = usuarioService.emailExiste(email);
+        boolean cpfExiste = usuarioService.cpfExiste(cpf);
+        return ResponseEntity.ok(Map.of("emailExiste", emailExiste, "cpfExiste", cpfExiste));
+    }
+
+    @PutMapping("/{id}/senha")
+    public ResponseEntity<?> updateSenha(@PathVariable Long id, @RequestParam String senhaAtual, @RequestParam String novaSenha) {
+        try {
+            usuarioService.updateSenha(id, senhaAtual, novaSenha);
+            return ResponseEntity.ok().body(Map.of("message", "Senha atualizada com sucesso."));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
+        }
+    }
+
+    @PutMapping("/{id}/endereco")
+    public ResponseEntity<?> updateEndereco(@PathVariable Long id, @RequestBody EnderecoDTO enderecoDTO, @RequestParam String senha) {
+        try {
+            usuarioService.updateEndereco(id, enderecoDTO, senha);
+            return ResponseEntity.ok().body(Map.of("message", "Endereço atualizado com sucesso."));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
         }
     }
 }

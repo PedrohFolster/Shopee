@@ -6,7 +6,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.projeto.shopee.dto.EnderecoDTO;
 import com.projeto.shopee.dto.UsuarioDTO;
+import com.projeto.shopee.entities.Endereco;
 import com.projeto.shopee.entities.Usuario;
 import com.projeto.shopee.entities.UsuarioAutenticar;
 import com.projeto.shopee.repository.UsuarioAutenticarRepository;
@@ -14,6 +16,8 @@ import com.projeto.shopee.repository.UsuarioRepository;
 import com.projeto.shopee.util.Hashing;
 import com.projeto.shopee.util.UsuarioMapper;
 import com.projeto.shopee.util.ValidationUtils;
+
+import java.security.NoSuchAlgorithmException;
 
 @Service
 public class UsuarioService {
@@ -53,6 +57,11 @@ public class UsuarioService {
     }
 
     public UsuarioDTO updateUsuario(Long id, UsuarioDTO usuarioDTO) {
+        Usuario usuarioExistentePorEmail = usuarioRepository.findByEmail(usuarioDTO.getEmail());
+        if (usuarioExistentePorEmail != null && !usuarioExistentePorEmail.getId().equals(id)) {
+            throw new IllegalArgumentException("E-mail já está em uso por outro usuário.");
+        }
+
         validateUsuario(usuarioDTO, false);
 
         Usuario usuarioExistente = usuarioRepository.findById(id)
@@ -108,5 +117,58 @@ public class UsuarioService {
         if (!ValidationUtils.isValidEndereco(usuarioDTO.getEnderecoDTO())) {
             throw new IllegalArgumentException("Endereço é obrigatório e deve ser válido");
         }
+    }
+
+    public boolean emailExiste(String email) {
+        return usuarioRepository.existsByEmail(email);
+    }
+
+    public boolean cpfExiste(String cpf) {
+        return usuarioRepository.existsByCpf(cpf);
+    }
+
+    public void updateSenha(Long id, String senhaAtual, String novaSenha) {
+        Usuario usuario = usuarioRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado"));
+
+        if (!validarSenha(usuario.getId(), senhaAtual)) {
+            throw new IllegalArgumentException("Senha atual incorreta.");
+        }
+
+        if (!ValidationUtils.isValidPassword(novaSenha)) {
+            throw new IllegalArgumentException("Nova senha inválida. Deve conter pelo menos uma letra maiúscula, letras, números e um caractere especial.");
+        }
+
+        UsuarioAutenticar usuarioAutenticar = usuario.getUsuarioAutenticar();
+        try {
+            usuarioAutenticar.setPassword(novaSenha);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("Erro ao atualizar senha.");
+        }
+        usuarioAutenticarRepository.save(usuarioAutenticar);
+    }
+
+    public void updateEndereco(Long id, EnderecoDTO enderecoDTO, String senha) {
+        Usuario usuario = usuarioRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado"));
+
+        if (!validarSenha(usuario.getId(), senha)) {
+            throw new IllegalArgumentException("Senha incorreta.");
+        }
+
+        if (!ValidationUtils.isValidEndereco(enderecoDTO)) {
+            throw new IllegalArgumentException("Endereço inválido.");
+        }
+
+        Endereco endereco = usuario.getEndereco();
+        endereco.setCep(enderecoDTO.getCep());
+        endereco.setRua(enderecoDTO.getRua());
+        endereco.setNumero(enderecoDTO.getNumero());
+        endereco.setCidade(enderecoDTO.getCidade());
+        endereco.setEstado(enderecoDTO.getEstado());
+        endereco.setPais(enderecoDTO.getPais());
+        endereco.setComplemento(enderecoDTO.getComplemento());
+
+        usuarioRepository.save(usuario);
     }
 }

@@ -4,7 +4,7 @@ import Input from '../../Components/Input/Input';
 import Button from '../../Components/Button/Button';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
+import { toast } from 'react-toastify';
 const LoginForm = ({ login }) => {
   const [formData, setFormData] = useState({
     email: '',
@@ -37,11 +37,11 @@ const LoginForm = ({ login }) => {
         login();
         navigate('/home');
       } else {
-        alert('Usuário ou senha inválidos');
+        toast.error('Usuário ou senha inválidos');
       }
     } catch (error) {
       console.error('Erro:', error);
-      alert('Usuário ou senha inválidos');
+      toast.error('Usuário ou senha inválidos');
     }
   };
 
