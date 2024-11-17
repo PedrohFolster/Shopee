@@ -11,6 +11,9 @@ public class PublicUrls {
         "/status",
         "/produtos/{id}",
         "/categoria/{categoriaId}",
-        "/produtos/categoria/{categoriaId}"
+        "/produtos/categoria/{categoriaId}",
+        "/lojas/search",
+        "/produtos/loja/{lojaId}/todos",
+        "/lojas/{lojaId}/publico"
     };
 } 

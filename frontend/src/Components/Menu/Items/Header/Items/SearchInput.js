@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import '../Header.css';
 
 const SearchInputComponent = ({ hidden }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (searchTerm) {
@@ -22,6 +24,10 @@ const SearchInputComponent = ({ hidden }) => {
     }
   }, [searchTerm]);
 
+  const handleLojaClick = (id) => {
+    navigate(`/loja/${id}`);
+  };
+
   return (
     <div className="search-container">
       <input
@@ -36,7 +42,11 @@ const SearchInputComponent = ({ hidden }) => {
       {searchResults.length > 0 && (
         <div className="search-dropdown">
           {searchResults.map((loja) => (
-            <div key={loja.id} className="search-item">
+            <div
+              key={loja.id}
+              className="search-item"
+              onClick={() => handleLojaClick(loja.id)}
+            >
               {loja.nome}
             </div>
           ))}

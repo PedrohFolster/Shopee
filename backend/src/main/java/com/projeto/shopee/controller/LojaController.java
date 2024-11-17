@@ -109,4 +109,13 @@ public class LojaController {
         List<LojaDTO> lojas = lojaService.searchLojasByName(nome);
         return ResponseEntity.ok(lojas);
     }
+
+    @GetMapping("/{id}/publico")
+    public ResponseEntity<?> getLojaPublicaById(@PathVariable Long id) {
+        LojaDTO loja = lojaService.getLojaById(id);
+        if (loja == null) {
+            return ResponseEntity.status(404).body("Loja não encontrada");
+        }
+        return ResponseEntity.ok(loja);
+    }
 }

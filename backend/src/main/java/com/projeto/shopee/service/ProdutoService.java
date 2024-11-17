@@ -182,4 +182,9 @@ public class ProdutoService {
         }
         return loja.getNome();
     }
+
+    public List<ProdutoDTO> getProdutosByLoja(Long lojaId) {
+        List<Produto> produtos = produtoRepository.findByLojaId(lojaId);
+        return produtoMapper.toDTOs(produtos);
+    }
 }

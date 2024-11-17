@@ -103,6 +103,12 @@ const Produto = () => {
     }
   };
 
+  const handleLojaClick = () => {
+    if (produto && produto.lojaId) {
+      navigate(`/loja/${produto.lojaId}`);
+    }
+  };
+
   if (!produto) return <p>Carregando...</p>;
 
   return (
@@ -117,7 +123,16 @@ const Produto = () => {
           <div className='produto-detalhes'>
             <p className='produto-preco'>R$ {produto.preco.toFixed(2)}</p>
             <div className='produto-descricao-container'>
-              <p className='produto-loja'>Vendido por: {nomeLoja}</p> 
+              <p className='produto-loja'>
+                Vendido por:     
+                <span 
+                  className='link-loja' 
+                  onClick={handleLojaClick}
+                  style={{ cursor: 'pointer' }}
+                >
+                  {" " +nomeLoja}
+                </span>
+              </p>
               <p className='produto-descricao'>{produto.descricao}</p>
             </div>
             <button className='botao-carrinho' onClick={() => adicionarAoCarrinho(produto)}>Adicionar ao Carrinho</button>

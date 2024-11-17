@@ -103,4 +103,10 @@ public class ProdutoController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @GetMapping("/loja/{lojaId}/todos")
+    public ResponseEntity<List<ProdutoDTO>> getProdutosByLoja(@PathVariable Long lojaId) {
+        List<ProdutoDTO> produtos = produtoService.getProdutosByLoja(lojaId);
+        return ResponseEntity.ok(produtos);
+    }
 }

@@ -12,6 +12,8 @@ import MinhaLoja from './Pages/HTML/MinhaLoja';
 import Carrinho from './Pages/HTML/Carrinho';
 import Produto from './Pages/HTML/Produto';
 import EditarPerfil from './Pages/HTML/EditarPerfil';
+import LojaPage from './Pages/HTML/LojaPage';
+
 function App() {
   return (
     <Router>
@@ -26,6 +28,7 @@ function App() {
           <Route path="/CreateLoja" element={<ProtectedRoute element={<CreateLoja />} />} />
           <Route path="/MinhaLoja" element={<ProtectedRoute element={<MinhaLoja />} />} />
           <Route path="/editar-perfil" element={<ProtectedRoute element={<EditarPerfil />} />} />
+          <Route path="/loja/:id" element={<LojaPage />} />
         </Routes>
         <ToastContainer position="bottom-right" autoClose={3000} />
       </div>

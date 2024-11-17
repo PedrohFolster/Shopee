@@ -46,7 +46,7 @@ const MinhaLoja = () => {
             .catch(error => {
                 console.error('Erro ao verificar loja:', error);
             });
-    }, [isAuthenticated]);
+    }, [isAuthenticated, navigate]);
 
   useEffect(() => {
     api.get('http://localhost:8080/lojas/minha-loja', { withCredentials: true })
