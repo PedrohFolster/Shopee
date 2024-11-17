@@ -24,8 +24,8 @@ const Carrinho = () => {
 
   const diminuirQuantidade = (id) => {
     const novoCarrinho = carrinho.map(produto => 
-      produto.id === id && produto.quantidade > 1 ? { ...produto, quantidade: produto.quantidade - 1 } : produto
-    );
+      produto.id === id ? { ...produto, quantidade: produto.quantidade - 1 } : produto
+    ).filter(produto => produto.quantidade > 0);
     setCarrinho(novoCarrinho);
     localStorage.setItem('carrinho', JSON.stringify(novoCarrinho));
   };
@@ -36,23 +36,28 @@ const Carrinho = () => {
     localStorage.setItem('carrinho', JSON.stringify(novoCarrinho));
   };
 
-  const verificarProdutosAtivos = async () => {
+  const verificarProdutosAtivosEEstoque = async () => {
     try {
       const promises = carrinho.map(produto =>
         axios.get(`http://localhost:8080/produtos/${produto.id}`)
       );
       const responses = await Promise.all(promises);
 
-      const produtosAtivos = responses.every(response => {
-        if (response.data.statusId !== 1) {
-          removerProduto(response.data.id);
-          toast.warn(`O produto ${response.data.nome} está inativo e foi removido do carrinho.`);
+      const produtosAtivosEEstoque = responses.every(response => {
+        const produto = response.data;
+        if (produto.statusId !== 1) {
+          removerProduto(produto.id);
+          toast.warn(`O produto ${produto.nome} está inativo e foi removido do carrinho.`);
+          return false;
+        }
+        if (produto.estoque < carrinho.find(p => p.id === produto.id).quantidade) {
+          toast.warn(`O produto ${produto.nome} tem estoque insuficiente.`);
           return false;
         }
         return true;
       });
 
-      return produtosAtivos;
+      return produtosAtivosEEstoque;
     } catch (error) {
       console.error('Erro ao verificar status dos produtos:', error);
       return false;
@@ -60,14 +65,18 @@ const Carrinho = () => {
   };
 
   const finalizarCompra = async () => {
+    if (!localStorage.getItem('token')) {
+      toast.error('Você precisa estar logado para finalizar a compra.');
+      return;
+    }
+
     if (carrinho.length === 0) {
       toast.warn('O carrinho está vazio. Adicione produtos antes de finalizar a compra.');
       return;
     }
 
-    const produtosAtivos = await verificarProdutosAtivos();
-    if (!produtosAtivos) {
-      toast.error('Um ou mais produtos no carrinho estavam inativos e foram removidos.');
+    const produtosAtivosEEstoque = await verificarProdutosAtivosEEstoque();
+    if (!produtosAtivosEEstoque) {
       return;
     }
 
