@@ -26,6 +26,7 @@ public class PedidoMapper {
         pedido.setUsuario(usuario);
         
         pedido.setValorTotal(pedidoDTO.getValorTotal());
+        pedido.setDataPedido(pedidoDTO.getDataPedido());
         
         if (pedidoDTO.getPedidoItens() != null) {
             List<PedidoItens> itens = pedidoDTO.getPedidoItens().stream()
@@ -42,6 +43,7 @@ public class PedidoMapper {
         pedidoDTO.setIdPedido(pedido.getIdPedido());
         pedidoDTO.setIdUsuario(pedido.getUsuario().getId());
         pedidoDTO.setValorTotal(pedido.getValorTotal());
+        pedidoDTO.setDataPedido(pedido.getDataPedido());
         
         if (pedido.getPedidoItens() != null) {
             List<PedidoItensDTO> itensDTO = pedido.getPedidoItens().stream()

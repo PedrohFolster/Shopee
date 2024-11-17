@@ -1,0 +1,8 @@
+.pedidos-page {
+  padding: 20px;
+}
+
+.pedidos-list {
+  display: flex;
+  flex-direction: column;
+} 

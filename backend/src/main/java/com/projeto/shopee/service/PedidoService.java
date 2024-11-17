@@ -10,6 +10,7 @@ import com.projeto.shopee.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -36,6 +37,8 @@ public class PedidoService {
         Pedido pedido = new Pedido();
         pedido.setUsuario(usuario);
 
+        pedido.setDataPedido(LocalDate.now());
+
         List<PedidoItens> itens = produtos.stream().map(produtoMap -> {
             Long produtoId = Long.valueOf(produtoMap.get("id").toString());
             Integer quantidade = Integer.valueOf(produtoMap.get("quantidade").toString());
@@ -59,5 +62,9 @@ public class PedidoService {
         pedido.setValorTotal(itens.stream().mapToDouble(PedidoItens::getValorTotal).sum());
 
         pedidoRepository.save(pedido);
+    }
+
+    public List<Pedido> getPedidosByUserId(Long userId) {
+        return pedidoRepository.findByUsuarioId(userId);
     }
 } 

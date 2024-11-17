@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import ProtectedRoute from './Util/ProtectedRoute';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
 import Home from './Pages/HTML/Home';
 import Register from './Pages/HTML/Register';
 import Login from './Pages/HTML/Login';
@@ -13,6 +12,7 @@ import Carrinho from './Pages/HTML/Carrinho';
 import Produto from './Pages/HTML/Produto';
 import EditarPerfil from './Pages/HTML/EditarPerfil';
 import LojaPage from './Pages/HTML/LojaPage';
+import PedidosPage from './Pages/HTML/PedidosPage';
 
 function App() {
   return (
@@ -29,6 +29,7 @@ function App() {
           <Route path="/MinhaLoja" element={<ProtectedRoute element={<MinhaLoja />} />} />
           <Route path="/editar-perfil" element={<ProtectedRoute element={<EditarPerfil />} />} />
           <Route path="/loja/:id" element={<LojaPage />} />
+          <Route path="/pedidos" element={<ProtectedRoute element={<PedidosPage />} />} />
         </Routes>
         <ToastContainer position="bottom-right" autoClose={3000} />
       </div>

@@ -2,6 +2,7 @@ package com.projeto.shopee.entities;
 
 import jakarta.persistence.*;
 import java.util.List;
+import java.time.LocalDate;
 
 @Entity
 public class Pedido {
@@ -18,6 +19,8 @@ public class Pedido {
 
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
     private List<PedidoItens> pedidoItens;
+
+    private LocalDate dataPedido;
 
     
     public Pedido() {
@@ -60,6 +63,14 @@ public class Pedido {
 
     public void setPedidoItens(List<PedidoItens> pedidoItens) {
         this.pedidoItens = pedidoItens;
+    }
+
+    public LocalDate getDataPedido() {
+        return dataPedido;
+    }
+
+    public void setDataPedido(LocalDate dataPedido) {
+        this.dataPedido = dataPedido;
     }
 
     
