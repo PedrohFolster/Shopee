@@ -9,4 +9,5 @@ import com.projeto.shopee.entities.Usuario;
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     boolean existsByEmail(String email);
     Usuario findByEmail(String email);
+    boolean existsByCpf(String cpf);
 }

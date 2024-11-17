@@ -8,6 +8,7 @@ import '../CSS/Register.css';
 import { formatarCpf, validarCpf } from '../../Util/CpfFormatter';
 import { fetchAddressByCep } from '../../Util/CepAPI';
 import { formatarTelefone } from '../../Util/TelefoneFormatter';
+import { toast } from 'react-toastify';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -122,7 +123,8 @@ const Register = () => {
       });
   
       if (response.status === 200) {
-        alert('Usuário registrado com sucesso!');
+        toast.success('Usuário registrado com sucesso!', {
+        });
         navigate('/login');
       }
     } catch (error) {

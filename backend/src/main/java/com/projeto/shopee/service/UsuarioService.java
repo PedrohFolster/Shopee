@@ -38,6 +38,14 @@ public class UsuarioService {
     }
 
     public UsuarioDTO createUsuario(UsuarioDTO usuarioDTO) {
+        if (usuarioRepository.existsByEmail(usuarioDTO.getEmail())) {
+            throw new IllegalArgumentException("E-mail já está em uso.");
+        }
+
+        if (usuarioRepository.existsByCpf(usuarioDTO.getCpf())) {
+            throw new IllegalArgumentException("CPF já está em uso.");
+        }
+
         validateUsuario(usuarioDTO, true);
         Usuario usuario = usuarioMapper.toEntity(usuarioDTO);
         usuario = usuarioRepository.save(usuario);
