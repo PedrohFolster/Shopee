@@ -2,18 +2,20 @@ package com.projeto.shopee.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Map;
+import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-
 import com.projeto.shopee.dto.LojaDTO;
 import com.projeto.shopee.entities.Loja;
 import com.projeto.shopee.exception.UsuarioJaPossuiLojaException;
 import com.projeto.shopee.exception.InvalidLojaDataException;
 import com.projeto.shopee.repository.LojaRepository;
 import com.projeto.shopee.repository.CategoriaLojaRepository;
+import com.projeto.shopee.repository.ProdutoRepository;
 import com.projeto.shopee.util.LojaMapper;
 import com.projeto.shopee.util.ValidationUtils;
+import com.projeto.shopee.entities.Produto;
 
 @Service
 public class LojaService {
@@ -26,6 +28,9 @@ public class LojaService {
 
     @Autowired
     private LojaMapper lojaMapper;
+
+    @Autowired
+    private ProdutoRepository produtoRepository;
 
     public List<LojaDTO> getAllLojas() {
         List<Loja> lojas = lojaRepository.findAll();
@@ -88,5 +93,22 @@ public class LojaService {
     public List<LojaDTO> searchLojasByName(String nome) {
         List<Loja> lojas = lojaRepository.findByNomeContainingIgnoreCase(nome);
         return lojaMapper.toDTOs(lojas);
+    }
+
+    public Map<String, Object> getLojaInfoByUsuarioId(Long usuarioId) {
+        Loja loja = lojaRepository.findByUsuarioId(usuarioId)
+            .orElseThrow(() -> new RuntimeException("Loja não encontrada para o usuário"));
+
+        List<Produto> produtos = produtoRepository.findByLojaId(loja.getId());
+        int quantidadeProdutosDiferentes = produtos.size();
+        int produtosTotais = produtos.stream().mapToInt(Produto::getEstoque).sum();
+
+        Map<String, Object> lojaInfo = new HashMap<>();
+        lojaInfo.put("nome", loja.getNome());
+        lojaInfo.put("quantidadeProdutosDiferentes", quantidadeProdutosDiferentes);
+        lojaInfo.put("produtosTotais", produtosTotais);
+        lojaInfo.put("valorTotalEstoque", produtos.stream().mapToDouble(p -> p.getPreco() * p.getEstoque()).sum());
+
+        return lojaInfo;
     }
 }

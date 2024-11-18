@@ -1,6 +1,7 @@
 package com.projeto.shopee.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -117,5 +118,15 @@ public class LojaController {
             return ResponseEntity.status(404).body("Loja não encontrada");
         }
         return ResponseEntity.ok(loja);
+    }
+
+    @GetMapping("/minha-loja/info")
+    public ResponseEntity<?> getLojaInfoByUsuario(@RequestHeader("Authorization") String token) {
+        Long usuarioId = jwtService.getUserIdFromToken(token.substring(7));
+        if (usuarioId == null) {
+            return ResponseEntity.status(401).body("Usuário não autenticado");
+        }
+        Map<String, Object> lojaInfo = lojaService.getLojaInfoByUsuarioId(usuarioId);
+        return ResponseEntity.ok(lojaInfo);
     }
 }

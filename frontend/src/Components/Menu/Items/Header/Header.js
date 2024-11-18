@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react';
 import './Header.css';
-import MenuButtonComponent from './Items/MenuButton';
 import SearchInputComponent from './Items/SearchInput';
 import LoginLink from './Items/LoginLink';
 import RegisterLink from './Items/RegisterLink';
@@ -23,7 +22,7 @@ const Header = ({ searchHidden = false, navbarHidden = true }) => {
       <header className="header">
         <div className="header-content">
           <div className="header-left">
-            <MenuButtonComponent />
+           
             <a href="/" className="logo-link" aria-label="Página inicial KaBuM!">
               <img alt="Logo Kabum" src="https://static.kabum.com.br/conteudo/icons/logo.svg" width="105" height="36" />
             </a>
