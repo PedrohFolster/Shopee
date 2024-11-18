@@ -130,6 +130,50 @@ function EditarPerfil() {
         });
     };
 
+    const handleSubmitPerfil = (e) => {
+        e.preventDefault();
+
+        const token = localStorage.getItem('token');
+        
+        // Primeiro, validar a senha
+        axios.post('http://localhost:8080/usuarios/validar-senha', null, {
+            headers: { 'Authorization': `Bearer ${token}` },
+            params: { senha: senhaAtual },
+            withCredentials: true
+        })
+        .then(response => {
+            if (response.data.valid) {
+                // Remover a formatação do telefone antes de enviar
+                const telefoneSemFormatacao = usuario.telefone.replace(/\D/g, '');
+
+                axios.put(`http://localhost:8080/usuarios/${usuario.id}`, {
+                    nome: usuario.nome,
+                    email: usuario.email,
+                    dataNascimento: usuario.dataNascimento,
+                    telefone: telefoneSemFormatacao // Enviar telefone sem formatação
+                }, {
+                    headers: { 'Authorization': `Bearer ${token}` },
+                    withCredentials: true
+                })
+                .then(() => {
+                    toast.success("Perfil atualizado com sucesso!");
+                })
+                .catch(error => {
+                    if (error.response && error.response.data && error.response.data.message) {
+                        toast.error(error.response.data.message);
+                    } else {
+                        toast.error("Erro ao atualizar perfil.");
+                    }
+                });
+            } else {
+                toast.error("Senha atual incorreta.");
+            }
+        })
+        .catch(() => {
+            toast.error("Erro ao validar senha.");
+        });
+    };
+
     return (
         <div className="register">
             <Header searchHidden={true} navbarHidden={true}/>
@@ -146,7 +190,7 @@ function EditarPerfil() {
                     handleChange={handleChange}
                     senhaAtual={senhaAtual}
                     setSenhaAtual={setSenhaAtual}
-                    handleSubmit={handleSubmitSenha}
+                    handleSubmit={handleSubmitPerfil}
                 />
                 <ModalSenha
                     isOpen={isSenhaModalOpen}

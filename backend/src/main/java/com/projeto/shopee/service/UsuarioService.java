@@ -114,7 +114,7 @@ public class UsuarioService {
             System.out.println("Senha recebida: " + usuarioDTO.getUsuarioAutenticarDTO().getPassword());
             throw new IllegalArgumentException("Senha inválida. Deve conter pelo menos uma letra maiúscula, letras, números e um caractere especial");
         }
-        if (!ValidationUtils.isValidEndereco(usuarioDTO.getEnderecoDTO())) {
+        if (usuarioDTO.getEnderecoDTO() != null && !ValidationUtils.isValidEndereco(usuarioDTO.getEnderecoDTO())) {
             throw new IllegalArgumentException("Endereço é obrigatório e deve ser válido");
         }
     }
