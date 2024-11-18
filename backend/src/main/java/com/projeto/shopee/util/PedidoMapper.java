@@ -62,6 +62,7 @@ public class PedidoMapper {
         pedidoItens.setValor(pedidoItensDTO.getValor());
         pedidoItens.setQuantidade(pedidoItensDTO.getQuantidade());
         pedidoItens.setValorTotal(pedidoItensDTO.getValorTotal());
+        pedidoItens.setProdutoId(pedidoItensDTO.getProdutoId());
         return pedidoItens;
     }
 
@@ -72,6 +73,7 @@ public class PedidoMapper {
         pedidoItensDTO.setValor(pedidoItens.getValor());
         pedidoItensDTO.setQuantidade(pedidoItens.getQuantidade());
         pedidoItensDTO.setValorTotal(pedidoItens.getValorTotal());
+        pedidoItensDTO.setProdutoId(pedidoItens.getProdutoId());
         return pedidoItensDTO;
     }
 }

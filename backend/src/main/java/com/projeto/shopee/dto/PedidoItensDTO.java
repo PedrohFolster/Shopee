@@ -6,6 +6,7 @@ public class PedidoItensDTO {
     private Double valor;
     private Integer quantidade;
     private Double valorTotal;
+    private Long produtoId;
     
     
     public PedidoItensDTO() {
@@ -49,6 +50,12 @@ public class PedidoItensDTO {
     }
     public void setValorTotal(Double valorTotal) {
         this.valorTotal = valorTotal;
+    }
+    public Long getProdutoId() {
+        return produtoId;
+    }
+    public void setProdutoId(Long produtoId) {
+        this.produtoId = produtoId;
     }
 
     

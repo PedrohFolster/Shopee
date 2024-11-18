@@ -13,6 +13,7 @@ public class PedidoItens {
     private Double valor;
     private Integer quantidade;
     private Double valorTotal;
+    private Long produtoId;
 
     @ManyToOne
     @JoinColumn(name = "idPedido", referencedColumnName = "idPedido")
@@ -76,6 +77,14 @@ public class PedidoItens {
 
     public void setPedido(Pedido pedido) {
         this.pedido = pedido;
+    }
+
+    public Long getProdutoId() {
+        return produtoId;
+    }
+
+    public void setProdutoId(Long produtoId) {
+        this.produtoId = produtoId;
     }
 
     

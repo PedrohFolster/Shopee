@@ -54,6 +54,7 @@ public class PedidoService {
             pedidoItem.setQuantidade(quantidade);
             pedidoItem.setValorTotal(produto.getPreco() * quantidade);
             pedidoItem.setPedido(pedido);
+            pedidoItem.setProdutoId(produtoId);
 
             return pedidoItem;
         }).collect(Collectors.toList());

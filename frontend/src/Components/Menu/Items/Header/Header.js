@@ -5,7 +5,6 @@ import LoginLink from './Items/LoginLink';
 import RegisterLink from './Items/RegisterLink';
 import MinhaContaLink from './Items/MinhaContaLink'; 
 import CartLink from './Items/CartLink';
-import FavoritesLink from './Items/FavoritesLink';
 import NavBar from '../NavBar/NavBar';
 import { AuthContext } from '../../../../Util/Authentication';
 
@@ -52,10 +51,6 @@ const Header = ({ searchHidden = false, navbarHidden = true }) => {
               </>
             )}
             <CartLink
-              activeLink={activeLink}
-              handleSetActive={handleSetActive}
-            />
-            <FavoritesLink
               activeLink={activeLink}
               handleSetActive={handleSetActive}
             />
