@@ -10,10 +10,8 @@ const ProdutosList = ({ produtos, onEdit, onAddNew, searchTerm, setSearchTerm })
 
   return (
     <div className="produtos-container">
+      {/* Header com barra de pesquisa e botão */}
       <div className="produtos-header">
-        <Button type="button-register" onClick={onAddNew}>
-          Cadastrar Novo Produto
-        </Button>
         <input
           type="text"
           placeholder="Pesquisar produtos..."
@@ -21,7 +19,12 @@ const ProdutosList = ({ produtos, onEdit, onAddNew, searchTerm, setSearchTerm })
           onChange={(e) => setSearchTerm(e.target.value)}
           className="search-bar"
         />
+        <Button className="produtos-button" onClick={onAddNew}>
+          Cadastrar Novo Produto
+        </Button>
       </div>
+
+      {/* Lista de produtos */}
       <div className="minha-loja-produtos-list">
         {filteredProdutos.length === 0 ? (
           <p>Nenhum produto encontrado</p>
@@ -48,4 +51,4 @@ ProdutosList.propTypes = {
   setSearchTerm: PropTypes.func.isRequired,
 };
 
-export default ProdutosList; 
+export default ProdutosList;
