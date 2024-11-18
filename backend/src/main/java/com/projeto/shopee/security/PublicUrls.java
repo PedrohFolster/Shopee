@@ -15,6 +15,7 @@ public class PublicUrls {
         "/lojas/search",
         "/produtos/loja/{lojaId}/todos",
         "/lojas/{lojaId}/publico",
-        "/usuarios/verificar"
+        "/usuarios/verificar",
+        "/produtos/{produtoId}/loja"
     };
 } 

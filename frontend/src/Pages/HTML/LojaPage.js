@@ -102,6 +102,7 @@ const LojaPage = () => {
         {loja && (
           <div className='loja-info'>
             <h1>{loja.nome}</h1>
+            <h3>Produtos: {produtos.length}</h3>
           </div>
         )}
       <main className='home-content'>
