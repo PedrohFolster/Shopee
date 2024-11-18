@@ -250,12 +250,6 @@ const MinhaLoja = () => {
             setSearchTerm={setSearchTerm}
           />
         );
-      case 'estoque':
-        return (
-          <div className="informacoes-loja">
-            <p>Informações do estoque virão aqui</p>
-          </div>
-        );
       default:
         return null;
     }
@@ -278,12 +272,6 @@ const MinhaLoja = () => {
               onClick={() => setActiveTab('produtos')}
             >
               Meus Produtos
-            </li>
-            <li 
-              className={activeTab === 'estoque' ? 'active' : ''} 
-              onClick={() => setActiveTab('estoque')}
-            >
-              Meu Estoque
             </li>
           </ul>
         </nav>
