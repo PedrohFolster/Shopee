@@ -9,8 +9,7 @@ const ModalEndereco = ({ isOpen, onClose, enderecoDTO, setEnderecoDTO, enderecoS
     const handleCepChange = async (e) => {
         let newCep = e.target.value.replace(/\D/g, '');
         if (newCep.length <= 8) {
-            const formattedCep = newCep.replace(/(\d{5})(\d{3})/, '$1-$2');
-            setEnderecoDTO({ ...enderecoDTO, cep: formattedCep });
+            setEnderecoDTO({ ...enderecoDTO, cep: newCep });
         }
 
         if (newCep.length === 8) {
@@ -21,10 +20,6 @@ const ModalEndereco = ({ isOpen, onClose, enderecoDTO, setEnderecoDTO, enderecoS
                 console.error('Erro ao buscar endereço:', error);
             }
         }
-    };
-
-    const formatCep = (cep) => {
-        return cep.replace(/(\d{5})(\d{3})/, '$1-$2');
     };
 
     return (

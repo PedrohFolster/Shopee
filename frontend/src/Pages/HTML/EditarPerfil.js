@@ -107,7 +107,12 @@ function EditarPerfil() {
         e.preventDefault();
 
         const token = localStorage.getItem('token');
-        axios.put(`http://localhost:8080/usuarios/${usuario.id}/endereco`, usuario.enderecoDTO, {
+        const enderecoSemFormatacao = {
+            ...usuario.enderecoDTO,
+            cep: usuario.enderecoDTO.cep.replace(/\D/g, '')
+        };
+
+        axios.put(`http://localhost:8080/usuarios/${usuario.id}/endereco`, enderecoSemFormatacao, {
             headers: { 'Authorization': `Bearer ${token}` },
             params: { senha: enderecoSenha },
             withCredentials: true
