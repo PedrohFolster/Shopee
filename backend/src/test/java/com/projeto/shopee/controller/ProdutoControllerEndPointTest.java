@@ -27,6 +27,7 @@ import com.projeto.shopee.repository.ProdutoRepository;
 import com.projeto.shopee.repository.UsuarioRepository;
 import com.projeto.shopee.security.JwtService;
 import org.springframework.test.web.servlet.MockMvc;
+
 @SpringBootTest
 @AutoConfigureMockMvc
 public class ProdutoControllerEndPointTest {
@@ -81,7 +82,6 @@ public class ProdutoControllerEndPointTest {
 
         novaLoja = new LojaDTO();
         novaLoja.setNome("Loja Teste");
-        novaLoja.setCategoriaLojaId(1L);
         objectMapper.registerModule(new JavaTimeModule());
     }
 

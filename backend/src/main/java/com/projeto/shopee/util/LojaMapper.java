@@ -2,9 +2,7 @@ package com.projeto.shopee.util;
 
 import com.projeto.shopee.dto.LojaDTO;
 import com.projeto.shopee.entities.Loja;
-import com.projeto.shopee.entities.CategoriaLoja;
 import com.projeto.shopee.entities.Usuario;
-import com.projeto.shopee.repository.CategoriaLojaRepository;
 import com.projeto.shopee.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,19 +14,12 @@ import java.util.stream.Collectors;
 public class LojaMapper {
 
     @Autowired
-    private CategoriaLojaRepository categoriaLojaRepository;
-
-    @Autowired
     private UsuarioRepository usuarioRepository;
 
     public LojaDTO toDTO(Loja loja) {
         LojaDTO lojaDTO = new LojaDTO();
         lojaDTO.setId(loja.getId());
         lojaDTO.setNome(loja.getNome());
-
-        if (loja.getCategoriaLoja() != null) {
-            lojaDTO.setCategoriaLojaId(loja.getCategoriaLoja().getId());
-        }
 
         if (loja.getUsuario() != null) {
             lojaDTO.setUsuarioId(loja.getUsuario().getId());
@@ -41,11 +32,6 @@ public class LojaMapper {
         Loja loja = new Loja();
         loja.setId(lojaDTO.getId());
         loja.setNome(lojaDTO.getNome());
-
-        if (lojaDTO.getCategoriaLojaId() != null) {
-            CategoriaLoja categoriaLoja = categoriaLojaRepository.findById(lojaDTO.getCategoriaLojaId()).orElse(null);
-            loja.setCategoriaLoja(categoriaLoja);
-        }
 
         if (lojaDTO.getUsuarioId() != null) {
             Usuario usuario = usuarioRepository.findById(lojaDTO.getUsuarioId()).orElse(null);

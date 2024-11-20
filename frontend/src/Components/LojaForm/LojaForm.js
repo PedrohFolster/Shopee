@@ -4,7 +4,7 @@ import Button from '../Button/Button';
 import FormRow from './FormRow';
 import ErrorMessage from './ErrorMessage';
 
-const LojaForm = ({ nome, setNome, categoriaId, setCategoriaId, categorias, handleSubmit, error }) => (
+const LojaForm = ({ nome, setNome, handleSubmit, error }) => (
     <form onSubmit={handleSubmit}>
         <FormRow>
             <Input
@@ -16,21 +16,6 @@ const LojaForm = ({ nome, setNome, categoriaId, setCategoriaId, categorias, hand
                 placeholder="Nome da Loja"
                 required
             />
-        </FormRow>
-        <FormRow>
-            <select
-                className="categoria-loja-select"
-                value={categoriaId}
-                onChange={(e) => setCategoriaId(e.target.value)}
-                required
-            >
-                <option value="">Selecione uma categoria para sua loja</option>
-                {categorias.map(categoria => (
-                    <option key={categoria.id} value={categoria.id}>
-                        {categoria.nome}
-                    </option>
-                ))}
-            </select>
         </FormRow>
         {error && <ErrorMessage message={error} />}
         <FormRow>

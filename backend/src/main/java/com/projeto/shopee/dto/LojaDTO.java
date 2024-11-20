@@ -4,16 +4,14 @@ public class LojaDTO {
 
     private Long id;
     private String nome;
-    private Long categoriaLojaId;
     private Long usuarioId;
 
     public LojaDTO() {
     }
 
-    public LojaDTO(Long id, String nome, Long categoriaLojaId, Long usuarioId) {
+    public LojaDTO(Long id, String nome, Long usuarioId) {
         this.id = id;
         this.nome = nome;
-        this.categoriaLojaId = categoriaLojaId;
         this.usuarioId = usuarioId;
     }
 
@@ -31,14 +29,6 @@ public class LojaDTO {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public Long getCategoriaLojaId() {
-        return categoriaLojaId;
-    }
-
-    public void setCategoriaLojaId(Long categoriaLojaId) {
-        this.categoriaLojaId = categoriaLojaId;
     }
 
     public Long getUsuarioId() {

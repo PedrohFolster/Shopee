@@ -7,7 +7,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.projeto.shopee.entities.CategoriaLoja;
 import com.projeto.shopee.entities.CategoriaProduto;
 import com.projeto.shopee.entities.Endereco;
 import com.projeto.shopee.entities.Loja;
@@ -15,7 +14,6 @@ import com.projeto.shopee.entities.Produto;
 import com.projeto.shopee.entities.Status;
 import com.projeto.shopee.entities.Usuario;
 import com.projeto.shopee.entities.UsuarioAutenticar;
-import com.projeto.shopee.repository.CategoriaLojaRepository;
 import com.projeto.shopee.repository.CategoriaProdutoRepository;
 import com.projeto.shopee.repository.LojaRepository;
 import com.projeto.shopee.repository.ProdutoRepository;
@@ -38,9 +36,6 @@ public class ShopeeApplication implements CommandLineRunner {
     private ProdutoRepository produtoRepository;
 
     @Autowired
-    private CategoriaLojaRepository categoriaLojaRepository;
-
-    @Autowired
     private CategoriaProdutoRepository categoriaProdutoRepository;
 
     public static void main(String[] args) {
@@ -49,24 +44,6 @@ public class ShopeeApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-
-        String[] categoriasLoja = {
-                "Eletrônicos", "Hardware", "Moda e Vestuário", "Beleza e Cuidados Pessoais",
-                "Casa e Decoração", "Automotivo", "Esportes e Lazer", "Brinquedos e Jogos",
-                "Livros e Papelaria", "Ferramentas e Construção", "Alimentos e Bebidas",
-                "Saúde e Bem-estar", "Joias e Acessórios", "Pet Shop", "Instrumentos Musicais",
-                "Informática", "Bebês e Maternidade", "Jardinagem e Agricultura",
-                "Viagens e Turismo", "Móveis e Eletrodomésticos", "Fotografia e Filmagem",
-                "Segurança e Vigilância", "Energia Renovável", "Material Escolar",
-                "Artigos de Cozinha", "Artigos Religiosos", "Artigos para Festa",
-                "Artesanato", "Fitness e Academia"
-        };
-
-        for (String nome : categoriasLoja) {
-            if (!categoriaLojaRepository.existsByNome(nome)) {
-                categoriaLojaRepository.save(new CategoriaLoja(null, nome));
-            }
-        }
 
         String[] categoriasProduto = {
                 "Eletrônicos", "Hardware", "Moda e Vestuário", "Beleza e Cuidados Pessoais",
@@ -168,7 +145,6 @@ public class ShopeeApplication implements CommandLineRunner {
             Loja loja = new Loja();
             loja.setNome("Kabum");
             loja.setUsuario(usuarioRepository.findByEmail("2@gmail.com"));
-            loja.setCategoriaLoja(categoriaLojaRepository.findById(1L).orElse(null));
             loja = lojaRepository.save(loja);
             System.out.println("Loja 'Kabum' criada com ID 1.");
         } else {

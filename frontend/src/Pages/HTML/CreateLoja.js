@@ -10,8 +10,6 @@ import { toast } from 'react-toastify';
 const CriarLoja = () => {
     const { isAuthenticated } = useContext(AuthContext);
     const [nome, setNome] = useState('');
-    const [categoriaId, setCategoriaId] = useState('');
-    const [categorias, setCategorias] = useState([]);
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
@@ -25,14 +23,6 @@ const CriarLoja = () => {
             .then(response => {
                 if (response.data === "Redirecionar para /minha-loja") {
                     navigate("/MinhaLoja");
-                } else {
-                    axios.get(`${process.env.REACT_APP_API_URL}/categorias-l`)
-                        .then(response => {
-                            setCategorias(response.data);
-                        })
-                        .catch(error => {
-                            console.error('Erro ao buscar categorias:', error);
-                        });
                 }
             })
             .catch(error => {
@@ -46,15 +36,10 @@ const CriarLoja = () => {
             setError('O nome é obrigatório.');
             return;
         }
-        if (!categoriaId) {
-            setError('A categoria é obrigatória.');
-            return;
-        }
         setError(''); 
 
         const novaLoja = {
-            nome,
-            categoriaLojaId: categoriaId
+            nome
         };
 
         axios.post(`${process.env.REACT_APP_API_URL}/lojas`, novaLoja, { withCredentials: true })
@@ -82,9 +67,6 @@ const CriarLoja = () => {
                 <LojaForm 
                     nome={nome}
                     setNome={setNome}
-                    categoriaId={categoriaId}
-                    setCategoriaId={setCategoriaId}
-                    categorias={categorias}
                     handleSubmit={handleSubmit}
                     error={error}
                 />

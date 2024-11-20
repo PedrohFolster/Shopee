@@ -11,20 +11,15 @@ public class Loja {
 
     private String nome;
 
-    @ManyToOne  
-    @JoinColumn(name = "categoria_loja_id")
-    private CategoriaLoja categoriaLoja; 
-
     @OneToOne  
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;  
 
     public Loja() {}
 
-    public Loja(Long id, String nome, CategoriaLoja categoriaLoja, Usuario usuario) {
+    public Loja(Long id, String nome, Usuario usuario) {
         this.id = id;
         this.nome = nome;
-        this.categoriaLoja = categoriaLoja;
         this.usuario = usuario;
     }
 
@@ -42,14 +37,6 @@ public class Loja {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public CategoriaLoja getCategoriaLoja() {
-        return categoriaLoja;
-    }
-
-    public void setCategoriaLoja(CategoriaLoja categoriaLoja) {
-        this.categoriaLoja = categoriaLoja;
     }
 
     public Usuario getUsuario() {

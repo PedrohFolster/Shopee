@@ -81,9 +81,8 @@ public class LojaControllerEndPointTest {
 
         novaLoja = new LojaDTO();
         novaLoja.setNome("Loja Teste");
-        novaLoja.setCategoriaLojaId(1L); 
 
-        objectMapper.registerModule(new JavaTimeModule()); 
+        objectMapper.registerModule(new JavaTimeModule());
     }
 
     @Test
@@ -105,7 +104,7 @@ public class LojaControllerEndPointTest {
 
         String lojaNovaJson = objectMapper.writeValueAsString(novaLoja);
         this.mockMvc.perform(post("/lojas")
-                .header("Authorization", "Bearer " + token) 
+                .header("Authorization", "Bearer " + token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(lojaNovaJson))
                 .andExpect(status().isOk());

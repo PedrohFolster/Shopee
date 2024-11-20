@@ -9,22 +9,18 @@ import org.springframework.stereotype.Service;
 import com.projeto.shopee.dto.LojaDTO;
 import com.projeto.shopee.entities.Loja;
 import com.projeto.shopee.exception.UsuarioJaPossuiLojaException;
-import com.projeto.shopee.exception.InvalidLojaDataException;
 import com.projeto.shopee.repository.LojaRepository;
-import com.projeto.shopee.repository.CategoriaLojaRepository;
 import com.projeto.shopee.repository.ProdutoRepository;
 import com.projeto.shopee.util.LojaMapper;
 import com.projeto.shopee.util.ValidationUtils;
 import com.projeto.shopee.entities.Produto;
+import com.projeto.shopee.exception.InvalidLojaDataException;
 
 @Service
 public class LojaService {
 
     @Autowired
     private LojaRepository lojaRepository;
-
-    @Autowired
-    private CategoriaLojaRepository categoriaLojaRepository;
 
     @Autowired
     private LojaMapper lojaMapper;
@@ -47,15 +43,11 @@ public class LojaService {
         return lojaOptional.map(lojaMapper::toDTO).orElse(null);
     }
 
-    public LojaDTO createLoja(LojaDTO lojaDTO) throws UsuarioJaPossuiLojaException, InvalidLojaDataException {
+    public LojaDTO createLoja(LojaDTO lojaDTO) throws UsuarioJaPossuiLojaException {
         validateLojaData(lojaDTO);
 
         if (lojaRepository.existsByUsuarioId(lojaDTO.getUsuarioId())) {
             throw new UsuarioJaPossuiLojaException("Usuário já possui uma loja.");
-        }
-
-        if (!categoriaLojaRepository.existsById(lojaDTO.getCategoriaLojaId())) {
-            throw new InvalidLojaDataException("Categoria da loja inválida.");
         }
 
         Loja loja = lojaMapper.toEntity(lojaDTO);
@@ -63,12 +55,9 @@ public class LojaService {
         return lojaMapper.toDTO(novaLoja);
     }
 
-    private void validateLojaData(LojaDTO lojaDTO) throws InvalidLojaDataException {
+    private void validateLojaData(LojaDTO lojaDTO) {
         if (!ValidationUtils.isValidNomeLoja(lojaDTO.getNome())) {
             throw new InvalidLojaDataException("O nome da loja é obrigatório e deve conter pelo menos 2 caracteres.");
-        }
-        if (!ValidationUtils.isValidCategoriaLoja(lojaDTO.getCategoriaLojaId())) {
-            throw new InvalidLojaDataException("A categoria da loja é obrigatória.");
         }
     }
 
