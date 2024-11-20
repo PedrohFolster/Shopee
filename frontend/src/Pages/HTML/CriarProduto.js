@@ -18,7 +18,7 @@ const CriarProduto = () => {
   const [statusList, setStatusList] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:8080/categorias-p')
+    axios.get(`${process.env.REACT_APP_API_URL}/categorias-p`)
       .then(response => {
         setCategorias(response.data);
       })
@@ -26,7 +26,7 @@ const CriarProduto = () => {
         console.error('Erro ao buscar categorias:', error);
       });
 
-    axios.get('http://localhost:8080/status')
+    axios.get(`${process.env.REACT_APP_API_URL}/status`)
       .then(response => {
         setStatusList(response.data);
       })
@@ -48,7 +48,7 @@ const CriarProduto = () => {
       statusId: parseInt(statusId, 10),
     };
   
-    axios.post('http://localhost:8080/produtos', produto, {
+    axios.post(`${process.env.REACT_APP_API_URL}/produtos`, produto, {
       headers: {
         'Content-Type': 'application/json',
       },

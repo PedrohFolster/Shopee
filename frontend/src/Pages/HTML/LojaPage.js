@@ -23,7 +23,7 @@ const LojaPage = () => {
   useEffect(() => {
     const fetchLoja = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/lojas/${id}/publico`);
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/lojas/${id}/publico`);
         setLoja(response.data);
       } catch (error) {
         console.error('Erro ao buscar informações da loja:', error);
@@ -32,7 +32,7 @@ const LojaPage = () => {
 
     const fetchProdutos = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/produtos/loja/${id}/todos`);
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/produtos/loja/${id}/todos`);
         setProdutos(response.data);
       } catch (error) {
         console.error('Erro ao buscar produtos da loja:', error);
@@ -41,7 +41,7 @@ const LojaPage = () => {
 
     const fetchCategorias = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/categorias-p');
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/categorias-p`);
         setCategorias(response.data);
       } catch (error) {
         console.error('Erro ao buscar categorias:', error);

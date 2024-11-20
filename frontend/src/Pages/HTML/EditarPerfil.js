@@ -42,7 +42,7 @@ function EditarPerfil() {
 
     useEffect(() => {
         const token = localStorage.getItem('token');
-        axios.get('http://localhost:8080/usuarios/perfil', {
+        axios.get(`${process.env.REACT_APP_API_URL}/usuarios/perfil`, {
             headers: { 'Authorization': `Bearer ${token}` },
             withCredentials: true
         })
@@ -85,7 +85,7 @@ function EditarPerfil() {
         }
 
         const token = localStorage.getItem('token');
-        axios.put(`http://localhost:8080/usuarios/${usuario.id}/senha`, null, {
+        axios.put(`${process.env.REACT_APP_API_URL}/usuarios/${usuario.id}/senha`, null, {
             headers: { 'Authorization': `Bearer ${token}` },
             params: { senhaAtual, novaSenha },
             withCredentials: true
@@ -112,7 +112,7 @@ function EditarPerfil() {
             cep: usuario.enderecoDTO.cep.replace(/\D/g, '')
         };
 
-        axios.put(`http://localhost:8080/usuarios/${usuario.id}/endereco`, enderecoSemFormatacao, {
+        axios.put(`${process.env.REACT_APP_API_URL}/usuarios/${usuario.id}/endereco`, enderecoSemFormatacao, {
             headers: { 'Authorization': `Bearer ${token}` },
             params: { senha: enderecoSenha },
             withCredentials: true
@@ -136,7 +136,7 @@ function EditarPerfil() {
         const token = localStorage.getItem('token');
         
         // Primeiro, validar a senha
-        axios.post('http://localhost:8080/usuarios/validar-senha', null, {
+        axios.post(`${process.env.REACT_APP_API_URL}/usuarios/validar-senha`, null, {
             headers: { 'Authorization': `Bearer ${token}` },
             params: { senha: senhaAtual },
             withCredentials: true
@@ -146,7 +146,7 @@ function EditarPerfil() {
                 // Remover a formatação do telefone antes de enviar
                 const telefoneSemFormatacao = usuario.telefone.replace(/\D/g, '');
 
-                axios.put(`http://localhost:8080/usuarios/${usuario.id}`, {
+                axios.put(`${process.env.REACT_APP_API_URL}/usuarios/${usuario.id}`, {
                     nome: usuario.nome,
                     email: usuario.email,
                     dataNascimento: usuario.dataNascimento,

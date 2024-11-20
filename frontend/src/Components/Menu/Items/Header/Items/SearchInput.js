@@ -12,7 +12,7 @@ const SearchInputComponent = ({ hidden }) => {
     if (searchTerm) {
       const fetchLojas = async () => {
         try {
-          const response = await axios.get(`http://localhost:8080/lojas/search?nome=${searchTerm}`);
+          const response = await axios.get(`${process.env.REACT_APP_API_URL}/lojas/search?nome=${searchTerm}`);
           setSearchResults(response.data);
         } catch (error) {
           console.error('Erro ao buscar lojas:', error);

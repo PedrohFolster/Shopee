@@ -5,7 +5,7 @@ const LojaInfo = () => {
   const [lojaInfo, setLojaInfo] = useState(null);
 
   useEffect(() => {
-    axios.get('http://localhost:8080/lojas/minha-loja/info', { withCredentials: true })
+    axios.get(`${process.env.REACT_APP_API_URL}/lojas/minha-loja/info`, { withCredentials: true })
       .then(response => {
         setLojaInfo(response.data);
       })

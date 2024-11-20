@@ -5,8 +5,8 @@ import LojaForm from '../../Components/LojaForm/LojaForm';
 import '../CSS/CreateLoja.css';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Util/Authentication';
-import api from '../../Util/ApiConfig';
 import { toast } from 'react-toastify';
+
 const CriarLoja = () => {
     const { isAuthenticated } = useContext(AuthContext);
     const [nome, setNome] = useState('');
@@ -21,12 +21,12 @@ const CriarLoja = () => {
             return;
         }
 
-        api.get('http://localhost:8080/lojas/verificar-loja', { withCredentials: true })
+        axios.get(`${process.env.REACT_APP_API_URL}/lojas/verificar-loja`, { withCredentials: true })
             .then(response => {
                 if (response.data === "Redirecionar para /minha-loja") {
                     navigate("/MinhaLoja");
                 } else {
-                    axios.get('http://localhost:8080/categorias-l')
+                    axios.get(`${process.env.REACT_APP_API_URL}/categorias-l`)
                         .then(response => {
                             setCategorias(response.data);
                         })
@@ -57,14 +57,19 @@ const CriarLoja = () => {
             categoriaLojaId: categoriaId
         };
 
-        axios.post('http://localhost:8080/lojas', novaLoja, { withCredentials: true })
+        axios.post(`${process.env.REACT_APP_API_URL}/lojas`, novaLoja, { withCredentials: true })
             .then(response => {
                 console.log('Loja criada com sucesso:', response.data);
                 navigate('/minhaloja');
             })
             .catch(error => {
                 console.error('Erro ao criar loja:', error);
-                toast.error('Erro ao criar loja. Por favor, tente novamente.');
+                const errorMessage = error.response?.data?.message || 'Erro ao criar loja. Por favor, tente novamente.';
+                if (errorMessage.includes('obrigatório e deve conter pelo menos 2 caracteres')) {
+                    toast.warn('O nome da loja é obrigatório e deve conter pelo menos 2 caracteres.');
+                } else {
+                    toast.error(errorMessage);
+                }
             });
     };
 

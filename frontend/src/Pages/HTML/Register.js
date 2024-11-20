@@ -81,7 +81,7 @@ const Register = () => {
       }
 
       try {
-        const response = await axios.get('http://localhost:8080/usuarios/verificar', {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/usuarios/verificar`, {
           params: { email, cpf }
         });
         const { emailExiste, cpfExiste } = response.data;
@@ -123,7 +123,7 @@ const Register = () => {
       const cpfSemFormatacao = formData.cpf.replace(/\D/g, '');
       const dataNascimentoFormatada = formData.dataNascimento.split('T')[0];
   
-      const response = await axios.post('http://localhost:8080/usuarios', {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/usuarios`, {
         nome: formData.nomeCompleto,
         email: formData.email,
         telefone: telefoneSemFormatacao,

@@ -37,7 +37,7 @@ const MinhaLoja = () => {
             return;
         }
 
-        api.get('http://localhost:8080/lojas/verificar-loja', { withCredentials: true })
+        api.get(`${process.env.REACT_APP_API_URL}/lojas/verificar-loja`, { withCredentials: true })
             .then(response => {
                 if (response.data !== "Redirecionar para /minha-loja") {
                     navigate("/CreateLoja");
@@ -49,7 +49,7 @@ const MinhaLoja = () => {
     }, [isAuthenticated, navigate]);
 
   useEffect(() => {
-    api.get('http://localhost:8080/lojas/minha-loja', { withCredentials: true })
+    api.get(`${process.env.REACT_APP_API_URL}/lojas/minha-loja`, { withCredentials: true })
       .then(lojaResponse => {
         setLojaInfo(lojaResponse.data);
       })
@@ -65,7 +65,7 @@ const MinhaLoja = () => {
 
   useEffect(() => {
     if (showModal) {
-      axios.get('http://localhost:8080/categorias-p')
+      axios.get(`${process.env.REACT_APP_API_URL}/categorias-p`)
         .then(response => {
           setCategorias(response.data);
         })
@@ -73,7 +73,7 @@ const MinhaLoja = () => {
           console.error('Erro ao buscar categorias:', error);
         });
 
-      axios.get('http://localhost:8080/status')
+      axios.get(`${process.env.REACT_APP_API_URL}/status`)
         .then(response => {
           setStatusList(response.data);
         })
@@ -85,7 +85,7 @@ const MinhaLoja = () => {
 
   useEffect(() => {
     if (activeTab === 'produtos' && lojaInfo?.id) {
-      axios.get(`http://localhost:8080/produtos/loja/${lojaInfo.id}`, { withCredentials: true })
+      axios.get(`${process.env.REACT_APP_API_URL}/produtos/loja/${lojaInfo.id}`, { withCredentials: true })
         .then(response => {
           setProdutos(response.data);
         })
@@ -193,8 +193,8 @@ const MinhaLoja = () => {
     };
 
     const url = editingProduto 
-      ? `http://localhost:8080/produtos/${editingProduto.id}`
-      : 'http://localhost:8080/produtos';
+      ? `${process.env.REACT_APP_API_URL}/produtos/${editingProduto.id}`
+      : `${process.env.REACT_APP_API_URL}/produtos`;
     
     const method = editingProduto ? 'put' : 'post';
 
@@ -216,7 +216,7 @@ const MinhaLoja = () => {
       setEditingProduto(null);
       
       if (lojaInfo?.id) {
-        axios.get(`http://localhost:8080/produtos/loja/${lojaInfo.id}`, { withCredentials: true })
+        axios.get(`${process.env.REACT_APP_API_URL}/produtos/loja/${lojaInfo.id}`, { withCredentials: true })
           .then(response => {
             setProdutos(response.data);
           })

@@ -20,7 +20,7 @@ const Produto = () => {
   useEffect(() => {
     const fetchProduto = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/produtos/${id}`);
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/produtos/${id}`);
         setProduto(response.data);
         fetchProdutosRelacionados(response.data.categoriaProdutoId, response.data.id);
         fetchNomeLoja(response.data.id);
@@ -31,7 +31,7 @@ const Produto = () => {
 
     const fetchProdutosRelacionados = async (categoriaId, produtoId) => {
       try {
-        const response = await axios.get(`http://localhost:8080/produtos/categoria/${categoriaId}`);
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/produtos/categoria/${categoriaId}`);
         const produtosFiltrados = response.data.filter(produto => produto.id !== produtoId);
         
         const produtosEmbaralhados = produtosFiltrados.sort(() => Math.random() - 0.5);
@@ -45,7 +45,7 @@ const Produto = () => {
 
     const fetchNomeLoja = async (produtoId) => {
       try {
-        const response = await axios.get(`http://localhost:8080/produtos/${produtoId}/loja`);
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/produtos/${produtoId}/loja`);
         setNomeLoja(response.data);
       } catch (error) {
         console.error('Erro ao buscar nome da loja:', error);

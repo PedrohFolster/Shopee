@@ -39,7 +39,7 @@ const Carrinho = () => {
   const verificarProdutosAtivosEEstoque = async () => {
     try {
       const promises = carrinho.map(produto =>
-        axios.get(`http://localhost:8080/produtos/${produto.id}`)
+        axios.get(`${process.env.REACT_APP_API_URL}/produtos/${produto.id}`)
       );
       const responses = await Promise.all(promises);
 
@@ -80,7 +80,7 @@ const Carrinho = () => {
       return;
     }
 
-    axios.post('http://localhost:8080/pedidos/finalizar-compra', carrinho, {
+    axios.post(`${process.env.REACT_APP_API_URL}/pedidos/finalizar-compra`, carrinho, {
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem('token')
       }

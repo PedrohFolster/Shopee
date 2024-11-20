@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
       const token = localStorage.getItem('token');
       if (token) {
         try {
-          const response = await axios.get('http://localhost:8080/validate-session', {
+          const response = await axios.get(`${process.env.REACT_APP_API_URL}/validate-session`, {
             headers: { 'Authorization': `Bearer ${token}` }
           });
           if (response.status === 200) {

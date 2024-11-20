@@ -21,7 +21,7 @@ const Home = () => {
   useEffect(() => {
     const fetchProdutos = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/produtos/ativos');
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/produtos/ativos`);
         setProdutos(response.data);
       } catch (error) {
         toast.error('Erro ao buscar produtos ativos.');
@@ -30,7 +30,7 @@ const Home = () => {
 
     const fetchCategorias = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/categorias-p');
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/categorias-p`);
         setCategorias(response.data);
       } catch (error) {
         toast.error('Erro ao buscar categorias.');
