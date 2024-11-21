@@ -236,11 +236,12 @@ button[type="button-register"] {
         width: 95%;
         padding: 15px;
     }
-    
+
     .form-container .form-group {
         width: 100%;
     }
 }
+
 @media (max-width: 1024px) {
     .produto-item {
         width: calc(50% - 10px);
@@ -314,4 +315,3 @@ button[type="button-register"] {
 .button-register:hover {
     background-color: #0056b3;
 }
-

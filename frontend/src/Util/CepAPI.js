@@ -11,7 +11,7 @@ export const fetchAddressByCep = async (cep) => {
     if (response.data.erro) {
       throw new Error('CEP não encontrado');
     }
-    
+
     // Formata o CEP corretamente
     const formattedCep = sanitizedCep.replace(/(\d{5})(\d{3})/, '$1-$2');
 

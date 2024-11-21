@@ -66,7 +66,7 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('isAuthenticated');
-    setCookie('token', '', -1); 
+    setCookie('token', '', -1);
     setIsAuthenticated(false);
     console.log('Logout bem-sucedido');
   };

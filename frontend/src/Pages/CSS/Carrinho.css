@@ -195,7 +195,8 @@
     width: 80px;
     text-align: center;
     justify-content: center;
-}   
+}
+
 .resumo-total {
     margin-left: 10px;
     font-size: 14px;
@@ -203,4 +204,3 @@
     width: 100px;
     text-align: right;
 }
-

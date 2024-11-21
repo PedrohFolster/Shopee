@@ -40,9 +40,9 @@
     display: block;
     padding: 0;
     justify-content: center;
-    width: fit-content; 
-    margin-left: auto; 
-    margin-right: auto; 
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .register-link:hover {
@@ -96,13 +96,13 @@ button[type="submit"] {
 }
 
 .centered-form .form-row {
-    width: 100%; 
+    width: 100%;
     display: flex;
-    justify-content: center; 
+    justify-content: center;
     margin-bottom: 15px;
 }
 
 button[type="button-login"] {
-    width: 100%; 
-    max-width: 400px; 
+    width: 100%;
+    max-width: 400px;
 }

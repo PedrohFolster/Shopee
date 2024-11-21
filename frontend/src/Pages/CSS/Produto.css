@@ -1,181 +1,181 @@
 .produto-page {
-    display: flex;
-    justify-content: center;
-    padding: 10px 0;
-  }
-  
-  .produto-container {
-    width: 80%;
-    max-width: 1200px;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    background-color: #fff;
-    margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
+}
 
-  }
-  
-  .produto-content {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 20px;
-    align-items: start;
-  }
-  
-  .produto-nome {
-    grid-column: span 2;
-    font-size: 24px;
-    margin-bottom: 10px;
-    text-align: center;
-    height: 64px;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-  }
-  
-  .produto-imagem {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 512px;
-    height: auto;
-  }
-  
-  .produto-imagem img {
-    width: 100%;
-    max-width: 328px;
-    height: auto;
-    border-radius: 8px;
-  }
-  
-  .produto-detalhes {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-  }
-  
-  .produto-preco-botao {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  
-  .produto-preco {
-    font-size: 24px;
-    color: #e53935;
-  }
-  
-  .produto-detalhes button {
-    background-color: #ff5722;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .produto-detalhes button:hover {
-    background-color: #e64a19;
-  }
-  
-  .produto-descricao {
-    font-size: 16px;
-    color: #555;
-  }
-  
-  .produto-descricao-container {
-    height: 150px;
-    overflow-y: auto;
-    margin-bottom: 20px;
-  }
-  
-  .botao-carrinho {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    background-color: #ff5722;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .botao-carrinho:hover {
-    background-color: #e64a19;
-  }
-  
-  .produtos-relacionados {
-    margin: 100px;
-  }
-  
-  .produtos-relacionados h2 {
-    font-size: 20px;
-    margin-bottom: 20px;
-    text-align: center;
-  }
-  
-  .swiper-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-  }
-  
-  .swiper {
-    display: flex;
-    overflow-x: auto;
-    gap: 16px;
-    scroll-behavior: smooth;
-    padding: 0 40px;
-    width: 100%;
-  }
-  
-  .swiper::-webkit-scrollbar {
-    display: none;
-  }
-  
-  .produto-swiper-item {
-    flex: 0 0 auto;
-    width: calc(100% / 6 - 16px);
-    max-width: 200px;
-    box-sizing: border-box;
-  }
-  
-  .swiper-button {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(255, 255, 255, 0.8);
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-  }
-  
-  .swiper-button-left {
-    left: 0;
-  }
-  
-  .swiper-button-right {
-    right: 0;
-  }
-  
-  .swiper-button:disabled {
-    display: none;
-  }
-  
-  .produto-loja {
-    font-size: 18px;
-    color: #333;
-    margin-bottom: 5px;
-  }
-  c
-  .toast-clickable {
-    cursor: pointer;
-  }
+.produto-container {
+  width: 80%;
+  max-width: 1200px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  background-color: #fff;
+  margin: 0 auto;
+
+}
+
+.produto-content {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.produto-nome {
+  grid-column: span 2;
+  font-size: 24px;
+  margin-bottom: 10px;
+  text-align: center;
+  height: 64px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.produto-imagem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 512px;
+  height: auto;
+}
+
+.produto-imagem img {
+  width: 100%;
+  max-width: 328px;
+  height: auto;
+  border-radius: 8px;
+}
+
+.produto-detalhes {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.produto-preco-botao {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.produto-preco {
+  font-size: 24px;
+  color: #e53935;
+}
+
+.produto-detalhes button {
+  background-color: #ff5722;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.produto-detalhes button:hover {
+  background-color: #e64a19;
+}
+
+.produto-descricao {
+  font-size: 16px;
+  color: #555;
+}
+
+.produto-descricao-container {
+  height: 150px;
+  overflow-y: auto;
+  margin-bottom: 20px;
+}
+
+.botao-carrinho {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: #ff5722;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.botao-carrinho:hover {
+  background-color: #e64a19;
+}
+
+.produtos-relacionados {
+  margin: 100px;
+}
+
+.produtos-relacionados h2 {
+  font-size: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.swiper-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.swiper {
+  display: flex;
+  overflow-x: auto;
+  gap: 16px;
+  scroll-behavior: smooth;
+  padding: 0 40px;
+  width: 100%;
+}
+
+.swiper::-webkit-scrollbar {
+  display: none;
+}
+
+.produto-swiper-item {
+  flex: 0 0 auto;
+  width: calc(100% / 6 - 16px);
+  max-width: 200px;
+  box-sizing: border-box;
+}
+
+.swiper-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(255, 255, 255, 0.8);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.swiper-button-left {
+  left: 0;
+}
+
+.swiper-button-right {
+  right: 0;
+}
+
+.swiper-button:disabled {
+  display: none;
+}
+
+.produto-loja {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+c .toast-clickable {
+  cursor: pointer;
+}

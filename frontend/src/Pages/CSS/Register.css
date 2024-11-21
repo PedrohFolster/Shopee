@@ -40,10 +40,11 @@
   display: block;
   padding: 0;
   justify-content: center;
-  width: fit-content; 
-  margin-left: auto; 
-  margin-right: auto; 
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
 }
+
 .login-link:hover {
   text-decoration: underline;
 }
@@ -108,7 +109,7 @@ button[type="submit"] {
 .input-error {
   background-color: #ffcccc;
   position: relative;
-  padding-right: 30px; 
+  padding-right: 30px;
 }
 
 .error-icon {
