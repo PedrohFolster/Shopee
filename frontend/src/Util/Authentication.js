@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
+import { toast } from 'react-toastify'; // Importação do toast
 
 export const AuthContext = createContext();
 
@@ -68,6 +69,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('isAuthenticated');
     setCookie('token', '', -1);
     setIsAuthenticated(false);
+    toast.success('Logout realizado com sucesso!');
     console.log('Logout bem-sucedido');
   };
 
