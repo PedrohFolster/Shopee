@@ -23,17 +23,25 @@ const Carrinho = () => {
   };
 
   const diminuirQuantidade = (id) => {
+    const produtoRemovido = carrinho.find(produto => produto.id === id && produto.quantidade === 1);
     const novoCarrinho = carrinho.map(produto =>
       produto.id === id ? { ...produto, quantidade: produto.quantidade - 1 } : produto
     ).filter(produto => produto.quantidade > 0);
     setCarrinho(novoCarrinho);
     localStorage.setItem('carrinho', JSON.stringify(novoCarrinho));
+    if (produtoRemovido) {
+      toast.info(`O produto ${produtoRemovido.nome} foi removido do carrinho por quantidade zero.`);
+    }
   };
 
   const removerProduto = (id) => {
+    const produtoRemovido = carrinho.find(produto => produto.id === id);
     const novoCarrinho = carrinho.filter(produto => produto.id !== id);
     setCarrinho(novoCarrinho);
     localStorage.setItem('carrinho', JSON.stringify(novoCarrinho));
+    if (produtoRemovido) {
+      toast.info(`O produto ${produtoRemovido.nome} foi removido do carrinho.`);
+    }
   };
 
   const verificarProdutosAtivosEEstoque = async () => {
