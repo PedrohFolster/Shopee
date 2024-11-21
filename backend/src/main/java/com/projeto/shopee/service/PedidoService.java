@@ -3,8 +3,10 @@ package com.projeto.shopee.service;
 import com.projeto.shopee.entities.Pedido;
 import com.projeto.shopee.entities.PedidoItens;
 import com.projeto.shopee.entities.Produto;
+import com.projeto.shopee.entities.StatusPedido;
 import com.projeto.shopee.entities.Usuario;
 import com.projeto.shopee.repository.PedidoRepository;
+import com.projeto.shopee.repository.PedidoItensRepository;
 import com.projeto.shopee.repository.ProdutoRepository;
 import com.projeto.shopee.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,9 @@ public class PedidoService {
 
     @Autowired
     private ProdutoService produtoService;
+
+    @Autowired
+    private PedidoItensRepository pedidoItensRepository;
 
     public void finalizarCompra(List<Map<String, Object>> produtos, Long userId) {
         Usuario usuario = usuarioRepository.findById(userId)
@@ -56,6 +61,7 @@ public class PedidoService {
             pedidoItem.setPedido(pedido);
             pedidoItem.setProdutoId(produtoId);
             pedidoItem.setLojaId(produto.getLoja().getId());
+            pedidoItem.setStatusPedido(new StatusPedido(1L, "Aguardando pagamento"));
 
             return pedidoItem;
         }).collect(Collectors.toList());
@@ -68,5 +74,9 @@ public class PedidoService {
 
     public List<Pedido> getPedidosByUserId(Long userId) {
         return pedidoRepository.findByUsuarioId(userId);
+    }
+
+    public List<PedidoItens> getItensVendidosPorLoja(Long lojaId) {
+        return pedidoItensRepository.findByLojaId(lojaId);
     }
 } 

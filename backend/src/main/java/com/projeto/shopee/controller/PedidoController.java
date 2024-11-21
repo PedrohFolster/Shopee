@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.projeto.shopee.entities.Pedido;
+import com.projeto.shopee.dto.PedidoItensDTO;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -46,6 +47,18 @@ public class PedidoController {
                                                 .map(pedidoMapper::toDTO)
                                                 .collect(Collectors.toList());
             return ResponseEntity.ok(pedidosDTO);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/itens-pedidos/{lojaId}")
+    public ResponseEntity<?> getItensVendidosPorLoja(@PathVariable Long lojaId) {
+        try {
+            List<PedidoItensDTO> itensVendidos = pedidoService.getItensVendidosPorLoja(lojaId).stream()
+                .map(pedidoMapper::toDTO)
+                .collect(Collectors.toList());
+            return ResponseEntity.ok(itensVendidos);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

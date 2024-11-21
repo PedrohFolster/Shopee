@@ -22,7 +22,6 @@ public class Pedido {
 
     private LocalDate dataPedido;
 
-    
     public Pedido() {
     }
 
@@ -72,6 +71,4 @@ public class Pedido {
     public void setDataPedido(LocalDate dataPedido) {
         this.dataPedido = dataPedido;
     }
-
-    
-} 
+}

@@ -26,9 +26,7 @@ const ProdutosList = ({ produtos, onEdit, onAddNew, searchTerm, setSearchTerm })
 
       {/* Lista de produtos */}
       <div className="minha-loja-produtos-list">
-        {filteredProdutos.length === 0 ? (
-          <p>Nenhum produto encontrado</p>
-        ) : (
+        {Array.isArray(filteredProdutos) ? (
           filteredProdutos.map(produto => (
             <ProdutoLoja
               key={produto.id}
@@ -37,6 +35,8 @@ const ProdutosList = ({ produtos, onEdit, onAddNew, searchTerm, setSearchTerm })
               pageStyle="minha-loja-style"
             />
           ))
+        ) : (
+          <p>Nenhum produto disponível</p>
         )}
       </div>
     </div>

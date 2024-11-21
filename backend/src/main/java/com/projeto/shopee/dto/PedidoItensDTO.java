@@ -8,6 +8,7 @@ public class PedidoItensDTO {
     private Double valorTotal;
     private Long produtoId;
     private Long lojaId;
+    private String status;
     
     
     public PedidoItensDTO() {
@@ -63,6 +64,12 @@ public class PedidoItensDTO {
     }
     public void setLojaId(Long lojaId) {
         this.lojaId = lojaId;
+    }
+    public String getStatus() {
+        return status;
+    }
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     
