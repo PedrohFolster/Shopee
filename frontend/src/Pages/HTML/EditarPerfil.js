@@ -8,7 +8,6 @@ import ModalEndereco from '../../Components/EditarPerfil/ModalEndereco';
 import '../CSS/EditarPerfil.css';
 import { formatarCpf } from '../../Util/CpfFormatter';
 import { formatarTelefone } from '../../Util/TelefoneFormatter';
-import { isValidNomeCompleto, isValidEmail, isValidDataNascimento, isValidTelefone } from '../../Util/ValidacoesPerfil';
 import { toast } from 'react-toastify';
 
 function EditarPerfil() {

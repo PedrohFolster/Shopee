@@ -45,6 +45,7 @@ const CriarLoja = () => {
         axios.post(`${process.env.REACT_APP_API_URL}/lojas`, novaLoja, { withCredentials: true })
             .then(response => {
                 console.log('Loja criada com sucesso:', response.data);
+                toast.success('Loja criada com sucesso!'); // Alerta de sucesso
                 navigate('/minhaloja');
             })
             .catch(error => {
