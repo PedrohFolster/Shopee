@@ -24,7 +24,7 @@ const Pedido = ({ pedido }) => {
                 <p>Quantidade: {item.quantidade}</p>
                 <p>Valor: R$ {item.valor.toFixed(2)}</p>
                 <p>Valor Total: R$ {(item.valor * item.quantidade).toFixed(2)}</p>
-              <hr className="pedido-item-divisoria" />
+                <hr className="pedido-item-divisoria" />
               </div>
             </div>
           ))}

@@ -26,7 +26,8 @@
   margin-top: 20px;
 }
 
-.carrinho-confirm-button, .carrinho-cancel-button {
+.carrinho-confirm-button,
+.carrinho-cancel-button {
   background-color: #ff5722;
   color: white;
   border: none;
@@ -35,6 +36,7 @@
   cursor: pointer;
 }
 
-.carrinho-confirm-button:hover, .carrinho-cancel-button:hover {
+.carrinho-confirm-button:hover,
+.carrinho-cancel-button:hover {
   background-color: #e64a19;
-} 
+}

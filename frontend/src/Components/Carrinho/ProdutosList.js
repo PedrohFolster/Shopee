@@ -3,21 +3,21 @@ import ProdutoItem from './ProdutoItem';
 import '../../Pages/CSS/Produto.css';
 
 const ProdutosList = ({ produtos, aumentarQuantidade, diminuirQuantidade, removerProduto }) => (
-    <div className="produtos-list">
-      {produtos.length > 0 ? (
-        produtos.map((produto, index) => (
-          <ProdutoItem
-            key={index}
-            produto={produto}
-            aumentarQuantidade={aumentarQuantidade}
-            diminuirQuantidade={diminuirQuantidade}
-            removerProduto={removerProduto}
-          />
-        ))
-      ) : (
-        <p className="nenhum-produto">Nenhum produto no carrinho.</p>
-      )}
-    </div>
-  );
-  
-  export default ProdutosList;
+  <div className="produtos-list">
+    {produtos.length > 0 ? (
+      produtos.map((produto, index) => (
+        <ProdutoItem
+          key={index}
+          produto={produto}
+          aumentarQuantidade={aumentarQuantidade}
+          diminuirQuantidade={diminuirQuantidade}
+          removerProduto={removerProduto}
+        />
+      ))
+    ) : (
+      <p className="nenhum-produto">Nenhum produto no carrinho.</p>
+    )}
+  </div>
+);
+
+export default ProdutosList;

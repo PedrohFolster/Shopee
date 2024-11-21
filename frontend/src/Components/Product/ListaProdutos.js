@@ -7,10 +7,10 @@ const ListaProdutos = ({ produtosFiltrados, adicionarAoCarrinho, handleProdutoCl
     <div className='produtos-list'>
       {produtosFiltrados.length > 0 ? (
         produtosFiltrados.map(produto => (
-          <ProdutoHome 
-            key={produto.id} 
-            produto={produto} 
-            onAddToCart={adicionarAoCarrinho} 
+          <ProdutoHome
+            key={produto.id}
+            produto={produto}
+            onAddToCart={adicionarAoCarrinho}
             onNameClick={() => handleProdutoClick(produto.id)}
           />
         ))
