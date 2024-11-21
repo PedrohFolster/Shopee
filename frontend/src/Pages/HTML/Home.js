@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../Components/Menu/Items/Header/Header';
@@ -88,17 +88,17 @@ const Home = () => {
     <div className='home'>
       <Header />
       <main className='home-content'>
-        <FiltroProdutos 
-          filtros={filtros} 
-          setFiltros={setFiltros} 
-          categorias={categorias} 
-          handleFiltroChange={handleFiltroChange} 
-          limparFiltros={limparFiltros} 
+        <FiltroProdutos
+          filtros={filtros}
+          setFiltros={setFiltros}
+          categorias={categorias}
+          handleFiltroChange={handleFiltroChange}
+          limparFiltros={limparFiltros}
         />
-        <ListaProdutos 
-          produtosFiltrados={produtosFiltrados} 
-          adicionarAoCarrinho={adicionarAoCarrinho} 
-          handleProdutoClick={handleProdutoClick} 
+        <ListaProdutos
+          produtosFiltrados={produtosFiltrados}
+          adicionarAoCarrinho={adicionarAoCarrinho}
+          handleProdutoClick={handleProdutoClick}
         />
       </main>
     </div>

@@ -15,7 +15,7 @@ const Carrinho = () => {
   );
 
   const aumentarQuantidade = (id) => {
-    const novoCarrinho = carrinho.map(produto => 
+    const novoCarrinho = carrinho.map(produto =>
       produto.id === id ? { ...produto, quantidade: produto.quantidade + 1 } : produto
     );
     setCarrinho(novoCarrinho);
@@ -23,7 +23,7 @@ const Carrinho = () => {
   };
 
   const diminuirQuantidade = (id) => {
-    const novoCarrinho = carrinho.map(produto => 
+    const novoCarrinho = carrinho.map(produto =>
       produto.id === id ? { ...produto, quantidade: produto.quantidade - 1 } : produto
     ).filter(produto => produto.quantidade > 0);
     setCarrinho(novoCarrinho);
@@ -85,15 +85,15 @@ const Carrinho = () => {
         'Authorization': 'Bearer ' + localStorage.getItem('token')
       }
     })
-    .then(response => {
-      toast.success(response.data);
-      localStorage.removeItem('carrinho');
-      setCarrinho([]);
-    })
-    .catch(error => {
-      console.error('Erro ao finalizar compra:', error);
-      toast.error('Erro ao finalizar compra.');
-    });
+      .then(response => {
+        toast.success(response.data);
+        localStorage.removeItem('carrinho');
+        setCarrinho([]);
+      })
+      .catch(error => {
+        console.error('Erro ao finalizar compra:', error);
+        toast.error('Erro ao finalizar compra.');
+      });
   };
 
   const calcularTotal = () => {
@@ -106,10 +106,10 @@ const Carrinho = () => {
       <div className="carrinho-container carrinho-page">
         <h2 className="carrinho-title">Carrinho</h2>
         <div className="carrinho-content">
-          <ProdutosList 
-            produtos={carrinho} 
-            aumentarQuantidade={aumentarQuantidade} 
-            diminuirQuantidade={diminuirQuantidade} 
+          <ProdutosList
+            produtos={carrinho}
+            aumentarQuantidade={aumentarQuantidade}
+            diminuirQuantidade={diminuirQuantidade}
             removerProduto={removerProduto}
           />
           <ResumoCompra produtos={carrinho} total={calcularTotal()} finalizarCompra={finalizarCompra} />

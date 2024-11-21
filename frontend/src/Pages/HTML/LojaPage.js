@@ -99,24 +99,24 @@ const LojaPage = () => {
   return (
     <div className='loja-page'>
       <Header />
-        {loja && (
-          <div className='loja-info'>
-            <h1>{loja.nome}</h1>
-            <h3>Produtos: {produtos.length}</h3>
-          </div>
-        )}
+      {loja && (
+        <div className='loja-info'>
+          <h1>{loja.nome}</h1>
+          <h3>Produtos: {produtos.length}</h3>
+        </div>
+      )}
       <main className='home-content'>
-        <FiltroProdutos 
-          filtros={filtros} 
-          setFiltros={setFiltros} 
-          categorias={categorias} 
-          handleFiltroChange={handleFiltroChange} 
-          limparFiltros={limparFiltros} 
+        <FiltroProdutos
+          filtros={filtros}
+          setFiltros={setFiltros}
+          categorias={categorias}
+          handleFiltroChange={handleFiltroChange}
+          limparFiltros={limparFiltros}
         />
-        <ListaProdutos 
-          produtosFiltrados={produtosFiltrados} 
-          adicionarAoCarrinho={adicionarAoCarrinho} 
-          handleProdutoClick={handleProdutoClick} 
+        <ListaProdutos
+          produtosFiltrados={produtosFiltrados}
+          adicionarAoCarrinho={adicionarAoCarrinho}
+          handleProdutoClick={handleProdutoClick}
         />
       </main>
     </div>

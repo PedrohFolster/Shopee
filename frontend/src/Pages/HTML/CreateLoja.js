@@ -36,7 +36,7 @@ const CriarLoja = () => {
             setError('O nome é obrigatório.');
             return;
         }
-        setError(''); 
+        setError('');
 
         const novaLoja = {
             nome
@@ -64,7 +64,7 @@ const CriarLoja = () => {
             <main className="create-loja-form">
                 <h2>CRIAR LOJA</h2>
                 <p className="descricao-loja">Preencha os campos abaixo para criar sua loja e começar a vender seus produtos!</p>
-                <LojaForm 
+                <LojaForm
                     nome={nome}
                     setNome={setNome}
                     handleSubmit={handleSubmit}

@@ -33,9 +33,9 @@ const Produto = () => {
       try {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}/produtos/categoria/${categoriaId}`);
         const produtosFiltrados = response.data.filter(produto => produto.id !== produtoId);
-        
+
         const produtosEmbaralhados = produtosFiltrados.sort(() => Math.random() - 0.5);
-        
+
         setProdutosRelacionados(produtosEmbaralhados);
         setProdutosVisiveis(produtosEmbaralhados.slice(0, maxProdutosVisiveis));
       } catch (error) {
@@ -78,7 +78,7 @@ const Produto = () => {
       const novoIndice = Math.max(indiceAtual - maxProdutosVisiveis, 0);
       setIndiceAtual(novoIndice);
       setProdutosVisiveis(produtosRelacionados.slice(novoIndice, novoIndice + maxProdutosVisiveis));
-      
+
       if (swiperRef.current) {
         swiperRef.current.scrollTo({
           left: swiperRef.current.scrollLeft - swiperRef.current.clientWidth,
@@ -93,7 +93,7 @@ const Produto = () => {
       const novoIndice = Math.min(indiceAtual + maxProdutosVisiveis, produtosRelacionados.length - maxProdutosVisiveis);
       setIndiceAtual(novoIndice);
       setProdutosVisiveis(produtosRelacionados.slice(novoIndice, novoIndice + maxProdutosVisiveis));
-      
+
       if (swiperRef.current) {
         swiperRef.current.scrollTo({
           left: swiperRef.current.scrollLeft + swiperRef.current.clientWidth,
@@ -124,13 +124,13 @@ const Produto = () => {
             <p className='produto-preco'>R$ {produto.preco.toFixed(2)}</p>
             <div className='produto-descricao-container'>
               <p className='produto-loja'>
-                Vendido por:     
-                <span 
-                  className='link-loja' 
+                Vendido por:
+                <span
+                  className='link-loja'
                   onClick={handleLojaClick}
                   style={{ cursor: 'pointer' }}
                 >
-                  {" " +nomeLoja}
+                  {" " + nomeLoja}
                 </span>
               </p>
               <p className='produto-descricao'>{produto.descricao}</p>
@@ -144,9 +144,9 @@ const Produto = () => {
             <button className='swiper-button swiper-button-left' onClick={scrollLeft}>&lt;</button>
             <div className='swiper' ref={swiperRef}>
               {produtosVisiveis.map(produtoRelacionado => (
-                <ProdutoSwiperItem 
-                  key={produtoRelacionado.id} 
-                  produto={produtoRelacionado} 
+                <ProdutoSwiperItem
+                  key={produtoRelacionado.id}
+                  produto={produtoRelacionado}
                 />
               ))}
             </div>

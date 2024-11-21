@@ -37,7 +37,7 @@ const CriarProduto = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-  
+
     const produto = {
       nome,
       descricao,
@@ -47,20 +47,20 @@ const CriarProduto = () => {
       categoriaProdutoId: parseInt(categoriaProdutoId, 10),
       statusId: parseInt(statusId, 10),
     };
-  
+
     axios.post(`${process.env.REACT_APP_API_URL}/produtos`, produto, {
       headers: {
         'Content-Type': 'application/json',
       },
     })
-    .then(response => {
-      console.log('Produto criado com sucesso:', response.data);
-      setMensagem('Produto criado com sucesso!');
-    })
-    .catch(error => {
-      console.error('Erro ao criar produto:', error);
-      setMensagem('Erro ao criar produto.');
-    });
+      .then(response => {
+        console.log('Produto criado com sucesso:', response.data);
+        setMensagem('Produto criado com sucesso!');
+      })
+      .catch(error => {
+        console.error('Erro ao criar produto:', error);
+        setMensagem('Erro ao criar produto.');
+      });
   };
 
   return (

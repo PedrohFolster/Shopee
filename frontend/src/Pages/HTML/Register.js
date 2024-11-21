@@ -48,7 +48,7 @@ const Register = () => {
   };
 
   const handleNextStep = async () => {
-    setErrorMessage(''); 
+    setErrorMessage('');
     if (step === 1) {
       const { nomeCompleto, cpf, dataNascimento, email, telefone, senha, confirmarSenha } = formData;
       if (!nomeCompleto || !cpf || !dataNascimento || !email || !telefone || !senha || !confirmarSenha) {
@@ -122,7 +122,7 @@ const Register = () => {
       const telefoneSemFormatacao = formData.telefone.replace(/\D/g, '');
       const cpfSemFormatacao = formData.cpf.replace(/\D/g, '');
       const dataNascimentoFormatada = formData.dataNascimento.split('T')[0];
-  
+
       const response = await axios.post(`${process.env.REACT_APP_API_URL}/usuarios`, {
         nome: formData.nomeCompleto,
         email: formData.email,
@@ -141,10 +141,10 @@ const Register = () => {
         usuarioAutenticarDTO: {
           login: formData.email,
           password: formData.senha,
-          perfil: 'CLIENTE' 
+          perfil: 'CLIENTE'
         }
       });
-  
+
       if (response.status === 200) {
         toast.success('Usuário registrado com sucesso!');
         navigate('/login');
@@ -189,20 +189,20 @@ const Register = () => {
         <div className="separator"></div>
         <form onSubmit={(e) => e.preventDefault()}>
           {step === 1 && (
-            <RegisterFormStep1 
-              formData={formData} 
-              handleChange={handleChange} 
-              handleNextStep={handleNextStep} 
+            <RegisterFormStep1
+              formData={formData}
+              handleChange={handleChange}
+              handleNextStep={handleNextStep}
               errorMessage={errorMessage}
             />
           )}
           {step === 2 && (
-            <RegisterFormStep2 
-              formData={formData} 
-              handleChange={handleChange} 
-              handleCepChange={handleCepChange} 
-              handlePreviousStep={handlePreviousStep} 
-              handleNextStep={handleNextStep} 
+            <RegisterFormStep2
+              formData={formData}
+              handleChange={handleChange}
+              handleCepChange={handleCepChange}
+              handlePreviousStep={handlePreviousStep}
+              handleNextStep={handleNextStep}
               errorMessage={errorMessage}
             />
           )}
