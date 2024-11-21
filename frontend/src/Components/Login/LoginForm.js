@@ -4,7 +4,8 @@ import Input from '../../Components/Input/Input';
 import Button from '../../Components/Button/Button';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { toast } from 'react-toastify';
+import { toast } from 'react-toastify'; // Importação do toast
+
 const LoginForm = ({ login }) => {
   const [formData, setFormData] = useState({
     email: '',
@@ -33,6 +34,8 @@ const LoginForm = ({ login }) => {
         localStorage.setItem('token', token);
 
         document.cookie = `token=${token}; path=/; secure; samesite=strict`;
+
+        toast.success('Login realizado com sucesso!'); // Alerta de sucesso
 
         login();
         navigate('/home');
@@ -78,4 +81,4 @@ LoginForm.propTypes = {
   login: PropTypes.func.isRequired,
 };
 
-export default LoginForm; 
+export default LoginForm;
