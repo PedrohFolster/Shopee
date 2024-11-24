@@ -16,7 +16,7 @@ const Home = () => {
     nome: ''
   });
   const [paginaAtual, setPaginaAtual] = useState(1);
-  const produtosPorPagina = 5;
+  const produtosPorPagina = 20;
 
   const navigate = useNavigate();
 

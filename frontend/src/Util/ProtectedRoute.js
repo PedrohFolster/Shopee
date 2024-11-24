@@ -1,6 +1,5 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
-import { AuthContext } from './Authentication';
 
 const isTokenValid = (token) => {
   if (!token) return false;

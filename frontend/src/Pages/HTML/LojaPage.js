@@ -20,6 +20,9 @@ const LojaPage = () => {
 
   const navigate = useNavigate();
 
+  const [paginaAtual, setPaginaAtual] = useState(1);
+  const produtosPorPagina = 20;
+
   useEffect(() => {
     const fetchLoja = async () => {
       try {
@@ -92,6 +95,23 @@ const LojaPage = () => {
     return precoValido && categoriaValida && nomeValido;
   });
 
+  const produtosPaginados = produtosFiltrados.slice(
+    (paginaAtual - 1) * produtosPorPagina,
+    paginaAtual * produtosPorPagina
+  );
+
+  const handleAvancarPagina = () => {
+    if (paginaAtual * produtosPorPagina < produtosFiltrados.length) {
+      setPaginaAtual(paginaAtual + 1);
+    }
+  };
+
+  const handleRetornarPagina = () => {
+    if (paginaAtual > 1) {
+      setPaginaAtual(paginaAtual - 1);
+    }
+  };
+
   const handleProdutoClick = (id) => {
     navigate(`/produto/${id}`);
   };
@@ -112,9 +132,14 @@ const LojaPage = () => {
           categorias={categorias} 
           handleFiltroChange={handleFiltroChange} 
           limparFiltros={limparFiltros} 
+          paginaAtual={paginaAtual}
+          handleAvancarPagina={handleAvancarPagina}
+          handleRetornarPagina={handleRetornarPagina}
+          produtosFiltrados={produtosFiltrados}
+          produtosPorPagina={produtosPorPagina}
         />
         <ListaProdutos 
-          produtosFiltrados={produtosFiltrados} 
+          produtosFiltrados={produtosPaginados} 
           adicionarAoCarrinho={adicionarAoCarrinho} 
           handleProdutoClick={handleProdutoClick} 
         />
