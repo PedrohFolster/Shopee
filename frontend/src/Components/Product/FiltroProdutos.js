@@ -2,7 +2,7 @@ import React from 'react';
 import { Range } from 'react-range';
 import PropTypes from 'prop-types';
 
-const FiltroProdutos = ({ filtros, setFiltros, categorias, handleFiltroChange, limparFiltros }) => {
+const FiltroProdutos = ({ filtros, setFiltros, categorias, handleFiltroChange, limparFiltros, paginaAtual, handleAvancarPagina, handleRetornarPagina, produtosFiltrados, produtosPorPagina }) => {
   return (
     <aside className='filtros'>
       <h3>Filtrar Produtos</h3>
@@ -70,9 +70,19 @@ const FiltroProdutos = ({ filtros, setFiltros, categorias, handleFiltroChange, l
         </select>
       </div>
       <button onClick={limparFiltros}>Limpar Filtros</button>
+      <div className="paginacao">
+        <button onClick={handleRetornarPagina} disabled={paginaAtual === 1}>
+          &larr;
+        </button>
+        <span className="pagina-atual">{paginaAtual}</span>
+        <button onClick={handleAvancarPagina} disabled={paginaAtual * produtosPorPagina >= produtosFiltrados.length}>
+          &rarr;
+        </button>
+      </div>
     </aside>
   );
 };
+
 
 FiltroProdutos.propTypes = {
   filtros: PropTypes.object.isRequired,
@@ -80,6 +90,11 @@ FiltroProdutos.propTypes = {
   categorias: PropTypes.array.isRequired,
   handleFiltroChange: PropTypes.func.isRequired,
   limparFiltros: PropTypes.func.isRequired,
+  paginaAtual: PropTypes.number.isRequired,
+  handleAvancarPagina: PropTypes.func.isRequired,
+  handleRetornarPagina: PropTypes.func.isRequired,
+  produtosFiltrados: PropTypes.array.isRequired,
+  produtosPorPagina: PropTypes.number.isRequired,
 };
 
 export default FiltroProdutos;

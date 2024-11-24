@@ -15,6 +15,8 @@ const Home = () => {
     categoria: '',
     nome: ''
   });
+  const [paginaAtual, setPaginaAtual] = useState(1);
+  const produtosPorPagina = 10;
 
   const navigate = useNavigate();
 
@@ -80,6 +82,23 @@ const Home = () => {
     return precoValido && categoriaValida && nomeValido;
   });
 
+  const produtosPaginados = produtosFiltrados.slice(
+    (paginaAtual - 1) * produtosPorPagina,
+    paginaAtual * produtosPorPagina
+  );
+
+  const handleAvancarPagina = () => {
+    if (paginaAtual * produtosPorPagina < produtosFiltrados.length) {
+      setPaginaAtual(paginaAtual + 1);
+    }
+  };
+
+  const handleRetornarPagina = () => {
+    if (paginaAtual > 1) {
+      setPaginaAtual(paginaAtual - 1);
+    }
+  };
+
   const handleProdutoClick = (id) => {
     navigate(`/produto/${id}`);
   };
@@ -94,12 +113,19 @@ const Home = () => {
           categorias={categorias} 
           handleFiltroChange={handleFiltroChange} 
           limparFiltros={limparFiltros} 
+          paginaAtual={paginaAtual}
+          handleAvancarPagina={handleAvancarPagina}
+          handleRetornarPagina={handleRetornarPagina}
+          produtosFiltrados={produtosFiltrados}
+          produtosPorPagina={produtosPorPagina}
         />
-        <ListaProdutos 
-          produtosFiltrados={produtosFiltrados} 
-          adicionarAoCarrinho={adicionarAoCarrinho} 
-          handleProdutoClick={handleProdutoClick} 
-        />
+        <div className='produtos-list'>
+          <ListaProdutos 
+            produtosFiltrados={produtosPaginados} 
+            adicionarAoCarrinho={adicionarAoCarrinho} 
+            handleProdutoClick={handleProdutoClick} 
+          />
+        </div>
       </main>
     </div>
   );
