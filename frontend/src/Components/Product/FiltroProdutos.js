@@ -1,6 +1,8 @@
 import React from 'react';
 import { Range } from 'react-range';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 const FiltroProdutos = ({ filtros, setFiltros, categorias, handleFiltroChange, limparFiltros, paginaAtual, handleAvancarPagina, handleRetornarPagina, produtosFiltrados, produtosPorPagina }) => {
   return (
@@ -71,18 +73,17 @@ const FiltroProdutos = ({ filtros, setFiltros, categorias, handleFiltroChange, l
       </div>
       <button onClick={limparFiltros}>Limpar Filtros</button>
       <div className="paginacao">
-        <button onClick={handleRetornarPagina} disabled={paginaAtual === 1}>
-          &larr;
+        <button className="botao-paginacao" onClick={handleRetornarPagina} disabled={paginaAtual === 1}>
+          <FontAwesomeIcon icon={faArrowLeft} />
         </button>
         <span className="pagina-atual">{paginaAtual}</span>
-        <button onClick={handleAvancarPagina} disabled={paginaAtual * produtosPorPagina >= produtosFiltrados.length}>
-          &rarr;
+        <button className="botao-paginacao" onClick={handleAvancarPagina} disabled={paginaAtual * produtosPorPagina >= produtosFiltrados.length}>
+          <FontAwesomeIcon icon={faArrowRight} />
         </button>
       </div>
     </aside>
   );
 };
-
 
 FiltroProdutos.propTypes = {
   filtros: PropTypes.object.isRequired,

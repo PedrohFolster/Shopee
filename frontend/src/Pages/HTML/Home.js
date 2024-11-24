@@ -16,7 +16,7 @@ const Home = () => {
     nome: ''
   });
   const [paginaAtual, setPaginaAtual] = useState(1);
-  const produtosPorPagina = 10;
+  const produtosPorPagina = 5;
 
   const navigate = useNavigate();
 
@@ -24,7 +24,8 @@ const Home = () => {
     const fetchProdutos = async () => {
       try {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}/produtos/ativos`);
-        setProdutos(response.data);
+        const produtosAleatorios = response.data.sort(() => Math.random() - 0.5);
+        setProdutos(produtosAleatorios);
       } catch (error) {
         toast.error('Erro ao buscar produtos ativos.');
       }
