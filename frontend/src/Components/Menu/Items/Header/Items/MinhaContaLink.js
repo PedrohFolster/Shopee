@@ -5,13 +5,13 @@ import { faUser, faClipboardList, faSignOutAlt, faCaretDown, faCaretUp, faStore 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { AuthContext } from '../../../../../Util/Authentication';
 import axios from 'axios';
-
+import { isTokenValid } from '../../../../../Util/Authentication';
 
 axios.defaults.withCredentials = true;
 
 const MinhaContaLink = ({ activeLink, handleSetActive, usuario }) => {
     const [isDropdownVisible, setDropdownVisible] = useState(false);
-    const { isAuthenticated, logout } = useContext(AuthContext);
+    const { logout } = useContext(AuthContext);
     const navigate = useNavigate(); 
     let timer;
 
@@ -37,7 +37,8 @@ const MinhaContaLink = ({ activeLink, handleSetActive, usuario }) => {
     };
 
     const handleLojaClick = async () => {
-        if (!isAuthenticated) {
+        const token = localStorage.getItem('token');
+        if (!isTokenValid(token)) {
             navigate('/login');
             return;
         }

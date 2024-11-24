@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Header from '../../Components/Menu/Items/Header/Header';
 import LojaInfo from '../../Components/Loja/LojaInfo';
@@ -8,11 +8,10 @@ import ProdutosVendidosList from '../../Components/Loja/ProdutosVendidosList';
 import '../CSS/MinhaLoja.css';
 import '../CSS/CriarProduto.css';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../Util/Authentication';
 import api from '../../Util/ApiConfig';
+import { isTokenValid } from '../../Util/Authentication';
 
 const MinhaLoja = () => {
-    const { isAuthenticated } = useContext(AuthContext);
     const [lojaInfo, setLojaInfo] = useState(null);
     const [error, setError] = useState(null);
     const [activeTab, setActiveTab] = useState('dados');
@@ -25,7 +24,7 @@ const MinhaLoja = () => {
     const [estoque, setEstoque] = useState('');
     const [categoriaProdutoId, setCategoriaProdutoId] = useState('');
     const [statusId, setStatusId] = useState('');
-    const [mensagem, setMensagem] = useState('');
+    const [mensagem] = useState('');
     const [statusList, setStatusList] = useState([]);
     const [produtos, setProdutos] = useState([]);
     const [produtosVendidos, setProdutosVendidos] = useState([]);
@@ -35,7 +34,8 @@ const MinhaLoja = () => {
     const [categorias, setCategorias] = useState([]);
 
     useEffect(() => {
-        if (!isAuthenticated) {
+        const token = localStorage.getItem('token');
+        if (!isTokenValid(token)) {
             navigate('/login');
             return;
         }
@@ -65,7 +65,7 @@ const MinhaLoja = () => {
             .catch(error => {
                 console.error('Erro ao carregar status:', error);
             });
-    }, [isAuthenticated, navigate]);
+    }, [navigate]);
 
     useEffect(() => {
         api.get(`${process.env.REACT_APP_API_URL}/lojas/minha-loja`, { withCredentials: true })

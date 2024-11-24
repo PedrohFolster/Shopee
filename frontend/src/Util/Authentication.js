@@ -3,15 +3,26 @@ import axios from 'axios';
 
 export const AuthContext = createContext();
 
+export const isTokenValid = (token) => {
+  if (!token) return false;
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    return payload.exp * 1000 > Date.now();
+  } catch (e) {
+    return false;
+  }
+};
+
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    return localStorage.getItem('isAuthenticated') === 'true';
+    const token = localStorage.getItem('token');
+    return isTokenValid(token);
   });
 
   useEffect(() => {
     const validateSession = async () => {
       const token = localStorage.getItem('token');
-      if (token) {
+      if (isTokenValid(token)) {
         try {
           const response = await axios.get(`${process.env.REACT_APP_API_URL}/validate-session`, {
             headers: { 'Authorization': `Bearer ${token}` }
@@ -26,12 +37,13 @@ export const AuthProvider = ({ children }) => {
           console.error('Erro ao validar sessão:', error);
           handleSessionInvalid();
         }
+      } else {
+        handleSessionInvalid();
       }
     };
 
     const handleSessionInvalid = () => {
       localStorage.removeItem('token');
-      localStorage.removeItem('isAuthenticated');
       setCookie('token', '', -1);
       setIsAuthenticated(false);
       console.log('Sessão inválida ou expirada');
@@ -59,13 +71,11 @@ export const AuthProvider = ({ children }) => {
 
   const login = () => {
     setIsAuthenticated(true);
-    localStorage.setItem('isAuthenticated', 'true');
     console.log('Sessão válida');
   };
 
   const logout = () => {
     localStorage.removeItem('token');
-    localStorage.removeItem('isAuthenticated');
     setCookie('token', '', -1); 
     setIsAuthenticated(false);
     console.log('Logout bem-sucedido');
