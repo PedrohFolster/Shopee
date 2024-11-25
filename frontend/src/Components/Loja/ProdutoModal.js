@@ -21,8 +21,8 @@ const ProdutoModal = ({
   setCategoriaProdutoId,
   statusId,
   setStatusId,
-  categorias,
-  statusList,
+  categorias = [], // Inicialize como array vazio
+  statusList = [], // Inicialize como array vazio
   handleSubmit,
   mensagem
 }) => {
@@ -89,7 +89,7 @@ const ProdutoModal = ({
                 required
               >
                 <option value="">Selecione a Categoria</option>
-                {categorias.map(categoria => (
+                {Array.isArray(categorias) && categorias.map(categoria => (
                   <option key={categoria.id} value={categoria.id}>
                     {categoria.nome}
                   </option>
@@ -103,7 +103,7 @@ const ProdutoModal = ({
                 required
               >
                 <option value="">Selecione o Status</option>
-                {statusList.map(status => (
+                {Array.isArray(statusList) && statusList.map(status => (
                   <option key={status.id} value={status.id}>
                     {status.nomeStatus}
                   </option>
@@ -154,4 +154,4 @@ ProdutoModal.propTypes = {
   mensagem: PropTypes.string,
 };
 
-export default ProdutoModal; 
+export default ProdutoModal;

@@ -20,6 +20,10 @@ public class PedidoItens {
     @JoinColumn(name = "idPedido", referencedColumnName = "idPedido")
     private Pedido pedido;
 
+    @ManyToOne
+    @JoinColumn(name = "status_pedido_id", referencedColumnName = "id")
+    private StatusPedido statusPedido;
+
     public PedidoItens() {
     }
 
@@ -96,5 +100,12 @@ public class PedidoItens {
         this.lojaId = lojaId;
     }
 
-    
+    public StatusPedido getStatusPedido() {
+        return statusPedido;
+    }
+
+    public void setStatusPedido(StatusPedido statusPedido) {
+        this.statusPedido = statusPedido;
+    }
+
 } 

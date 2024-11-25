@@ -9,9 +9,7 @@ public class PedidoDTO {
     private Double valorTotal;
     private List<PedidoItensDTO> pedidoItens;
     private LocalDate dataPedido;
-    
-    
-    
+
     public PedidoDTO() {
     }
 
@@ -26,34 +24,40 @@ public class PedidoDTO {
     public Long getIdPedido() {
         return idPedido;
     }
+
     public void setIdPedido(Long idPedido) {
         this.idPedido = idPedido;
     }
+
     public Long getIdUsuario() {
         return idUsuario;
     }
+
     public void setIdUsuario(Long idUsuario) {
         this.idUsuario = idUsuario;
     }
+
     public Double getValorTotal() {
         return valorTotal;
     }
+
     public void setValorTotal(Double valorTotal) {
         this.valorTotal = valorTotal;
     }
+
     public List<PedidoItensDTO> getPedidoItens() {
         return pedidoItens;
     }
+
     public void setPedidoItens(List<PedidoItensDTO> pedidoItens) {
         this.pedidoItens = pedidoItens;
     }
+
     public LocalDate getDataPedido() {
         return dataPedido;
     }
+
     public void setDataPedido(LocalDate dataPedido) {
         this.dataPedido = dataPedido;
     }
-
-    
-    
-} 
+}

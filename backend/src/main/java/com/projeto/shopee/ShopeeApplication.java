@@ -12,10 +12,12 @@ import com.projeto.shopee.entities.Endereco;
 import com.projeto.shopee.entities.Loja;
 import com.projeto.shopee.entities.Produto;
 import com.projeto.shopee.entities.Status;
+import com.projeto.shopee.entities.StatusPedido;
 import com.projeto.shopee.entities.Usuario;
 import com.projeto.shopee.entities.UsuarioAutenticar;
 import com.projeto.shopee.repository.CategoriaProdutoRepository;
 import com.projeto.shopee.repository.LojaRepository;
+import com.projeto.shopee.repository.StatusPedidoRepository;
 import com.projeto.shopee.repository.ProdutoRepository;
 import com.projeto.shopee.repository.StatusRepository;
 import com.projeto.shopee.repository.UsuarioRepository;
@@ -37,6 +39,9 @@ public class ShopeeApplication implements CommandLineRunner {
 
     @Autowired
     private CategoriaProdutoRepository categoriaProdutoRepository;
+
+    @Autowired
+    private StatusPedidoRepository statusPedidoRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(ShopeeApplication.class, args);
@@ -81,6 +86,17 @@ public class ShopeeApplication implements CommandLineRunner {
         } else {
             System.out.println("Status com ID 2 já existe.");
         }
+
+        if (!statusPedidoRepository.existsById(1L)) {
+            StatusPedido statusAguardandoPagamento = new StatusPedido();
+            statusAguardandoPagamento.setId(1L);
+            statusAguardandoPagamento.setNomeStatus("Aguardando pagamento");
+            statusPedidoRepository.save(statusAguardandoPagamento);
+            System.out.println("StatusPedido 'Aguardando pagamento' criado com ID 1.");
+        } else {
+            System.out.println("StatusPedido com ID 1 já existe.");
+        }
+
         if (!usuarioRepository.existsByEmail("1@gmail.com")) {
             Usuario usuario = new Usuario();
             usuario.setNome("João Silva");

@@ -4,6 +4,7 @@ import com.projeto.shopee.dto.PedidoDTO;
 import com.projeto.shopee.dto.PedidoItensDTO;
 import com.projeto.shopee.entities.Pedido;
 import com.projeto.shopee.entities.PedidoItens;
+import com.projeto.shopee.entities.StatusPedido;
 import com.projeto.shopee.entities.Usuario;
 import com.projeto.shopee.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,20 +22,20 @@ public class PedidoMapper {
     public Pedido toEntity(PedidoDTO pedidoDTO) {
         Pedido pedido = new Pedido();
         pedido.setIdPedido(pedidoDTO.getIdPedido());
-        
+
         Usuario usuario = usuarioRepository.findById(pedidoDTO.getIdUsuario()).orElse(null);
         pedido.setUsuario(usuario);
-        
+
         pedido.setValorTotal(pedidoDTO.getValorTotal());
         pedido.setDataPedido(pedidoDTO.getDataPedido());
-        
+
         if (pedidoDTO.getPedidoItens() != null) {
             List<PedidoItens> itens = pedidoDTO.getPedidoItens().stream()
                 .map(this::toEntity)
                 .collect(Collectors.toList());
             pedido.setPedidoItens(itens);
         }
-        
+
         return pedido;
     }
 
@@ -44,14 +45,14 @@ public class PedidoMapper {
         pedidoDTO.setIdUsuario(pedido.getUsuario().getId());
         pedidoDTO.setValorTotal(pedido.getValorTotal());
         pedidoDTO.setDataPedido(pedido.getDataPedido());
-        
+
         if (pedido.getPedidoItens() != null) {
             List<PedidoItensDTO> itensDTO = pedido.getPedidoItens().stream()
                 .map(this::toDTO)
                 .collect(Collectors.toList());
             pedidoDTO.setPedidoItens(itensDTO);
         }
-        
+
         return pedidoDTO;
     }
 
@@ -64,10 +65,11 @@ public class PedidoMapper {
         pedidoItens.setValorTotal(pedidoItensDTO.getValorTotal());
         pedidoItens.setProdutoId(pedidoItensDTO.getProdutoId());
         pedidoItens.setLojaId(pedidoItensDTO.getLojaId());
+        pedidoItens.setStatusPedido(new StatusPedido(1L, "Aguardando pagamento"));
         return pedidoItens;
     }
 
-    private PedidoItensDTO toDTO(PedidoItens pedidoItens) {
+    public PedidoItensDTO toDTO(PedidoItens pedidoItens) {
         PedidoItensDTO pedidoItensDTO = new PedidoItensDTO();
         pedidoItensDTO.setId(pedidoItens.getId());
         pedidoItensDTO.setNomeItem(pedidoItens.getNomeItem());
@@ -76,6 +78,7 @@ public class PedidoMapper {
         pedidoItensDTO.setValorTotal(pedidoItens.getValorTotal());
         pedidoItensDTO.setProdutoId(pedidoItens.getProdutoId());
         pedidoItensDTO.setLojaId(pedidoItens.getLojaId());
+        pedidoItensDTO.setStatus(pedidoItens.getStatusPedido().getNomeStatus());
         return pedidoItensDTO;
     }
 }

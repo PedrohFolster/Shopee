@@ -1,8 +1,10 @@
 import React from 'react';
 import { Range } from 'react-range';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
-const FiltroProdutos = ({ filtros, setFiltros, categorias, handleFiltroChange, limparFiltros }) => {
+const FiltroProdutos = ({ filtros, setFiltros, categorias, handleFiltroChange, limparFiltros, paginaAtual, handleAvancarPagina, handleRetornarPagina, produtosFiltrados, produtosPorPagina }) => {
   return (
     <aside className='filtros'>
       <h3>Filtrar Produtos</h3>
@@ -70,6 +72,15 @@ const FiltroProdutos = ({ filtros, setFiltros, categorias, handleFiltroChange, l
         </select>
       </div>
       <button onClick={limparFiltros}>Limpar Filtros</button>
+      <div className="paginacao">
+        <button className="botao-paginacao" onClick={handleRetornarPagina} disabled={paginaAtual === 1}>
+          <FontAwesomeIcon icon={faArrowLeft} />
+        </button>
+        <span className="pagina-atual">{paginaAtual}</span>
+        <button className="botao-paginacao" onClick={handleAvancarPagina} disabled={paginaAtual * produtosPorPagina >= produtosFiltrados.length}>
+          <FontAwesomeIcon icon={faArrowRight} />
+        </button>
+      </div>
     </aside>
   );
 };
@@ -80,6 +91,11 @@ FiltroProdutos.propTypes = {
   categorias: PropTypes.array.isRequired,
   handleFiltroChange: PropTypes.func.isRequired,
   limparFiltros: PropTypes.func.isRequired,
+  paginaAtual: PropTypes.number.isRequired,
+  handleAvancarPagina: PropTypes.func.isRequired,
+  handleRetornarPagina: PropTypes.func.isRequired,
+  produtosFiltrados: PropTypes.array.isRequired,
+  produtosPorPagina: PropTypes.number.isRequired,
 };
 
 export default FiltroProdutos;

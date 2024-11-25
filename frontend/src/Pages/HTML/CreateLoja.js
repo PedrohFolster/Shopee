@@ -1,20 +1,20 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Header from '../../Components/Menu/Items/Header/Header';
 import LojaForm from '../../Components/LojaForm/LojaForm';
 import '../CSS/CreateLoja.css';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../Util/Authentication';
 import { toast } from 'react-toastify';
+import { isTokenValid } from '../../Util/Authentication';
 
 const CriarLoja = () => {
-    const { isAuthenticated } = useContext(AuthContext);
     const [nome, setNome] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!isAuthenticated) {
+        const token = localStorage.getItem('token');
+        if (!isTokenValid(token)) {
             navigate('/login');
             return;
         }
@@ -28,7 +28,7 @@ const CriarLoja = () => {
             .catch(error => {
                 console.error('Erro ao verificar loja:', error);
             });
-    }, [isAuthenticated, navigate]);
+    }, [navigate]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
