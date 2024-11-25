@@ -109,4 +109,18 @@ public class ProdutoController {
         List<ProdutoDTO> produtos = produtoService.getProdutosByLoja(lojaId);
         return ResponseEntity.ok(produtos);
     }
+
+    @GetMapping("/{produtoId}/imagem")
+    public ResponseEntity<String> getImagemByProdutoId(@PathVariable Long produtoId) {
+        try {
+            ProdutoDTO produto = produtoService.getProdutoById(produtoId);
+            if (produto != null) {
+                return ResponseEntity.ok(produto.getImagem());
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }
