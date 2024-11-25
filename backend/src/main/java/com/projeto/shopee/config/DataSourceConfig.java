@@ -18,24 +18,23 @@ import org.springframework.transaction.PlatformTransactionManager;
 @PropertySource("classpath:custom.properties")
 public class DataSourceConfig {
 
+    @Value("${DATABASE_URL}")
+    private String dbUrl;
+
     @Value("${DATABASE_USERNAME}")
     private String dbUsername;
 
     @Value("${DATABASE_PASSWORD}")
     private String dbPassword;
 
-    @Value("${DATABASE_URL}")
-    private String dbUrl;
-
-    @SuppressWarnings("rawtypes")
     @Bean
     public DataSource dataSource() {
-        DataSourceBuilder builder = DataSourceBuilder.create();
-        builder.url(dbUrl);
-        builder.username(dbUsername);
-        builder.password(dbPassword);
-        builder.driverClassName("org.postgresql.Driver");
-        return builder.build();
+        return DataSourceBuilder.create()
+                .url(dbUrl)
+                .username(dbUsername)
+                .password(dbPassword)
+                .driverClassName("org.h2.Driver")
+                .build();
     }
 
     @Bean
@@ -45,9 +44,9 @@ public class DataSourceConfig {
         factoryBean.setPackagesToScan("com.projeto.shopee");
 
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-        vendorAdapter.setGenerateDdl(true); 
-        vendorAdapter.setShowSql(true); 
-        vendorAdapter.setDatabasePlatform("org.hibernate.dialect.PostgreSQLDialect");
+        vendorAdapter.setGenerateDdl(true);
+        vendorAdapter.setShowSql(true);
+        vendorAdapter.setDatabasePlatform("org.hibernate.dialect.H2Dialect");
         factoryBean.setJpaVendorAdapter(vendorAdapter);
 
         Properties jpaProperties = new Properties();
@@ -62,20 +61,5 @@ public class DataSourceConfig {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(entityManagerFactory.getObject());
         return transactionManager;
-
     }
-    
-    // Mudar para create (Apagar a db, somente para realizar testes)
 }
-
-/*
- * Crie o arquivo custom.properties no diretório src/main/resources com o
- * seguinte conteúdo:
- *
- * DB_USERNAME=your_username
- * DB_PASSWORD=your_password
- *
- * Substitua 'your_username' e 'your_password' pelos valores reais das suas
- * credenciais do banco de dados.
- */
-

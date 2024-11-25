@@ -16,12 +16,12 @@ const ProdutoVendidoLoja = ({ item, onEdit, pageStyle }) => {
 
     return (
         <div className={`produto-item vendido ${pageStyle}`}>
-            <h3>{item.nomeItem}</h3> {/* Alterado de item.nome para item.nomeItem */}
-            <p className="preco">Preço: {formatarPreco(item.valor)}</p> {/* Alterado de item.preco para item.valor */}
+            <h3>{item.nomeItem}</h3> 
+            <p className="preco">Preço: {formatarPreco(item.valor)}</p> 
             <p className="quantidade">Quantidade: {item.quantidade}</p>
             <p className="valor-total">Valor Total: {formatarPreco(item.valorTotal)}</p>
             <div className="produto-info">
-                <p className="status">Status: {obterStatus(item.status)}</p> {/* Alterado de item.statusId para item.status */}
+                <p className="status">Status: {obterStatus(item.status)}</p> 
             </div>
             <div className="produto-acoes">
                 <button type="button" onClick={() => onEdit(item)}>
@@ -33,7 +33,7 @@ const ProdutoVendidoLoja = ({ item, onEdit, pageStyle }) => {
 };
 
 ProdutoVendidoLoja.propTypes = {
-    item: PropTypes.object.isRequired, // Alterado de produto para item
+    item: PropTypes.object.isRequired, 
     onEdit: PropTypes.func.isRequired,
     pageStyle: PropTypes.string
 };

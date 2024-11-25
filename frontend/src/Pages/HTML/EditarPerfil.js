@@ -134,7 +134,6 @@ function EditarPerfil() {
 
         const token = localStorage.getItem('token');
 
-        // Primeiro, validar a senha
         axios.post(`${process.env.REACT_APP_API_URL}/usuarios/validar-senha`, null, {
             headers: { 'Authorization': `Bearer ${token}` },
             params: { senha: senhaAtual },
@@ -142,14 +141,13 @@ function EditarPerfil() {
         })
             .then(response => {
                 if (response.data.valid) {
-                    // Remover a formatação do telefone antes de enviar
                     const telefoneSemFormatacao = usuario.telefone.replace(/\D/g, '');
 
                     axios.put(`${process.env.REACT_APP_API_URL}/usuarios/${usuario.id}`, {
                         nome: usuario.nome,
                         email: usuario.email,
                         dataNascimento: usuario.dataNascimento,
-                        telefone: telefoneSemFormatacao // Enviar telefone sem formatação
+                        telefone: telefoneSemFormatacao 
                     }, {
                         headers: { 'Authorization': `Bearer ${token}` },
                         withCredentials: true
