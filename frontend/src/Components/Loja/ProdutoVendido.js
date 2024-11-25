@@ -14,11 +14,13 @@ const ProdutoVendido = ({ produto, onEdit }) => {
             </div>
             <div className="produto-detalhes">
                 <h3>{produto.nomeItem}</h3>
-                <p>R$ {produto.valor.toFixed(2)}</p>
+                <p className="preco">R$ {produto.valor.toFixed(2)}</p>
                 <p>Quantidade: {produto.quantidade}</p>
                 <p>Valor Total: R$ {produto.valorTotal.toFixed(2)}</p>
-                <p>Status: {produto.status}</p>
-                <button onClick={onEdit}>Editar</button>
+                <p className="status">Status: {produto.status}</p>
+                <div className="produto-acoes">
+                    <button onClick={onEdit}>Editar</button>
+                </div>
             </div>
         </div>
     );

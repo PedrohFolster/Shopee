@@ -111,7 +111,8 @@ const MinhaLoja = () => {
                       quantidade: item.quantidade,
                       valorTotal: item.valorTotal,
                       status: item.status,
-                      pedidoId: item.idPedido
+                      pedidoId: item.idPedido,
+                      produtoId: item.produtoId
                   }));
                   setProdutosVendidos(produtos);
               })

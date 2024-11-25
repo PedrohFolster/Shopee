@@ -1,32 +1,80 @@
 .produto-card {
+    background: white;
     border: 1px solid #ddd;
     border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 16px;
-    margin: 16px;
-    width: 200px;
-    text-align: center;
-}
-
-.produto-imagem {
-    height: 150px;
-    background-color: #f9f9f9;
-    margin-bottom: 8px;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
+    text-align: center;
+    min-height: 420px;
+    width: 250px;
+    margin: 0 auto;
 }
 
 .produto-imagem img {
-    max-height: 100%;
     max-width: 100%;
+    height: 250px;
+    width: 250px;
+    border-radius: 8px;
     object-fit: cover;
 }
 
 .produto-detalhes h3 {
+    margin: 0 0 10px 0;
+    color: #333;
     font-size: 16px;
-    margin: 8px 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    height: 42px;
 }
 
 .produto-detalhes p {
     margin: 4px 0;
 }
+
+.produto-detalhes .preco {
+    color: #ff6600;
+    font-weight: bold;
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+.produto-detalhes .estoque,
+.produto-detalhes .status {
+    color: #666;
+    font-size: 14px;
+}
+
+.produto-acoes {
+    display: flex;
+    gap: 10px;
+    margin-top: auto;
+}
+
+.produto-card button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    flex: 1;
+}
+
+.produto-card button:hover {
+    background-color: #45a049;
+}
+
+    .produtos-container-vendidos {
+        display: flex;
+        justify-content: flex-start;
+        gap: 16px;
+        flex-wrap: wrap;
+    }
