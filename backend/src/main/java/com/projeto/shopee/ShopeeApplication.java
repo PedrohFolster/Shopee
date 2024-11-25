@@ -90,9 +90,9 @@ public class ShopeeApplication implements CommandLineRunner {
         if (!statusPedidoRepository.existsById(1L)) {
             StatusPedido statusAguardandoPagamento = new StatusPedido();
             statusAguardandoPagamento.setId(1L);
-            statusAguardandoPagamento.setNomeStatus("Aguardando pagamento");
+            statusAguardandoPagamento.setNomeStatus("Aguardando Pagamento");
             statusPedidoRepository.save(statusAguardandoPagamento);
-            System.out.println("StatusPedido 'Aguardando pagamento' criado com ID 1.");
+            System.out.println("StatusPedido 'Aguardando Pagamento' criado com ID 1.");
         } else {
             System.out.println("StatusPedido com ID 1 já existe.");
         }
@@ -105,6 +105,66 @@ public class ShopeeApplication implements CommandLineRunner {
             System.out.println("StatusPedido 'Pagamento Aprovado' criado com ID 2.");
         } else {
             System.out.println("StatusPedido com ID 2 já existe.");
+        }
+
+        if (!statusPedidoRepository.existsById(3L)) {
+            StatusPedido statusPagamentoFinalizando = new StatusPedido();
+            statusPagamentoFinalizando.setId(3L);
+            statusPagamentoFinalizando.setNomeStatus("Pagamento Finalizando");
+            statusPedidoRepository.save(statusPagamentoFinalizando);
+            System.out.println("StatusPedido 'Pagamento Finalizando' criado com ID 3.");
+        } else {
+            System.out.println("StatusPedido com ID 3 já existe.");
+        }
+
+        if (!statusPedidoRepository.existsById(4L)) {
+            StatusPedido statusPedidoSeparado = new StatusPedido();
+            statusPedidoSeparado.setId(4L);
+            statusPedidoSeparado.setNomeStatus("Pedido Separado");
+            statusPedidoRepository.save(statusPedidoSeparado);
+            System.out.println("StatusPedido 'Pedido Separado' criado com ID 4.");
+        } else {
+            System.out.println("StatusPedido com ID 4 já existe.");
+        }
+
+        if (!statusPedidoRepository.existsById(5L)) {
+            StatusPedido statusPedidoEnviado = new StatusPedido();
+            statusPedidoEnviado.setId(5L);
+            statusPedidoEnviado.setNomeStatus("Pedido Enviado");
+            statusPedidoRepository.save(statusPedidoEnviado);
+            System.out.println("StatusPedido 'Pedido Enviado' criado com ID 5.");
+        } else {
+            System.out.println("StatusPedido com ID 5 já existe.");
+        }
+
+        if (!statusPedidoRepository.existsById(6L)) {
+            StatusPedido statusPedidoEntregue = new StatusPedido();
+            statusPedidoEntregue.setId(6L);
+            statusPedidoEntregue.setNomeStatus("Pedido Entregue");
+            statusPedidoRepository.save(statusPedidoEntregue);
+            System.out.println("StatusPedido 'Pedido Entregue' criado com ID 6.");
+        } else {
+            System.out.println("StatusPedido com ID 6 já existe.");
+        }
+
+        if (!statusPedidoRepository.existsById(7L)) {
+            StatusPedido statusPedidoCancelado = new StatusPedido();
+            statusPedidoCancelado.setId(7L);
+            statusPedidoCancelado.setNomeStatus("Pedido Cancelado");
+            statusPedidoRepository.save(statusPedidoCancelado);
+            System.out.println("StatusPedido 'Pedido Cancelado' criado com ID 7.");
+        } else {
+            System.out.println("StatusPedido com ID 7 já existe.");
+        }
+
+        if (!statusPedidoRepository.existsById(8L)) {
+            StatusPedido statusPedidoDevolvido = new StatusPedido();
+            statusPedidoDevolvido.setId(8L);
+            statusPedidoDevolvido.setNomeStatus("Pedido Devolvido");
+            statusPedidoRepository.save(statusPedidoDevolvido);
+            System.out.println("StatusPedido 'Pedido Devolvido' criado com ID 8.");
+        } else {
+            System.out.println("StatusPedido com ID 8 já existe.");
         }
 
         if (!usuarioRepository.existsByEmail("1@gmail.com")) {
