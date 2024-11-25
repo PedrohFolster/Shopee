@@ -8,14 +8,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.Profile;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
-@PropertySource("classpath:custom.properties")
 public class DataSourceConfig {
 
     @Value("${DATABASE_URL}")
@@ -28,12 +27,24 @@ public class DataSourceConfig {
     private String dbPassword;
 
     @Bean
-    public DataSource dataSource() {
+    @Profile("test")
+    public DataSource h2DataSource() {
+        return DataSourceBuilder.create()
+                .url("jdbc:h2:mem:shopee;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE")
+                .username("sa")
+                .password("")
+                .driverClassName("org.h2.Driver")
+                .build();
+    }
+
+    @Bean
+    @Profile("prod")
+    public DataSource postgresDataSource() {
         return DataSourceBuilder.create()
                 .url(dbUrl)
                 .username(dbUsername)
                 .password(dbPassword)
-                .driverClassName("org.h2.Driver")
+                .driverClassName("org.postgresql.Driver")
                 .build();
     }
 
@@ -46,11 +57,11 @@ public class DataSourceConfig {
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         vendorAdapter.setGenerateDdl(true);
         vendorAdapter.setShowSql(true);
-        vendorAdapter.setDatabasePlatform("org.hibernate.dialect.H2Dialect");
+
         factoryBean.setJpaVendorAdapter(vendorAdapter);
 
         Properties jpaProperties = new Properties();
-        jpaProperties.put("hibernate.hbm2ddl.auto", "create");
+        jpaProperties.put("hibernate.hbm2ddl.auto", "create"); 
         factoryBean.setJpaProperties(jpaProperties);
 
         return factoryBean;
