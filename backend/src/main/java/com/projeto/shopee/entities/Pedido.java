@@ -17,7 +17,7 @@ public class Pedido {
 
     private Double valorTotal;
 
-    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<PedidoItens> pedidoItens;
 
     private LocalDate dataPedido;
