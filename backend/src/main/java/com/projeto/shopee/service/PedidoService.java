@@ -8,6 +8,7 @@ import com.projeto.shopee.entities.Usuario;
 import com.projeto.shopee.repository.PedidoRepository;
 import com.projeto.shopee.repository.PedidoItensRepository;
 import com.projeto.shopee.repository.ProdutoRepository;
+import com.projeto.shopee.repository.StatusPedidoRepository;
 import com.projeto.shopee.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,6 +36,9 @@ public class PedidoService {
 
     @Autowired
     private PedidoItensRepository pedidoItensRepository;
+
+    @Autowired
+    private StatusPedidoRepository statusPedidoRepository;
 
     public void finalizarCompra(List<Map<String, Object>> produtos, Long userId) {
         Usuario usuario = usuarioRepository.findById(userId)
@@ -78,5 +83,21 @@ public class PedidoService {
 
     public List<PedidoItens> getItensVendidosPorLoja(Long lojaId) {
         return pedidoItensRepository.findByLojaId(lojaId);
+    }
+
+    public void updateItemStatus(Long itemId, Long statusId) throws Exception {
+        Optional<PedidoItens> pedidoItensOptional = pedidoItensRepository.findById(itemId);
+        if (pedidoItensOptional.isPresent()) {
+            PedidoItens pedidoItens = pedidoItensOptional.get();
+            Optional<StatusPedido> statusPedidoOptional = statusPedidoRepository.findById(statusId);
+            if (statusPedidoOptional.isPresent()) {
+                pedidoItens.setStatusPedido(statusPedidoOptional.get());
+                pedidoItensRepository.save(pedidoItens);
+            } else {
+                throw new Exception("Status não encontrado");
+            }
+        } else {
+            throw new Exception("Item do pedido não encontrado");
+        }
     }
 } 

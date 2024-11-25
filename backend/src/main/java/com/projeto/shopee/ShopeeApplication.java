@@ -97,6 +97,16 @@ public class ShopeeApplication implements CommandLineRunner {
             System.out.println("StatusPedido com ID 1 já existe.");
         }
 
+        if (!statusPedidoRepository.existsById(2L)) {
+            StatusPedido statusPagamentoAprovado = new StatusPedido();
+            statusPagamentoAprovado.setId(2L);
+            statusPagamentoAprovado.setNomeStatus("Pagamento Aprovado");
+            statusPedidoRepository.save(statusPagamentoAprovado);
+            System.out.println("StatusPedido 'Pagamento Aprovado' criado com ID 2.");
+        } else {
+            System.out.println("StatusPedido com ID 2 já existe.");
+        }
+
         if (!usuarioRepository.existsByEmail("1@gmail.com")) {
             Usuario usuario = new Usuario();
             usuario.setNome("João Silva");

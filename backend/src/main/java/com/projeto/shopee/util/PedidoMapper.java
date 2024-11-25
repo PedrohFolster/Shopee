@@ -79,6 +79,7 @@ public class PedidoMapper {
         pedidoItensDTO.setProdutoId(pedidoItens.getProdutoId());
         pedidoItensDTO.setLojaId(pedidoItens.getLojaId());
         pedidoItensDTO.setStatus(pedidoItens.getStatusPedido().getNomeStatus());
+        pedidoItensDTO.setIdPedido(pedidoItens.getPedido().getIdPedido());
         return pedidoItensDTO;
     }
 }

@@ -36,6 +36,7 @@ public class PedidoItens {
         this.pedido = pedido;
     }
 
+    // Getters e setters
     public Long getId() {
         return id;
     }
@@ -107,5 +108,4 @@ public class PedidoItens {
     public void setStatusPedido(StatusPedido statusPedido) {
         this.statusPedido = statusPedido;
     }
-
-} 
+}
