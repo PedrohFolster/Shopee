@@ -1,8 +1,5 @@
 package com.projeto.shopee.controller;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import java.time.LocalDate;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -11,22 +8,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.test.web.servlet.MockMvc;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.projeto.shopee.dto.LojaDTO;
-import com.projeto.shopee.dto.UsuarioDTO;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.projeto.shopee.dto.EnderecoDTO;
+import com.projeto.shopee.dto.LojaDTO;
 import com.projeto.shopee.dto.UsuarioAutenticarDTO;
+import com.projeto.shopee.dto.UsuarioDTO;
 import com.projeto.shopee.entities.Loja;
 import com.projeto.shopee.entities.Usuario;
 import com.projeto.shopee.repository.LojaRepository;
-import com.projeto.shopee.repository.UsuarioRepository;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.projeto.shopee.repository.ProdutoRepository;
+import com.projeto.shopee.repository.UsuarioRepository;
 import com.projeto.shopee.security.JwtService;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 @SpringBootTest
 @AutoConfigureMockMvc
