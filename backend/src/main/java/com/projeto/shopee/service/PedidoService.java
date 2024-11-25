@@ -12,6 +12,7 @@ import com.projeto.shopee.repository.StatusPedidoRepository;
 import com.projeto.shopee.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -77,6 +78,7 @@ public class PedidoService {
         pedidoRepository.save(pedido);
     }
 
+    @Transactional
     public List<Pedido> getPedidosByUserId(Long userId) {
         return pedidoRepository.findByUsuarioId(userId);
     }
