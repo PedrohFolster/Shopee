@@ -13,7 +13,6 @@ import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -37,7 +36,7 @@ public class DataSourceConfig {
     private String dbPassword;
 
     @Bean
-    @Profile("test")
+    @Qualifier("h2DataSource")
     public DataSource h2DataSource() {
         return DataSourceBuilder.create()
                 .url("jdbc:h2:mem:shopee;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE")
@@ -48,30 +47,16 @@ public class DataSourceConfig {
     }
 
     @Bean
-    @Profile("prod")
-    public DataSource postgresDataSource() {
-        return DataSourceBuilder.create()
-                .url(dbUrl)
-                .username(dbUsername)
-                .password(dbPassword)
-                .driverClassName("org.postgresql.Driver")
-                .build();
-    }
-
-    @Bean
     @Primary
     public DataSource routingDataSource(
-            @Qualifier("h2DataSource") DataSource h2DataSource,
-            @Qualifier("postgresDataSource") DataSource postgresDataSource) {
+            @Qualifier("h2DataSource") DataSource h2DataSource) {
         Map<Object, Object> targetDataSources = new HashMap<>();
         targetDataSources.put("test", h2DataSource);
-        targetDataSources.put("prod", postgresDataSource);
 
         AbstractRoutingDataSource routingDataSource = new AbstractRoutingDataSource() {
             @Override
             protected Object determineCurrentLookupKey() {
-                String activeProfile = environment.getActiveProfiles()[0];
-                return activeProfile;
+                return "test";
             }
         };
         routingDataSource.setTargetDataSources(targetDataSources);
