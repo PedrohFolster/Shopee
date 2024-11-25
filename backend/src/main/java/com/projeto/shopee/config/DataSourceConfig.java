@@ -18,19 +18,23 @@ import org.springframework.transaction.PlatformTransactionManager;
 @PropertySource("classpath:custom.properties")
 public class DataSourceConfig {
 
-    @Value("${DB_USERNAME}")
+    @Value("${DATABASE_USERNAME}")
     private String dbUsername;
 
-    @Value("${DB_PASSWORD}")
+    @Value("${DATABASE_PASSWORD}")
     private String dbPassword;
+
+    @Value("${DATABASE_URL}")
+    private String dbUrl;
 
     @SuppressWarnings("rawtypes")
     @Bean
     public DataSource dataSource() {
         DataSourceBuilder builder = DataSourceBuilder.create();
-        builder.url("jdbc:mysql://localhost:3306/shopee");
+        builder.url(dbUrl);
         builder.username(dbUsername);
         builder.password(dbPassword);
+        builder.driverClassName("org.postgresql.Driver");
         return builder.build();
     }
 
@@ -43,7 +47,7 @@ public class DataSourceConfig {
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         vendorAdapter.setGenerateDdl(true); 
         vendorAdapter.setShowSql(true); 
-        vendorAdapter.setDatabasePlatform("org.hibernate.dialect.MySQL8Dialect");
+        vendorAdapter.setDatabasePlatform("org.hibernate.dialect.PostgreSQLDialect");
         factoryBean.setJpaVendorAdapter(vendorAdapter);
 
         Properties jpaProperties = new Properties();

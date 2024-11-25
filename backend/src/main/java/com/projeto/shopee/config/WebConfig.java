@@ -14,7 +14,7 @@ public class WebConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                .allowedOriginPatterns("http://localhost:3000", "https://*.example.com")
+                .allowedOriginPatterns("http://localhost:3000", "https://shopee-front.onrender.com")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*");
             }
