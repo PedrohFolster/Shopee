@@ -26,13 +26,13 @@ public class DataSourceConfig {
     @Autowired
     private Environment environment;
 
-    @Value("${DATABASE_URL}")
+    @Value("${DATABASE_URL:}")
     private String dbUrl;
 
-    @Value("${DATABASE_USERNAME}")
+    @Value("${DATABASE_USERNAME:}")
     private String dbUsername;
 
-    @Value("${DATABASE_PASSWORD}")
+    @Value("${DATABASE_PASSWORD:}")
     private String dbPassword;
 
     @Bean
@@ -47,16 +47,30 @@ public class DataSourceConfig {
     }
 
     @Bean
+    @Qualifier("postgresDataSource")
+    public DataSource postgresDataSource() {
+        return DataSourceBuilder.create()
+                .url(dbUrl)
+                .username(dbUsername)
+                .password(dbPassword)
+                .driverClassName("org.postgresql.Driver")
+                .build();
+    }
+
+    @Bean
     @Primary
     public DataSource routingDataSource(
-            @Qualifier("h2DataSource") DataSource h2DataSource) {
+            @Qualifier("h2DataSource") DataSource h2DataSource,
+            @Qualifier("postgresDataSource") DataSource postgresDataSource) {
         Map<Object, Object> targetDataSources = new HashMap<>();
         targetDataSources.put("test", h2DataSource);
+        targetDataSources.put("prod", postgresDataSource);
 
         AbstractRoutingDataSource routingDataSource = new AbstractRoutingDataSource() {
             @Override
             protected Object determineCurrentLookupKey() {
-                return "test";
+                String activeProfile = environment.getActiveProfiles()[0];
+                return activeProfile.equals("prod") ? "prod" : "test";
             }
         };
         routingDataSource.setTargetDataSources(targetDataSources);
