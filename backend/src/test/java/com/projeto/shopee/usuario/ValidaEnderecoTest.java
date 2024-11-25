@@ -20,5 +20,10 @@ public class ValidaEnderecoTest {
     void testEnderecoInvalido() {
         EnderecoDTO enderecoInvalido = new EnderecoDTO(1L, null, "Rua A", "123", "Cidade", "Estado", "Pais", "Complemento");
         assertFalse(ValidationUtils.isValidEndereco(enderecoInvalido), "Endereço deve ser inválido");
+        enderecoInvalido.setCep("123");
+        assertFalse(ValidationUtils.isValidEndereco(enderecoInvalido), "Endereço deve ser inválido");
+        enderecoInvalido.setCep("12345678");
+        enderecoInvalido.setRua(null);
+        assertFalse(ValidationUtils.isValidEndereco(enderecoInvalido), "Endereço deve ser inválido");
     }
 } 

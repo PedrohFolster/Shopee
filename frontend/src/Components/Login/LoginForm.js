@@ -4,7 +4,7 @@ import Input from '../../Components/Input/Input';
 import Button from '../../Components/Button/Button';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { toast } from 'react-toastify'; // Importação do toast
+import { toast } from 'react-toastify';
 
 const LoginForm = ({ login }) => {
   const [formData, setFormData] = useState({
@@ -35,7 +35,7 @@ const LoginForm = ({ login }) => {
 
         document.cookie = `token=${token}; path=/; secure; samesite=strict`;
 
-        toast.success('Login realizado com sucesso!'); // Alerta de sucesso
+        toast.success('Login realizado com sucesso!'); 
 
         login();
         navigate('/home');

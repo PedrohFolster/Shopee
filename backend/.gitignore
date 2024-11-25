@@ -34,5 +34,5 @@ build/
 
 
 ### Config ###
-src/main/resources/application.properties
+### src/main/resources/application.properties
 backend\src\main\resources\custom.properties

@@ -21,8 +21,8 @@ const ProdutoModal = ({
   setCategoriaProdutoId,
   statusId,
   setStatusId,
-  categorias = [], // Inicialize como array vazio
-  statusList = [], // Inicialize como array vazio
+  categorias = [],
+  statusList = [], 
   handleSubmit,
   mensagem
 }) => {

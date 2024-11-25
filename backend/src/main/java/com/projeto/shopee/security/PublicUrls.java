@@ -8,7 +8,6 @@ public class PublicUrls {
         "/usuarios",
         "/produtos/ativos",
         "/categorias-p",
-        "/status",
         "/produtos/{id}",
         "/categoria/{categoriaId}",
         "/produtos/categoria/{categoriaId}",

@@ -10,6 +10,7 @@ import '../CSS/CriarProduto.css';
 import { useNavigate } from 'react-router-dom';
 import api from '../../Util/ApiConfig';
 import { isTokenValid } from '../../Util/Authentication';
+import { toast } from 'react-toastify';
 
 const MinhaLoja = () => {
     const [lojaInfo, setLojaInfo] = useState(null);
@@ -110,7 +111,7 @@ const MinhaLoja = () => {
                       quantidade: item.quantidade,
                       valorTotal: item.valorTotal,
                       status: item.status,
-                      pedidoId: item.idPedido // Certifique-se de que pedidoId está presente
+                      pedidoId: item.idPedido
                   }));
                   setProdutosVendidos(produtos);
               })
@@ -170,8 +171,71 @@ const handleStatusChange = (pedidoId, itemId, novoStatusId) => {
         });
 };
 
+    const isValidNomeProduto = (nome) => {
+        return nome && nome.trim().length > 0 && nome.length <= 100;
+    };
+
+    const isValidPreco = (preco) => {
+        return !isNaN(preco) && parseFloat(preco) >= 0 && parseFloat(preco) < 99999;
+    };
+
+    const isValidImagem = (imagem) => {
+        return imagem && imagem.trim().length > 0;
+    };
+
+    const isValidEstoque = (estoque) => {
+        return !isNaN(estoque) && parseInt(estoque, 10) >= 0 && parseInt(estoque, 10) <= 99999;
+    };
+
+    const isValidCategoriaProduto = (categoriaProdutoId) => {
+        return categoriaProdutoId !== '';
+    };
+
+    const isValidStatus = (statusId) => {
+        return statusId !== '' && (statusId === '1' || statusId === '2');
+    };
+
+    const isValidDescricao = (descricao) => {
+        return descricao && descricao.trim().length >= 5 && descricao.length <= 500;
+    };
+
     const handleSubmit = (event) => {
         event.preventDefault();
+
+        let isValid = true;
+
+        if (!isValidNomeProduto(nome)) {
+            toast.error("Nome do produto é inválido.");
+            isValid = false;
+        }
+        if (!isValidDescricao(descricao)) {
+            toast.error("Descrição do produto é inválida.");
+            isValid = false;
+        }
+        if (!isValidPreco(preco)) {
+            toast.error("Preço do produto é inválido.");
+            isValid = false;
+        }
+        if (!isValidImagem(imagem)) {
+            toast.error("Imagem do produto é obrigatória.");
+            isValid = false;
+        }
+        if (!isValidEstoque(estoque)) {
+            toast.error("Estoque do produto é inválido.");
+            isValid = false;
+        }
+        if (!isValidCategoriaProduto(categoriaProdutoId)) {
+            toast.error("Categoria do produto é obrigatória.");
+            isValid = false;
+        }
+        if (!statusId) {
+            toast.error("Status do produto é obrigatório.");
+            isValid = false;
+        }
+
+        if (!isValid) {
+            return;
+        }
 
         const produtoData = {
             nome,

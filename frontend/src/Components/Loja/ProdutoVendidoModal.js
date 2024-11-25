@@ -26,7 +26,7 @@ const ProdutoVendidoModal = ({ showModal, setShowModal, produto, setStatus, hand
             console.error('Status não encontrado');
             return;
         }
-        handleSubmit(selectedStatus); // Passa o objeto status completo
+        handleSubmit(selectedStatus); 
     };
 
     if (!showModal) return null;
