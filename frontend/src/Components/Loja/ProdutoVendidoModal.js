@@ -5,6 +5,7 @@ import Button from '../../Components/Button/Button';
 
 const ProdutoVendidoModal = ({ showModal, setShowModal, produto, setStatus, handleSubmit }) => {
     const [statusList, setStatusList] = useState([]);
+    const [selectedStatusId, setSelectedStatusId] = useState(null);
 
     useEffect(() => {
         if (showModal) {
@@ -18,6 +19,16 @@ const ProdutoVendidoModal = ({ showModal, setShowModal, produto, setStatus, hand
         }
     }, [showModal]);
 
+    const handleStatusSubmit = (e) => {
+        e.preventDefault();
+        const selectedStatus = statusList.find(status => status.id === selectedStatusId);
+        if (!selectedStatus) {
+            console.error('Status não encontrado');
+            return;
+        }
+        handleSubmit(selectedStatus); // Passa o objeto status completo
+    };
+
     if (!showModal) return null;
 
     return (
@@ -27,7 +38,7 @@ const ProdutoVendidoModal = ({ showModal, setShowModal, produto, setStatus, hand
                 <div className="form-container">
                     <h2>Detalhes do Produto Vendido</h2>
                     <div className="separator"></div>
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleStatusSubmit}>
                         <div className="form-group">
                             <p><strong>Nome:</strong> {produto.nomeItem}</p>
                         </div>
@@ -42,16 +53,20 @@ const ProdutoVendidoModal = ({ showModal, setShowModal, produto, setStatus, hand
                         </div>
                         <div className="form-group-center-status">
                             <p><strong>Status:</strong></p>
-                            <select value={produto.status} onChange={(e) => setStatus(e.target.value)} required>
+                            <select 
+                                value={selectedStatusId || ''} 
+                                onChange={(e) => setSelectedStatusId(Number(e.target.value))} 
+                                required
+                            >
                                 <option value="">Selecione o Status</option>
                                 {statusList.map(status => (
-                                    <option key={status.id} value={status.nomeStatus}>
+                                    <option key={status.id} value={status.id}>
                                         {status.nomeStatus}
                                     </option>
                                 ))}
                             </select>
                         </div>
-                        <Button type="button-register" onClick={handleSubmit}>
+                        <Button type="submit">
                             Salvar
                         </Button>
                     </form>

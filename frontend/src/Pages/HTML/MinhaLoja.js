@@ -100,24 +100,25 @@ const MinhaLoja = () => {
     }, [activeTab, lojaInfo]);
 
     useEffect(() => {
-        if (activeTab === 'vendidos' && lojaInfo?.id) {
-            axios.get(`${process.env.REACT_APP_API_URL}/pedidos/itens-pedidos/${lojaInfo.id}`, { withCredentials: true })
-                .then(response => {
-                    const produtos = response.data.map(item => ({
-                        id: item.id,
-                        nomeItem: item.nomeItem,
-                        valor: item.valor,
-                        quantidade: item.quantidade,
-                        valorTotal: item.valorTotal,
-                        status: item.status
-                    }));
-                    setProdutosVendidos(produtos);
-                })
-                .catch(error => {
-                    console.error('Erro ao buscar produtos vendidos:', error);
-                });
-        }
-    }, [activeTab, lojaInfo]);
+      if (activeTab === 'vendidos' && lojaInfo?.id) {
+          axios.get(`${process.env.REACT_APP_API_URL}/pedidos/itens-pedidos/${lojaInfo.id}`, { withCredentials: true })
+              .then(response => {
+                  const produtos = response.data.map(item => ({
+                      id: item.id,
+                      nomeItem: item.nomeItem,
+                      valor: item.valor,
+                      quantidade: item.quantidade,
+                      valorTotal: item.valorTotal,
+                      status: item.status,
+                      pedidoId: item.idPedido // Certifique-se de que pedidoId está presente
+                  }));
+                  setProdutosVendidos(produtos);
+              })
+              .catch(error => {
+                  console.error('Erro ao buscar produtos vendidos:', error);
+              });
+      }
+  }, [activeTab, lojaInfo]);
 
     const handleEditarProduto = (produto) => {
         setEditingProduto(produto);
@@ -149,7 +150,7 @@ const MinhaLoja = () => {
                 return (
                     <ProdutosVendidosList
                         produtosVendidos={produtosVendidos}
-                        onStatusChange={handleStatusChange}
+                        onStatusChange={(pedidoId, itemId, novoStatusId) => handleStatusChange(pedidoId, itemId, novoStatusId)}
                     />
                 );
             default:
@@ -157,17 +158,17 @@ const MinhaLoja = () => {
         }
     };
 
-    const handleStatusChange = (pedidoId, novoStatus) => {
-        axios.put(`${process.env.REACT_APP_API_URL}/pedidos/${pedidoId}/status`, { status: novoStatus }, { withCredentials: true })
-            .then(response => {
-                setProdutosVendidos(prevState => prevState.map(pedido => 
-                    pedido.id === pedidoId ? { ...pedido, status: novoStatus } : pedido
-                ));
-            })
-            .catch(error => {
-                console.error('Erro ao atualizar status do pedido:', error);
-            });
-    };
+const handleStatusChange = (pedidoId, itemId, novoStatusId) => {
+    axios.put(`${process.env.REACT_APP_API_URL}/pedidos/${pedidoId}/itens/${itemId}/status`, { statusId: novoStatusId }, { withCredentials: true })
+        .then(response => {
+            setProdutosVendidos(prevState => prevState.map(item => 
+                item.id === itemId ? { ...item, status: novoStatusId } : item
+            ));
+        })
+        .catch(error => {
+            console.error('Erro ao atualizar status do item do pedido:', error);
+        });
+};
 
     const handleSubmit = (event) => {
         event.preventDefault();

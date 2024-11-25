@@ -63,4 +63,18 @@ public class PedidoController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @PutMapping("/{pedidoId}/itens/{itemId}/status")
+    public ResponseEntity<?> updateItemStatus(@PathVariable Long pedidoId, @PathVariable Long itemId, @RequestBody Map<String, Long> statusDetails) {
+        try {
+            Long statusId = statusDetails.get("statusId");
+            if (statusId == null) {
+                throw new IllegalArgumentException("Status ID não pode ser nulo");
+            }
+            pedidoService.updateItemStatus(itemId, statusId);
+            return ResponseEntity.ok("Status do item do pedido atualizado com sucesso!");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 } 

@@ -43,6 +43,7 @@ const Pedido = ({ pedido }) => {
                 <p>Quantidade: {item.quantidade}</p>
                 <p>Valor: R$ {item.valor.toFixed(2)}</p>
                 <p>Valor Total: R$ {(item.valor * item.quantidade).toFixed(2)}</p>
+                <p>Status: {item.status}</p>
                 <hr className="pedido-item-divisoria" />
               </div>
               {imagens[item.id] && <img src={imagens[item.id]} alt={item.nomeItem} className="produto-imagem" />}

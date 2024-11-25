@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import ProdutoLoja from '../../Components/Product/ProdutoLoja';
-import ProdutoVendidoModal from '../../Components/Loja/ProdutoVendidoModal';
+import ProdutoVendido from './ProdutoVendido';
+import ProdutoVendidoModal from './ProdutoVendidoModal';
 
 const ProdutosVendidosList = ({ produtosVendidos, onStatusChange }) => {
     const [showModal, setShowModal] = useState(false);
@@ -15,18 +15,11 @@ const ProdutosVendidosList = ({ produtosVendidos, onStatusChange }) => {
     return (
         <div className="produtos-container">
             {Array.isArray(produtosVendidos) && produtosVendidos.length > 0 ? (
-                produtosVendidos.map(pedido => (
-                    <ProdutoLoja
-                        key={pedido.id}
-                        produto={{
-                            nome: pedido.nomeItem,
-                            valor: pedido.valor,
-                            quantidade: pedido.quantidade,
-                            valorTotal: pedido.valorTotal,
-                            status: pedido.status
-                        }}
-                        onEdit={() => handleEditClick(pedido)}
-                        pageStyle="minha-loja-style"
+                produtosVendidos.map(produto => (
+                    <ProdutoVendido
+                        key={produto.id}
+                        produto={produto}
+                        onEdit={() => handleEditClick(produto)}
                     />
                 ))
             ) : (
@@ -38,9 +31,10 @@ const ProdutosVendidosList = ({ produtosVendidos, onStatusChange }) => {
                     showModal={showModal}
                     setShowModal={setShowModal}
                     produto={selectedProduto}
-                    setStatus={(status) => setSelectedProduto({ ...selectedProduto, status })}
-                    handleSubmit={() => {
-                        onStatusChange(selectedProduto.id, selectedProduto.status);
+                    setStatus={(status) => setSelectedProduto({ ...selectedProduto, status: status.nomeStatus })}
+                    handleSubmit={(status) => {
+                        onStatusChange(selectedProduto.pedidoId, selectedProduto.id, status.id);
+                        setSelectedProduto({ ...selectedProduto, status: status.nomeStatus });
                         setShowModal(false);
                     }}
                 />

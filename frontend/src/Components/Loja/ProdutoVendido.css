@@ -1,0 +1,32 @@
+.produto-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px;
+    width: 200px;
+    text-align: center;
+}
+
+.produto-imagem {
+    height: 150px;
+    background-color: #f9f9f9;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.produto-imagem img {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: cover;
+}
+
+.produto-detalhes h3 {
+    font-size: 16px;
+    margin: 8px 0;
+}
+
+.produto-detalhes p {
+    margin: 4px 0;
+}
