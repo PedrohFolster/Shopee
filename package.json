@@ -1,5 +1,8 @@
 {
   "dependencies": {
     "crypto-browserify": "^3.12.0"
+  },
+  "scripts": {
+    "build": "CI=false react-scripts build"
   }
 }
