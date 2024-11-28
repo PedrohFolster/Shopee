@@ -1,44 +1,44 @@
 services:
   backend:
-    build: ./backend
-    container_name: shopee_backend
+    build: ./backend  # Diretório de build do backend
+    container_name: shopee_backend  # Nome do contêiner
     ports:
-      - "8080:8080"
+      - "8080:8080"  # Mapeamento de portas
     env_file:
-      - ./backend/.env
+      - ./backend/.env  # Arquivo de variáveis de ambiente
     environment:
-      SPRING_APPLICATION_NAME: Shopee
-      SPRING_JPA_HIBERNATE_DDL_AUTO: update
-      SPRING_JPA_SHOW_SQL: true
-      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.PostgreSQLDialect
+      SPRING_APPLICATION_NAME: Shopee  # Nome da aplicação Spring
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update  # Configuração do Hibernate
+      SPRING_JPA_SHOW_SQL: true  # Mostrar SQL no log
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.PostgreSQLDialect  # Dialeto do Hibernate
     networks:
-      - shopee-network
+      - shopee-network  # Rede do Docker
     depends_on: 
-      - db
-    restart: always
+      - db  # Dependência do serviço de banco de dados
+    restart: always  # Reiniciar sempre
 
   frontend:
-    build: ./frontend
-    container_name: shopee_frontend
+    build: ./frontend  # Diretório de build do frontend
+    container_name: shopee_frontend  # Nome do contêiner
     ports:
-      - "3000:80"
+      - "3000:80"  # Mapeamento de portas
     env_file:
-      - ./frontend/.env
+      - ./frontend/.env  # Arquivo de variáveis de ambiente
     networks:
-      - shopee-network
+      - shopee-network  # Rede do Docker
     depends_on:
-      - backend
+      - backend  # Dependência do serviço de backend
 
   db:
-    image: postgres:13
-    container_name: postgres-db
+    image: postgres:13  # Imagem do PostgreSQL
+    container_name: postgres-db  # Nome do contêiner
     ports:
-      - "5432:5432"
+      - "5432:5432"  # Mapeamento de portas
     networks:
-      - shopee-network
+      - shopee-network  # Rede do Docker
     env_file:
-      - ./backend/.env
+      - ./backend/.env  # Arquivo de variáveis de ambiente
 
 networks:
   shopee-network:
-    driver: bridge
+    driver: bridge  # Tipo de rede
