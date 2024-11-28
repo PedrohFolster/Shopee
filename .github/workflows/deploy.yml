@@ -1,4 +1,4 @@
- name: CI/CD Workflow
+name: CI/CD Workflow
 
 on:
   push:
@@ -13,27 +13,46 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout do código
+      # 1. Checkout do código
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Backend: Configurar Java e Maven
+      # 2. Configurar Java e Maven (Backend)
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
           java-version: '17'
+
+      # 3. Rodar os testes no backend
+      - name: Run Backend Tests
+        run: mvn -f ./backend/pom.xml test
+
+      # 4. Fazer build do backend
       - name: Build Backend
         run: mvn -f ./backend/pom.xml clean package -DskipTests
 
-      # Frontend: Instalar dependências e build
-      - name: Install Node.js
+      # 5. Configurar Node.js (Frontend)
+      - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
-      - name: Build Frontend
+
+      # 6. Instalar dependências do frontend
+      - name: Install Frontend Dependencies
         run: |
           cd frontend
           npm install
+
+      # 7. Rodar testes no frontend
+      - name: Run Frontend Tests
+        run: |
+          cd frontend
+          npm test -- --watchAll=false
+
+      # 8. Fazer build do frontend
+      - name: Build Frontend
+        run: |
+          cd frontend
           npm run build
 
   deploy:
@@ -41,10 +60,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Deploy Backend
+      # 9. Deploy do backend no Render
       - name: Deploy Backend
         run: curl -X POST "${{ secrets.BACKEND_RENDER_DEPLOY_HOOK }}"
 
-      # Deploy Frontend
+      # 10. Deploy do frontend no Render
       - name: Deploy Frontend
         run: curl -X POST "${{ secrets.FRONTEND_RENDER_DEPLOY_HOOK }}"
