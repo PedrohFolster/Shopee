@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Header from '../../Components/Menu/Items/Header/Header';
 import FormularioPerfil from '../../Components/EditarPerfil/FormularioPerfil';
-import MensagemErro from '../../Components/EditarPerfil/MensagemErro';
 import ModalSenha from '../../Components/EditarPerfil/ModalSenha';
 import ModalEndereco from '../../Components/EditarPerfil/ModalEndereco';
 import '../CSS/EditarPerfil.css';
