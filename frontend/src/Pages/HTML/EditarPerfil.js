@@ -35,7 +35,6 @@ function EditarPerfil() {
     const [novaSenha, setNovaSenha] = useState('');
     const [confirmarNovaSenha, setConfirmarNovaSenha] = useState('');
     const [enderecoSenha, setEnderecoSenha] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
     const [isSenhaModalOpen, setIsSenhaModalOpen] = useState(false);
     const [isEnderecoModalOpen, setIsEnderecoModalOpen] = useState(false);
 
@@ -177,7 +176,6 @@ function EditarPerfil() {
             <main className="register-content">
                 <h2>EDITAR PERFIL</h2>
                 <div className="separator"></div>
-                {errorMessage && <MensagemErro mensagem={errorMessage} />}
                 <div className="button-container">
                     <button className="button-register" onClick={() => setIsSenhaModalOpen(true)}>Mudar Senha</button>
                     <button className="button-register" onClick={() => setIsEnderecoModalOpen(true)}>Editar Endereço</button>

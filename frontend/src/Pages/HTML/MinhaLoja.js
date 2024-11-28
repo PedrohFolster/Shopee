@@ -192,10 +192,6 @@ const handleStatusChange = (pedidoId, itemId, novoStatusId) => {
         return categoriaProdutoId !== '';
     };
 
-    const isValidStatus = (statusId) => {
-        return statusId !== '' && (statusId === '1' || statusId === '2');
-    };
-
     const isValidDescricao = (descricao) => {
         return descricao && descricao.trim().length >= 5 && descricao.length <= 500;
     };
