@@ -1,0 +1,50 @@
+ name: CI/CD Workflow
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout do código
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Backend: Configurar Java e Maven
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+      - name: Build Backend
+        run: mvn -f ./backend/pom.xml clean package -DskipTests
+
+      # Frontend: Instalar dependências e build
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - name: Build Frontend
+        run: |
+          cd frontend
+          npm install
+          npm run build
+
+  deploy:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+
+    steps:
+      # Deploy Backend
+      - name: Deploy Backend
+        run: curl -X POST "${{ secrets.BACKEND_RENDER_DEPLOY_HOOK }}"
+
+      # Deploy Frontend
+      - name: Deploy Frontend
+        run: curl -X POST "${{ secrets.FRONTEND_RENDER_DEPLOY_HOOK }}"
