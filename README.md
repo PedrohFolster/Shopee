@@ -13,6 +13,47 @@ Neste projeto, estamos desenvolvendo um sistema web responsivo, com o intuito de
 - **Frontend**: React com JavaScript, HTML e CSS
 - **Outras Tecnologias**: Docker
 
+## Passo a Passo para Rodar o Projeto
+
+1. **Clonar o Repositório**
+
+   Execute o seguinte comando para clonar o repositório e navegar até a pasta do projeto:
+
+   ```bash
+   git clone https://github.com/Vmp3/Shopee
+   cd Shopee
+   ```
+
+2. **Criar banco de dados na nuvem**
+
+    Crie um banco de dados na sua nuvem de preferência e salve suas variáveis de ambiente
+
+4.  **Adicionar variáveis de ambiente** 
+  
+    ### Para o backend:
+    Navegue até a /backend
+    Duplique o .env-examplo e renomeie para .env
+    Adicione as variáveis de ambiente do banco de dados da nuvem:
+    ```bash
+    DATABASE_URL=YOUR_DATABASE_URL_HERE
+    DATABASE_USERNAME=YOUR_DATABASE_USERNAME_HERE
+    DATABASE_PASSWORD=YOUR_DATABASE_PASSWORD_HERE
+    ```
+    ### Para o frontend:
+    Navegue até a /frontend
+    Duplique o .env-example e renomeie para .env
+    Adicione a variável de ambiente para a API (backend está configurado para rodar na localhost:8080
+     ```bash
+    REACT_API_URL=YOUR_API_URL_HERE
+    ```
+4. **Rodar o Projeto**
+
+   Utilize o Docker para construir e iniciar o projeto com o seguinte comando:
+
+   ```bash
+   docker-compose up --build
+   ```
+
 ## API Endpoints
 
 ### Authentication
