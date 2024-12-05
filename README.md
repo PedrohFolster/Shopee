@@ -1,6 +1,6 @@
 # Shopee
 
-Neste projeto, estamos desenvolvendo um sistema web responsivo, com o intuito de representar um marketplace, onde usuário podem procurar produtos para comprar ou então criar sua própria loja, para venderem seus produtos.
+Neste projeto, estamos desenvolvendo um sistema web, com o intuito de representar um marketplace, onde usuário podem procurar produtos para comprar ou então criar sua própria loja, para venderem seus produtos.
 
 
 ### Funcionalidades Principais:
