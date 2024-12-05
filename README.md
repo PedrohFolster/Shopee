@@ -140,6 +140,3 @@ Neste projeto, estamos desenvolvendo um sistema web responsivo, com o intuito de
 
 ## Swagger
 A documentação da API pode ser acessada em [Swagger UI](http://localhost:8080/swagger-ui.html).
-
-
-comit na main
